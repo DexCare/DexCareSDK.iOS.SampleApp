@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>auth0ClientId</key>
+	<string></string>
+	<key>auth0Domain</key>
+	<string></string>
+	<key>dexcareDomain</key>
+	<string></string>
+	<key>dexcareFhirOrchUrl</key>
+	<string></string>
+	<key>dexcareFhirOrchApiKey</key>
+	<string></string>
+	<key>dexcareVirtualVisitUrl</key>
+	<string></string>
+	<key>dexcarePcpUrl</key>
+	<string></string>
+	<key>userAgent</key>
+	<string></string>
+	<key>tenantName</key>
+	<string></string>
+	<key>pushNotificationAppId</key>
+	<string></string>
+	<key>pushNotificationPlatform</key>
+	<string></string>
+	<key>brand</key>
+	<string></string>
+</dict>
+</plist>

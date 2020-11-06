@@ -1,0 +1,26 @@
+// Validation
+"NonEmptyMessage" = "Can't be empty";
+"NonEmptyRecovery" = "Enter a value.";
+
+"ValidEmailMessage" = "Must be a valid email address";
+"ValidEmailRecovery" = "Enter a valid email address";
+"ValidPhoneMessage" = "Must be a valid phone number";
+"ValidPhoneRecovery" = "Enter a valid phone number";
+"InvalidPhoneAreaCodeCannotBeginWith0Or1" = "Area code cannot begin with 0 or 1";
+"InvalidPhoneAreaCodeSecondDigitCannotBe9" = "Second digit of area code cannot be 9";
+"InvalidPhoneFirstDigitAfterAreaCodeCannotBeginWith0Or1" = "First digit after area code cannot be 0 or 1";
+
+"MinAgeMessage" = "Must be at least %d years old";
+"MinAgeMonthMessage" = "Must be at least %d months old";
+"InvalidBirthDateMessage" = "Invalid date of birth";
+
+"MinLengthMessage" = "Must be at least %d characters";
+"MaxLengthMessage" = "Must be less than %d characters";
+"invalidCharacterMessageSingular" = "Contains unsupported character %@";
+"invalidCharacterMessagePlural" = "Contains unsupported characters %@";
+
+"invalidStateCodeErrorMessage" = "Enter a valid two letter state code";
+
+"invalidZIPErrorMessage" = "Must be in form xxxxx or %@";
+"invalidZIP5Characters" = "Must be 5 digits";
+"invalidZIPRecoveryMessage" = "Enter a valid zip code";
