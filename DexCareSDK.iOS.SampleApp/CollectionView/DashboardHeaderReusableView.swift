@@ -3,10 +3,32 @@
 import Foundation
 import UIKit
 
-class DashboardHeaderReusableView: UICollectionReusableView, ReusableView {
-    @IBOutlet weak var headerLabel: UILabel!
+class DashboardHeaderReusableView: UICollectionReusableView {
+    let headerLabel = UILabel()
     
-    func setup(title: String) {
-        headerLabel.text = title
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        configure()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+    
+    func configure() {
+        backgroundColor = .systemBackground
+        
+        addSubview(headerLabel)
+        headerLabel.translatesAutoresizingMaskIntoConstraints = false
+        headerLabel.adjustsFontForContentSizeCategory = true
+        
+        let inset = CGFloat(10)
+        NSLayoutConstraint.activate([
+            headerLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
+            headerLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset),
+            headerLabel.topAnchor.constraint(equalTo: topAnchor, constant: inset),
+            headerLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -inset)
+        ])
+        headerLabel.font = UIFont.preferredFont(forTextStyle: .title3)
     }
 }

@@ -40,6 +40,10 @@
 		E8054BEF253F22D200BB52DA /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8054BEE253F22D200BB52DA /* BaseViewController.swift */; };
 		E8054BF2253F2C9300BB52DA /* SummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8054BF1253F2C9300BB52DA /* SummaryViewController.swift */; };
 		E8054BF4253F31DE00BB52DA /* Summary.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8054BF3253F31DE00BB52DA /* Summary.storyboard */; };
+		E8301F49257010F1004A6209 /* RetailClinicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8301F48257010F1004A6209 /* RetailClinicCollectionViewCell.swift */; };
+		E8301F4B25701121004A6209 /* RetailClinicCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8301F4A25701121004A6209 /* RetailClinicCollectionViewCell.xib */; };
+		E8EC422E256EC6A3003C6D51 /* TimeslotCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EC422D256EC6A3003C6D51 /* TimeslotCollectionViewCell.swift */; };
+		E8EC4230256F0658003C6D51 /* RetailService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EC422F256F0658003C6D51 /* RetailService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +84,10 @@
 		E8054BEE253F22D200BB52DA /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		E8054BF1253F2C9300BB52DA /* SummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewController.swift; sourceTree = "<group>"; };
 		E8054BF3253F31DE00BB52DA /* Summary.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Summary.storyboard; sourceTree = "<group>"; };
+		E8301F48257010F1004A6209 /* RetailClinicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetailClinicCollectionViewCell.swift; sourceTree = "<group>"; };
+		E8301F4A25701121004A6209 /* RetailClinicCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RetailClinicCollectionViewCell.xib; sourceTree = "<group>"; };
+		E8EC422D256EC6A3003C6D51 /* TimeslotCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeslotCollectionViewCell.swift; sourceTree = "<group>"; };
+		E8EC422F256F0658003C6D51 /* RetailService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetailService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +184,7 @@
 			children = (
 				E8054BB92538E42100BB52DA /* AppServices.swift */,
 				E8054BE7253F1D8900BB52DA /* VirtualService.swift */,
+				E8EC422F256F0658003C6D51 /* RetailService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -183,8 +192,8 @@
 		E8054BBD2539E7C400BB52DA /* CollectionView */ = {
 			isa = PBXGroup;
 			children = (
-				E8054BBE2539E7D900BB52DA /* VirtualRegionCollectionViewCell.swift */,
-				E8054BC32539EADC00BB52DA /* VirtualRegionCollectionViewCell.xib */,
+				E8301F4D257011AC004A6209 /* Retail */,
+				E8301F4C257011A3004A6209 /* Virtual */,
 				E8054BC7253A013600BB52DA /* DashboardHeaderReusableView.swift */,
 			);
 			path = CollectionView;
@@ -239,6 +248,25 @@
 				E8054BF3253F31DE00BB52DA /* Summary.storyboard */,
 			);
 			path = Summary;
+			sourceTree = "<group>";
+		};
+		E8301F4C257011A3004A6209 /* Virtual */ = {
+			isa = PBXGroup;
+			children = (
+				E8054BBE2539E7D900BB52DA /* VirtualRegionCollectionViewCell.swift */,
+				E8054BC32539EADC00BB52DA /* VirtualRegionCollectionViewCell.xib */,
+			);
+			path = Virtual;
+			sourceTree = "<group>";
+		};
+		E8301F4D257011AC004A6209 /* Retail */ = {
+			isa = PBXGroup;
+			children = (
+				E8301F4A25701121004A6209 /* RetailClinicCollectionViewCell.xib */,
+				E8301F48257010F1004A6209 /* RetailClinicCollectionViewCell.swift */,
+				E8EC422D256EC6A3003C6D51 /* TimeslotCollectionViewCell.swift */,
+			);
+			path = Retail;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -304,6 +332,7 @@
 				E8054BA92538940700BB52DA /* LaunchScreen.storyboard in Resources */,
 				E8054BA62538940700BB52DA /* Assets.xcassets in Resources */,
 				E8054BE6253E8DBE00BB52DA /* Validation.strings in Resources */,
+				E8301F4B25701121004A6209 /* RetailClinicCollectionViewCell.xib in Resources */,
 				E8054BD2253DD38A00BB52DA /* Demographics.storyboard in Resources */,
 				E8054BB42538ACB900BB52DA /* acme.plist in Resources */,
 				E8054BC42539EADC00BB52DA /* VirtualRegionCollectionViewCell.xib in Resources */,
@@ -365,9 +394,11 @@
 				E8054BDE253DE8DC00BB52DA /* PickerMapper.swift in Sources */,
 				E8054BE0253DE92300BB52DA /* DatePicker.swift in Sources */,
 				E8054BC62539FBB900BB52DA /* Collection.swift in Sources */,
+				E8EC4230256F0658003C6D51 /* RetailService.swift in Sources */,
 				E8054BDA253DE61F00BB52DA /* UnitedStatesISO3166SubdivisionsValidator.swift in Sources */,
 				E8054BE2253E240500BB52DA /* Validation.swift in Sources */,
 				E8054BD8253DDD8D00BB52DA /* ValidationResult.swift in Sources */,
+				E8EC422E256EC6A3003C6D51 /* TimeslotCollectionViewCell.swift in Sources */,
 				E8054BA12538940400BB52DA /* DashboardViewController.swift in Sources */,
 				E8054B9D2538940400BB52DA /* AppDelegate.swift in Sources */,
 				E8054BEB253F212900BB52DA /* ReasonForVisitViewController.swift in Sources */,
@@ -375,6 +406,7 @@
 				E8054BC22539E86800BB52DA /* ReusableView.swift in Sources */,
 				E8054BE4253E88AA00BB52DA /* PhoneFormatter.swift in Sources */,
 				E8054BBA2538E42100BB52DA /* AppServices.swift in Sources */,
+				E8301F49257010F1004A6209 /* RetailClinicCollectionViewCell.swift in Sources */,
 				E8054BEF253F22D200BB52DA /* BaseViewController.swift in Sources */,
 				E8054BB72538DEFF00BB52DA /* ConsoleLogger.swift in Sources */,
 				E8054BCB253DD1A000BB52DA /* DemographicsViewController.swift in Sources */,

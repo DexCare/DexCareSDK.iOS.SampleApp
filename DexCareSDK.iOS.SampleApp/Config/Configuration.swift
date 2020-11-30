@@ -19,7 +19,6 @@ class Configuration: Decodable {
     var pushNotificationAppId: String
     var pushNotificationPlatform: String
     var brand: String
-    var ehrSystemName: String
     
     var loginEmail: String?
 }
@@ -41,7 +40,7 @@ extension Configuration {
             fhirOrchUrl: URL(string: dexcareFhirOrchUrl)!,
             virtualVisitConfiguration: virtualVisitConfig,
             dexcareAPIKey: dexcareFhirOrchApiKey,
-            pcpURL: URL(string: dexcarePcpUrl)!
+            pcpURL: nil
         )
         return DexcareConfiguration(
             environment: environment,

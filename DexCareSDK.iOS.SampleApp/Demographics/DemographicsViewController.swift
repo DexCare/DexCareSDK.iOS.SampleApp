@@ -48,7 +48,11 @@ class DemographicsViewController: BaseViewController {
             emailInputView.textField.textContentType = .emailAddress
             emailInputView.textField.keyboardType = .emailAddress
             emailInputView.textField.on(.editingChanged) { [weak self] in
-                AppServices.shared.virtualService.patientEmail = self?.emailInputView.text ?? ""
+                if self?.visitType == .virtual {
+                    AppServices.shared.virtualService.patientEmail = self?.emailInputView.text ?? ""
+                } else {
+                    AppServices.shared.retailService.userEmail = self?.emailInputView.text ?? ""
+                }
                 self?.emailInputView.validationResult = Validators.EmailAddress.checkForValidationErrors(self?.emailInputView.text ?? "")
                 self?.updateFormIsValid()
             }
@@ -191,6 +195,8 @@ class DemographicsViewController: BaseViewController {
     
     @IBOutlet weak var continueButton: UIButton!
     
+    var visitType: VisitType = .none
+    
     var stateOptions: [String] = []{
         didSet {
             stateOptionPicker.pickerItems = stateOptions
@@ -215,11 +221,19 @@ class DemographicsViewController: BaseViewController {
     }
     
     func updateFormIsValid() {
-        guard let patientEmail = AppServices.shared.virtualService.patientEmail else {
+        var patientEmail: String? = ""
+        if visitType == .virtual {
+            patientEmail = AppServices.shared.virtualService.patientEmail
+        } else {
+            patientEmail = AppServices.shared.retailService.userEmail
+        }
+        
+        guard let email = patientEmail else {
             continueButton.isEnabled = false
             return
         }
-        continueButton.isEnabled = myselfInformation.isValid() && myselfAddress.isValid() && patientEmail.isValidEmail()
+        
+        continueButton.isEnabled = myselfInformation.isValid() && myselfAddress.isValid() && email.isValidEmail()
     }
     
     func loadMyselfInformationIfAvailable() {
@@ -244,11 +258,20 @@ class DemographicsViewController: BaseViewController {
     }
     
     @IBAction func continueTapped() {
-        // save demographic information for later use in booking virtual visits
-        AppServices.shared.virtualService.myselfInformation = myselfInformation
-        AppServices.shared.virtualService.addressInformation = myselfAddress
+        switch visitType {
+            case .virtual:
+                // save demographic information for later use in booking virtual visits
+                AppServices.shared.virtualService.myselfInformation = myselfInformation
+                AppServices.shared.virtualService.addressInformation = myselfAddress
+            case .retail:
+                // save demographic information for later use in booking retail visits
+                AppServices.shared.retailService.myselfInformation = myselfInformation
+                AppServices.shared.retailService.addressInformation = myselfAddress
+            case .none:
+                return
+        }
         
-        navigateToSummary()
+        navigateToSummary(visitType: visitType)
     }
 }
 

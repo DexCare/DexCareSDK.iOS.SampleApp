@@ -1,2 +1,8 @@
 
 .DS_Store
+
+DexCareSDK.iOS.SampleApp/Config/acmeoriginal.plist
+
+DexCareSDK.iOS.SampleApp.xcworkspace/xcuserdata/mattkiazyk.xcuserdatad/xcdebugger/
+
+*.xcuserstate

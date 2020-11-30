@@ -14,6 +14,7 @@ class ReasonForVisitViewController: BaseViewController {
     @IBOutlet weak var placeHolderLabel: UILabel!
     
     var reasonForVisit: String = ""
+    var visitType: VisitType = .none
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,8 +35,16 @@ class ReasonForVisitViewController: BaseViewController {
     
     
     @IBAction func nextButtonTapped(_ sender: Any) {
-        AppServices.shared.virtualService.reasonForVisit = reasonForVisit
-        navigateToDemographics()
+        switch visitType {
+            case .virtual:
+                AppServices.shared.virtualService.reasonForVisit = reasonForVisit
+            case .retail:
+                AppServices.shared.retailService.reasonForVisit = reasonForVisit
+            case .none:
+                return
+        }
+        
+        navigateToDemographics(visitType: visitType)
     }
 }
 

@@ -12,6 +12,7 @@ class SummaryViewController: BaseViewController {
     @IBOutlet weak var insuranceMemberInputView: InputView!
     
     var insurancePayers: [InsurancePayer] = []
+    var visitType: VisitType = .none
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,24 +49,36 @@ class SummaryViewController: BaseViewController {
     
     
     @IBAction func bookVirtuaVisit() {
-        
-        do {
+        if visitType == .virtual {
+            do {
+                MBProgressHUD.showAdded(to: self.view, animated: true)
+                try AppServices.shared.virtualService.bookVirtualVisit(
+                    presentingViewController: self.navigationController!,
+                    onCompletion: { [weak self] visitCompletionReason in
+                        print("VISIT SUCCESSFULLY COMPLETED: \(visitCompletionReason)")
+                        // lets go back to the dashboard
+                        self?.navigationController?.popToRootViewController(animated: true)
+                },
+                    onSuccess: {
+                        MBProgressHUD.hide(for: self.view, animated: true)
+                })
+                
+            }
+            catch {
+                print("ERROR starting virtual visit:\(error)")
+                MBProgressHUD.hide(for: self.view, animated: true)
+            }
+        } else {
             MBProgressHUD.showAdded(to: self.view, animated: true)
-            try AppServices.shared.virtualService.bookVirtualVisit(
-                presentingViewController: self.navigationController!,
-                onCompletion: { [weak self] visitCompletionReason in
-                    print("VISIT SUCCESSFULLY COMPLETED: \(visitCompletionReason)")
-                    // lets go back to the dashboard
-                    self?.navigationController?.popToRootViewController(animated: true)
-            },
-                onSuccess: {
-                    MBProgressHUD.hide(for: self.view, animated: true)
-            })
-            
-        }
-        catch {
-            print("ERROR starting virtual visit:\(error)")
-            MBProgressHUD.hide(for: self.view, animated: true)
+            AppServices.shared.retailService.bookVisit().done {
+                print("VISIT SUCCESSFULLY booked")
+                MBProgressHUD.hide(for: self.view, animated: true)
+                // lets go back to the dashboard
+                self.navigationController?.popToRootViewController(animated: true)
+            }.catch { error in
+                print("ERROR booking retail visit:\(error)")
+                MBProgressHUD.hide(for: self.view, animated: true)
+            }
         }
         
     }

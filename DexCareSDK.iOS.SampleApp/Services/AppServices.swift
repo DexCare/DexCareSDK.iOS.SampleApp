@@ -16,5 +16,9 @@ class AppServices {
     
     lazy var virtualService: VirtualServiceHelper = {
         return VirtualServiceHelper()
-    }() 
+    }()
+    
+    lazy var retailService: RetailServiceHelper = {
+        return RetailServiceHelper()
+    }()
 }
