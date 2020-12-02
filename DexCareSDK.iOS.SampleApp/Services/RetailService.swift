@@ -82,7 +82,7 @@ class RetailServiceHelper {
     
     private func buildMyselfDemographics(myselfInformation: PersonInformation, myselfAddress: PersonDemographicAddress) throws -> PatientDemographics {
         
-        guard let email = AppServices.shared.configuration.loginEmail else {
+        guard let email = userEmail else {
             throw "Missing actor email from logged in account"
         }
         

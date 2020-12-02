@@ -102,6 +102,7 @@
                 <outlet property="clinicNameLabel" destination="yOQ-Li-Utc" id="Yat-ww-hoG"/>
                 <outlet property="timeSlotStackView" destination="me5-FF-6Uu" id="jmt-BU-nkM"/>
                 <outlet property="timeslotCount" destination="XRr-A7-9mZ" id="wsb-H0-Irj"/>
+                <outlet property="timeslotHeaderLabel" destination="4zX-VU-Nr3" id="uLe-nT-wbi"/>
             </connections>
             <point key="canvasLocation" x="-148.55072463768118" y="112.83482142857142"/>
         </collectionViewCell>

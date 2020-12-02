@@ -172,7 +172,7 @@ class DashboardViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        self.navigationItem.title = "ACME"
+        self.navigationItem.title = AppServices.shared.configuration.brand
         configureDataSource()
        
     }
@@ -215,12 +215,18 @@ class DashboardViewController: BaseViewController {
                                 }
                             }
                         }
+                        if let text = item as? String {
+                            cell.setupView(withString: text)
+                        }
                         
                         return cell
                     case .virtualRegions:
                         let cell = collectionView.dequeueReusableCell(ofType: VirtualRegionCollectionViewCell.self, for: indexPath)
                         if let region = item as? DashboardVirtualRegionViewModel {
                             cell.setupView(withRegion: region)
+                        }
+                        if let text = item as? String {
+                            cell.setupView(withString: text)
                         }
                         
                         return cell
@@ -380,17 +386,24 @@ class DashboardViewController: BaseViewController {
     
     func snapshotForCurrentState() -> NSDiffableDataSourceSnapshot<DashboardSection, AnyHashable> {
         var snapshot = NSDiffableDataSourceSnapshot<DashboardSection, AnyHashable>()
+      
+        snapshot.appendSections([DashboardSection.retailClinics])
         if allClinics.count > 0 {
-            snapshot.appendSections([DashboardSection.retailClinics])
             snapshot.appendItems( allClinics.map { clinic in
                 let timeslots = allTimeslots[clinic.departmentId]
                 return DashboardRetailClinicViewModel(withClinic: clinic, clinicTimeSlot: ClinicDayTimeslotsViewModel(withClinic: clinic, clinicTimeSlot: timeslots))
             })
+        } else {
+            // no clinics
+            snapshot.appendItems(["No retail clinics found"])
         }
         
+        snapshot.appendSections([DashboardSection.virtualRegions])
         if allVirtualRegions.count > 0 {
-            snapshot.appendSections([DashboardSection.virtualRegions])
             snapshot.appendItems( allVirtualRegions.map { DashboardVirtualRegionViewModel(withVirtualRegion: $0) })
+        } else {
+            // no virtual regions
+            snapshot.appendItems(["No Virtual Regions found"])
         }
         return snapshot
     }

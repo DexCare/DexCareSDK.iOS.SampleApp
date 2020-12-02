@@ -31,4 +31,11 @@ class VirtualRegionCollectionViewCell: UICollectionViewCell, NibLoadableView {
         }
         
     }
+    
+    func setupView(withString text: String) {
+        regionNameLabel.text = text
+        regionBusyLabel.text = ""
+        self.contentView.backgroundColor = UIColor.systemGray
+        self.isUserInteractionEnabled = false
+    }
 }

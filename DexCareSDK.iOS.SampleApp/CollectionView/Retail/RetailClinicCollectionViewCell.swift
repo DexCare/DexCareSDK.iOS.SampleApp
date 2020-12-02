@@ -8,11 +8,13 @@ class RetailClinicCollectionViewCell: UICollectionViewCell, NibLoadableView {
     @IBOutlet weak var clinicNameLabel: UILabel!
     @IBOutlet weak var timeslotCount: UILabel!
     @IBOutlet weak var timeSlotStackView: UIStackView!
+    @IBOutlet weak var timeslotHeaderLabel: UILabel!
     
     var onTimeslotTap: ((TimeSlot?) -> Void)?
     
     func setupView(withClinic clinic: DashboardRetailClinicViewModel) {
-        //self.contentView.isUserInteractionEnabled = false
+        timeslotHeaderLabel.text = "Timeslots"
+        timeSlotStackView.isHidden = false
         self.backgroundColor = UIColor.systemGray2
         self.clinicNameLabel.text = clinic.displayName
         
@@ -26,6 +28,13 @@ class RetailClinicCollectionViewCell: UICollectionViewCell, NibLoadableView {
         } else {
             timeslotCount.text = "Loading timeslots"
         }
+    }
+    
+    func setupView(withString text: String) {
+        timeslotHeaderLabel.text = ""
+        timeslotCount.text = ""
+        timeSlotStackView.isHidden = true
+        clinicNameLabel.text = text
     }
     
     @objc func timeslotTapped(_ sender: TimeButton) {
