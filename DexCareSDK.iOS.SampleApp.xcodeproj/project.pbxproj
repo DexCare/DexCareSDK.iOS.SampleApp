@@ -42,6 +42,8 @@
 		E8054BF4253F31DE00BB52DA /* Summary.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8054BF3253F31DE00BB52DA /* Summary.storyboard */; };
 		E8301F49257010F1004A6209 /* RetailClinicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8301F48257010F1004A6209 /* RetailClinicCollectionViewCell.swift */; };
 		E8301F4B25701121004A6209 /* RetailClinicCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8301F4A25701121004A6209 /* RetailClinicCollectionViewCell.xib */; };
+		E8A8C9FB258A947100644C91 /* RetailVisitConnectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A8C9FA258A947100644C91 /* RetailVisitConnectionViewCell.swift */; };
+		E8A8C9FD258A94F400644C91 /* RetailVisitCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8A8C9FC258A94F400644C91 /* RetailVisitCollectionViewCell.xib */; };
 		E8EC422E256EC6A3003C6D51 /* TimeslotCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EC422D256EC6A3003C6D51 /* TimeslotCollectionViewCell.swift */; };
 		E8EC4230256F0658003C6D51 /* RetailService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EC422F256F0658003C6D51 /* RetailService.swift */; };
 /* End PBXBuildFile section */
@@ -86,6 +88,8 @@
 		E8054BF3253F31DE00BB52DA /* Summary.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Summary.storyboard; sourceTree = "<group>"; };
 		E8301F48257010F1004A6209 /* RetailClinicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetailClinicCollectionViewCell.swift; sourceTree = "<group>"; };
 		E8301F4A25701121004A6209 /* RetailClinicCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RetailClinicCollectionViewCell.xib; sourceTree = "<group>"; };
+		E8A8C9FA258A947100644C91 /* RetailVisitConnectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetailVisitConnectionViewCell.swift; sourceTree = "<group>"; };
+		E8A8C9FC258A94F400644C91 /* RetailVisitCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RetailVisitCollectionViewCell.xib; sourceTree = "<group>"; };
 		E8EC422D256EC6A3003C6D51 /* TimeslotCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeslotCollectionViewCell.swift; sourceTree = "<group>"; };
 		E8EC422F256F0658003C6D51 /* RetailService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetailService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -192,6 +196,7 @@
 		E8054BBD2539E7C400BB52DA /* CollectionView */ = {
 			isa = PBXGroup;
 			children = (
+				E8A8C9F9258A946000644C91 /* RetailVisit */,
 				E8301F4D257011AC004A6209 /* Retail */,
 				E8301F4C257011A3004A6209 /* Virtual */,
 				E8054BC7253A013600BB52DA /* DashboardHeaderReusableView.swift */,
@@ -269,6 +274,15 @@
 			path = Retail;
 			sourceTree = "<group>";
 		};
+		E8A8C9F9258A946000644C91 /* RetailVisit */ = {
+			isa = PBXGroup;
+			children = (
+				E8A8C9FA258A947100644C91 /* RetailVisitConnectionViewCell.swift */,
+				E8A8C9FC258A94F400644C91 /* RetailVisitCollectionViewCell.xib */,
+			);
+			path = RetailVisit;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -334,6 +348,7 @@
 				E8054BE6253E8DBE00BB52DA /* Validation.strings in Resources */,
 				E8301F4B25701121004A6209 /* RetailClinicCollectionViewCell.xib in Resources */,
 				E8054BD2253DD38A00BB52DA /* Demographics.storyboard in Resources */,
+				E8A8C9FD258A94F400644C91 /* RetailVisitCollectionViewCell.xib in Resources */,
 				E8054BB42538ACB900BB52DA /* acme.plist in Resources */,
 				E8054BC42539EADC00BB52DA /* VirtualRegionCollectionViewCell.xib in Resources */,
 				E8054BED253F214A00BB52DA /* ReasonForVisit.storyboard in Resources */,
@@ -402,6 +417,7 @@
 				E8054BA12538940400BB52DA /* DashboardViewController.swift in Sources */,
 				E8054B9D2538940400BB52DA /* AppDelegate.swift in Sources */,
 				E8054BEB253F212900BB52DA /* ReasonForVisitViewController.swift in Sources */,
+				E8A8C9FB258A947100644C91 /* RetailVisitConnectionViewCell.swift in Sources */,
 				E8054BB22538AACB00BB52DA /* Configuration.swift in Sources */,
 				E8054BC22539E86800BB52DA /* ReusableView.swift in Sources */,
 				E8054BE4253E88AA00BB52DA /* PhoneFormatter.swift in Sources */,

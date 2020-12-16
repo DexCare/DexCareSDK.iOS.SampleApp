@@ -35,6 +35,16 @@ struct DashboardRetailClinicViewModel: Equatable, Hashable {
     }
 }
 
+struct DashboardRetailVisitViewModel: Equatable, Hashable {
+    let visitId: String
+    let clinicName: String
+    let timeslot: String
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(visitId)
+    }
+}
+
 struct TimeslotsViewModel: Equatable, Hashable {
     let timeslotId: String
     let timeLabel: String
@@ -139,7 +149,16 @@ extension DashboardRetailClinicViewModel {
     }
 }
 
+extension DashboardRetailVisitViewModel {
+    init(withScheduledVisit visit: ScheduledVisit) {
+        self.visitId = visit.id
+        self.clinicName = visit.clinic?.displayName ?? "Unkwown name"
+        self.timeslot = DateFormatter.appointmentString.string(from: visit.appointmentDetails.startDateTime)
+    }
+}
+
 enum DashboardSection: CaseIterable, Hashable {
+    case retailVisits
     case retailClinics
     case virtualRegions
 }
@@ -152,6 +171,7 @@ class DashboardViewController: BaseViewController {
     var didShowLogin: Bool = false
 
     var allClinics: [Clinic] = []
+    var scheduledlVisits: [ScheduledVisit] = []
     var allVirtualRegions: [Region] = []
     var allTimeslots: Dictionary<String, ClinicTimeSlot> = [:]
     var dataSource: UICollectionViewDiffableDataSource<DashboardSection, AnyHashable>! = nil
@@ -161,6 +181,7 @@ class DashboardViewController: BaseViewController {
             collectionView.delegate = self
             collectionView.register(UINib(nibName: "VirtualRegionCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: VirtualRegionCollectionViewCell.identifier)
             collectionView.register(UINib(nibName: "RetailClinicCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: RetailClinicCollectionViewCell.identifier)
+            collectionView.register(UINib(nibName: "RetailVisitCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: RetailVisitCollectionViewCell.identifier)
             collectionView.register(
                 DashboardHeaderReusableView.self,
                 forSupplementaryViewOfKind: DashboardViewController.sectionHeaderElementKind,
@@ -202,6 +223,17 @@ class DashboardViewController: BaseViewController {
                 
                 let sectionType = DashboardSection.allCases[indexPath.section]
                 switch sectionType {
+                    case .retailVisits:
+                        let cell = collectionView.dequeueReusableCell(ofType: RetailVisitCollectionViewCell.self, for: indexPath)
+                        
+                        if let visit = item as? DashboardRetailVisitViewModel {
+                            cell.setupView(withVisit: visit)
+                        }
+                        if let text = item as? String {
+                            cell.setupView(withString: text)
+                        }
+                        
+                        return cell
                     case .retailClinics:
                         let cell = collectionView.dequeueReusableCell(ofType: RetailClinicCollectionViewCell.self, for: indexPath)
                         
@@ -239,7 +271,9 @@ class DashboardViewController: BaseViewController {
             indexPath: IndexPath) -> UICollectionReusableView? in
             
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, type: DashboardHeaderReusableView.self, for: indexPath)
-            
+            if case .retailVisits = DashboardSection.allCases[indexPath.section] {
+                headerView.headerLabel.text = "Scheduled Visits"
+            }
             if case .virtualRegions = DashboardSection.allCases[indexPath.section] {
                 headerView.headerLabel.text = "Virtual Visits"
             }
@@ -251,13 +285,14 @@ class DashboardViewController: BaseViewController {
         }
         
         let snapshot = snapshotForCurrentState()
-        dataSource.apply(snapshot, animatingDifferences: false)
+        dataSource.apply(snapshot, animatingDifferences: true)
     }
     
     private func loadInformation() {
         loadCurrentUser()
         loadVirtualRegions()
         loadRetailClinics()
+        loadRetailVisits()
     }
 
     private func checkForAccessTokenAndLogin() {
@@ -285,8 +320,13 @@ class DashboardViewController: BaseViewController {
     
     
     private func loadCurrentUser() {
+        if didShowLogin {
+            return
+        }
+        print("Loading Patient")
         AppServices.shared.dexcareSDK.patientService.getPatient(success: { dexcarePatient in
             AppServices.shared.virtualService.currentDexcarePatient = dexcarePatient
+            AppServices.shared.retailService.currentDexcarePatient = dexcarePatient
             // we've gotten the dexcarepatient successfully with a jwt token
         }) { error in
             print("Error loading patient: \(error)")
@@ -340,7 +380,7 @@ class DashboardViewController: BaseViewController {
     }
     
     private func loadRetailClinics() {
-        AppServices.shared.dexcareSDK.retailService.getRetailClinics(
+        AppServices.shared.dexcareSDK.retailService.getClinics(
             brand: AppServices.shared.configuration.brand,
             success: { [weak self] clinics in
                 
@@ -348,7 +388,7 @@ class DashboardViewController: BaseViewController {
                 strongSelf.allClinics = clinics
                 
                 let snapshot = strongSelf.snapshotForCurrentState()
-                strongSelf.dataSource.apply(snapshot, animatingDifferences: false)
+                strongSelf.dataSource.apply(snapshot, animatingDifferences: true)
 
                 // load timeslots for clinics
                 clinics.forEach { clinic in
@@ -357,7 +397,7 @@ class DashboardViewController: BaseViewController {
                     }.done { clinicTimeSlot in
                         strongSelf.allTimeslots[clinic.departmentId] = clinicTimeSlot
                         let snapshot = strongSelf.snapshotForCurrentState()
-                        strongSelf.dataSource.apply(snapshot, animatingDifferences: false)
+                        strongSelf.dataSource.apply(snapshot, animatingDifferences: true)
 
                     }.catch { error in
                         print("Error loading timeslots: \(error)")
@@ -384,9 +424,32 @@ class DashboardViewController: BaseViewController {
         }
     }
     
+    private func loadRetailVisits() {
+        AppServices.shared.dexcareSDK.appointmentService.getRetailVisits(
+            success: { [weak self] scheduledVisits in
+                guard let strongSelf = self else { return }
+                strongSelf.scheduledlVisits = scheduledVisits
+                
+                let snapshot = strongSelf.snapshotForCurrentState()
+                strongSelf.dataSource.apply(snapshot, animatingDifferences: true)
+        }) { error in
+            print("Error loading retail visits: \(error)")
+        }
+    }
+    
     func snapshotForCurrentState() -> NSDiffableDataSourceSnapshot<DashboardSection, AnyHashable> {
         var snapshot = NSDiffableDataSourceSnapshot<DashboardSection, AnyHashable>()
       
+        snapshot.appendSections([DashboardSection.retailVisits])
+        if scheduledlVisits.count > 0 {
+            snapshot.appendItems( scheduledlVisits.map { scheduledVisit in
+                return DashboardRetailVisitViewModel(withScheduledVisit: scheduledVisit)
+            })
+        } else {
+            // no clinics
+            snapshot.appendItems(["No scheduled retail visits"])
+        }
+        
         snapshot.appendSections([DashboardSection.retailClinics])
         if allClinics.count > 0 {
             snapshot.appendItems( allClinics.map { clinic in
@@ -415,6 +478,7 @@ class DashboardViewController: BaseViewController {
             
             let sectionLayoutKind = DashboardSection.allCases[sectionIndex]
             switch (sectionLayoutKind) {
+                case .retailVisits: return self.generateRetailClinicLayout(isWide: isWideView)
                 case .retailClinics: return self.generateRetailClinicLayout(isWide: isWideView)
                 case .virtualRegions: return self.generateVirtualRegionsLayout(isWide: isWideView)
             }
@@ -482,6 +546,7 @@ class DashboardViewController: BaseViewController {
 extension DashboardViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         switch DashboardSection.allCases[indexPath.section] {
+            case .retailVisits: return false
             case .retailClinics: return false
             case .virtualRegions: return true
         }
@@ -491,6 +556,10 @@ extension DashboardViewController: UICollectionViewDelegate {
         guard let item = dataSource.itemIdentifier(for: indexPath) else { return }
         
         switch DashboardSection.allCases[indexPath.section] {
+            case .retailVisits:
+                guard let visit = item as? DashboardRetailVisitViewModel else { return }
+                
+                print("Selected: \(visit.clinicName)")
             case .retailClinics:
                 guard let clinic = item as? DashboardRetailClinicViewModel else { return }
 
@@ -508,6 +577,12 @@ public extension DateFormatter {
     static let dayString = { () -> DateFormatter in
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE"
+        return dateFormatter
+    }()
+    
+    static let appointmentString = { () -> DateFormatter in
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMMM dd, yyyy h:mm a"
         return dateFormatter
     }()
 }

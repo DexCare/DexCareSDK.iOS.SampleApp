@@ -5,8 +5,7 @@ import DexcareSDK
 import PromiseKit
 
 class VirtualServiceHelper {
-    var currentPatient: DexcarePatient?
-    
+   
     var currentRegionId: String?
     var myselfInformation: PersonInformation?
     var addressInformation: PersonDemographicAddress?
@@ -17,6 +16,7 @@ class VirtualServiceHelper {
     var currentVisitId: String?
     var currentInsurancePayer: InsurancePayer?
     var currentInsuranceMemberId: String?
+    var currentCatchmentArea: CatchmentArea?
   
     func bookVirtualVisit(presentingViewController: UINavigationController, onCompletion: @escaping VisitCompletion, onSuccess: @escaping () -> Void) throws {
         
@@ -38,7 +38,15 @@ class VirtualServiceHelper {
             guard let patientEmail = self?.patientEmail else {
                 throw "Missing patient email"
             }
-                
+            
+            guard let catchmentArea = self?.currentCatchmentArea else {
+                throw "Missing catchmentArea"
+            }
+            
+            guard let dexcarePatient = self?.currentDexcarePatient else {
+                throw "Missing dexcarePatient"
+            }
+            
             let virtualVisitInformation = VirtualVisitInformation(
                 visitReason: reasonForVisit,
                 patientDeclaration: .self,
@@ -46,7 +54,8 @@ class VirtualServiceHelper {
                 acceptedTerms: true,
                 userEmail: patientEmail,
                 contactPhoneNumber: "(204)233-2332",
-                preTriageTags: []
+                preTriageTags: [],
+                actorRelationshipToPatient: nil // set when creating a virtual visit appointment for a dependent
             )
             
             
@@ -55,6 +64,9 @@ class VirtualServiceHelper {
                 presentingViewController: presentingViewController,
                 paymentMethod: PaymentMethod.insuranceManualSelf(memberId: memberId, providerId: providerId),
                 virtualVisitInformation: virtualVisitInformation,
+                catchmentArea: catchmentArea,
+                patientDexCarePatient: dexcarePatient,
+                actorDexCarePatient: nil, // not used when booking for self.
                 onCompletion: onCompletion,
                 success: { [weak self] visitId in
                     // successfully started a virtual visit. Save the visit id in case we need to resume
@@ -86,21 +98,36 @@ class VirtualServiceHelper {
         }
         
         let patientDemographics = try buildMyselfDemographics(myselfInformation: myselfInformation, myselfAddress: addressInformation)
-        let brand: String = AppServices.shared.configuration.brand
         let dexcareSDK = AppServices.shared.dexcareSDK
+        let brand: String = AppServices.shared.configuration.brand
         
-        return Promise { seal in
-            dexcareSDK.patientService.createPatient(
-                usingVisitState: regionId,
-                patientDemographics: patientDemographics,
-                brand: brand,
-                success: { [weak self] patient in
-                  self?.currentDexcarePatient = patient
-                     seal.fulfill(())
-                }, failure: { error in
-                    print("error saving patient: \(error)")
-                    seal.reject(error)
-            })
+        return firstly {
+            // Based on the region and user address, we get a Catchment Area that includes an EHRSystem
+            return Promise<CatchmentArea> { resolver in
+                dexcareSDK.patientService.getCatchmentArea(
+                    visitState: regionId,
+                    residenceState: addressInformation.address.state,
+                    residenceZipCode: addressInformation.address.postalCode,
+                    brand: brand, success: { catchmentArea in
+                        resolver.fulfill(catchmentArea)
+                    }) { error in
+                        resolver.reject(error)
+                    }
+                }
+        }.then { catchmentArea in
+            return Promise { seal in
+                dexcareSDK.patientService.findOrCreatePatient(
+                    inEhrSystem: catchmentArea.ehrSystem,
+                    patientDemographics: patientDemographics,
+                    success: { [weak self] patient in
+                        self?.currentDexcarePatient = patient
+                        self?.currentCatchmentArea = catchmentArea
+                        seal.fulfill(())
+                    }, failure: { error in
+                        print("error saving patient: \(error)")
+                        seal.reject(error)
+                })
+            }
         }
     }
     

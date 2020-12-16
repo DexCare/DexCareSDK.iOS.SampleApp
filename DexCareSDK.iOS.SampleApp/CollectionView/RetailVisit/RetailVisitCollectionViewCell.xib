@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RetailVisitCollectionViewCell" id="WFA-b1-per" customClass="RetailVisitCollectionViewCell" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="469" height="200"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="gSx-Hx-smE">
+                <rect key="frame" x="0.0" y="0.0" width="469" height="200"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="dZD-pp-thZ">
+                        <rect key="frame" x="10" y="10" width="449" height="43.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hJ2-nk-E3O">
+                                <rect key="frame" x="0.0" y="0.0" width="449" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="22" id="v36-KC-ANw"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S9j-4U-OtE">
+                                <rect key="frame" x="0.0" y="22" width="449" height="21.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="22" id="XdT-nv-O2L"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="dZD-pp-thZ" secondAttribute="trailing" constant="10" id="4Fb-uh-dpj"/>
+                    <constraint firstAttribute="bottom" secondItem="dZD-pp-thZ" secondAttribute="bottom" constant="10" id="M6E-yi-Cs1"/>
+                    <constraint firstItem="dZD-pp-thZ" firstAttribute="top" secondItem="gSx-Hx-smE" secondAttribute="top" constant="10" id="b5l-x4-8NN"/>
+                    <constraint firstItem="dZD-pp-thZ" firstAttribute="leading" secondItem="gSx-Hx-smE" secondAttribute="leading" constant="10" id="bKc-on-yen"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <size key="customSize" width="469" height="200"/>
+            <connections>
+                <outlet property="clinicNameLabel" destination="hJ2-nk-E3O" id="eRJ-Ky-b72"/>
+                <outlet property="timeLabel" destination="S9j-4U-OtE" id="Qye-b2-kLr"/>
+            </connections>
+            <point key="canvasLocation" x="-119.56521739130436" y="121.875"/>
+        </collectionViewCell>
+    </objects>
+</document>

@@ -46,7 +46,6 @@ extension Configuration {
             environment: environment,
             userAgent: userAgent,
             domain: dexcareDomain,
-            tenantName: tenantName,
             customStrings: nil,
             logger: ConsoleLogger()
         )
@@ -65,7 +64,6 @@ extension Configuration {
                     case .success(let credentials):
                         // Do something with credentials e.g.: save them.
                         // Auth0 will automatically dismiss the login page
-                        print("Credentials: \(credentials.accessToken)")
                         // We've gotten a token from auth0
                         authToken(credentials.accessToken)
                         

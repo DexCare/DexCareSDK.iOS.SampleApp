@@ -11,7 +11,7 @@ def auth0_pods
 end
 
 def dexcare_pod
-  pod 'DexcareSDK', '~> 3.0'
+  pod 'DexcareSDK', '~> 4.0.1'
 end
 
 target 'DexCareSDK.iOS.SampleApp' do

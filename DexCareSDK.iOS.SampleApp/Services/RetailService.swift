@@ -5,8 +5,6 @@ import DexcareSDK
 import PromiseKit
 
 class RetailServiceHelper {
-    var currentPatient: DexcarePatient?
-    
     var myselfInformation: PersonInformation?
     var addressInformation: PersonDemographicAddress?
     
@@ -22,12 +20,15 @@ class RetailServiceHelper {
         guard let timeslot = timeslot else { return Promise(error: "Missing timeslot") }
         guard let userEmail = userEmail else { return Promise(error: "Missing userEmail") }
         guard let phoneNumber = phoneNumber ?? addressInformation?.phoneNumber else { return Promise(error: "Missing phoneNumber") }
-
+        guard let ehrSystemName = ehrSystemName else { return Promise(error: "Missing ehrSystemName") }
+        guard let currentDexcarePatient = currentDexcarePatient else { return Promise(error: "Missing currentDexcarePatient") }
+        
         let visitInformation = RetailVisitInformation(
             visitReason: reasonForVisit,
             patientDeclaration: .`self`,
             userEmail: userEmail,
-            contactPhoneNumber: phoneNumber
+            contactPhoneNumber: phoneNumber,
+            actorRelationshipToPatient: nil // set when making a retail appointment for a dependent (eg: child)
         )
            
         let dexcareSDK = AppServices.shared.dexcareSDK
@@ -36,16 +37,21 @@ class RetailServiceHelper {
             try updatePatientDemographics()
         }.then {
             return Promise { seal in
-                dexcareSDK.appointmentService.scheduleRetailAppointment(
+                dexcareSDK.retailService.scheduleRetailAppointment(
                     paymentMethod: .`self`,
                     visitInformation: visitInformation,
                     timeslot: timeslot,
-                    success: {
+                    ehrSystemName: ehrSystemName,
+                    patientDexCarePatient: currentDexcarePatient,
+                    actorDexCarePatient: nil,
+                    success: { visitId in
+                        // save this
                         seal.fulfill(())
                     }) { failedReason in
                         print("Failed to book a retail visit: \(failedReason)")
                         seal.reject(failedReason)
                     }
+                
             }
         }
     }
@@ -67,7 +73,7 @@ class RetailServiceHelper {
         let dexcareSDK = AppServices.shared.dexcareSDK
         
         return Promise { seal in
-            dexcareSDK.patientService.createPatient(
+            dexcareSDK.patientService.findOrCreatePatient(
                 inEhrSystem: ehrSystem,
                 patientDemographics: patientDemographics,
                 success: { [weak self] patient in

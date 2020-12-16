@@ -25,6 +25,7 @@ class VirtualRegionCollectionViewCell: UICollectionViewCell, NibLoadableView {
             self.contentView.backgroundColor = UIColor.systemGray
             self.isUserInteractionEnabled = false
         } else {
+            regionNameLabel.attributedText = nil
             regionNameLabel.text = region.regionName
             self.contentView.backgroundColor = UIColor.init(named: "AccentColor")
             regionBusyLabel.text = "OPEN: \n" + (region.openHours ?? "")
