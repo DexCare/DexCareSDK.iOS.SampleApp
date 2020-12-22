@@ -39,8 +39,7 @@ extension Configuration {
         let environment = Environment(
             fhirOrchUrl: URL(string: dexcareFhirOrchUrl)!,
             virtualVisitConfiguration: virtualVisitConfig,
-            dexcareAPIKey: dexcareFhirOrchApiKey,
-            pcpURL: nil
+            dexcareAPIKey: dexcareFhirOrchApiKey
         )
         return DexcareConfiguration(
             environment: environment,
