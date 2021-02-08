@@ -165,7 +165,6 @@ enum DashboardSection: CaseIterable, Hashable {
 
 class DashboardViewController: BaseViewController {
     static let sectionHeaderElementKind = "section-header-element-kind"
-    static let TokenUserDefaultKey = "AuthToken"
     private let collectionSpacing: CGFloat = 10.0
     
     var didShowLogin: Bool = false
@@ -195,25 +194,57 @@ class DashboardViewController: BaseViewController {
     
         self.navigationItem.title = AppServices.shared.configuration.brand
         configureDataSource()
-       
+        
+        setupSDKRefreshTokenDelegate()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        if !didShowLogin {
+            signInWithBiometrics()
+        }
+        
         if didShowLogin {
             loadInformation()
             return
         }
-        
-        if let savedToken = UserDefaults.standard.string(forKey: DashboardViewController.TokenUserDefaultKey) {
-            AppServices.shared.configuration.loadUserInfo(accessToken: savedToken)
-            AppServices.shared.dexcareSDK.signIn(accessToken: savedToken)
-           
-            loadInformation()
-        } else {
+    }
+    
+    private func signInWithBiometrics() {
+        // if user doesn't have biometrics OR user has biometrics but hasn't any saved tokens return early
+        if !AppServices.shared.auth0AccountService.canLogInWithBiometrics {
             checkForAccessTokenAndLogin()
+            return
         }
+        // grabs the access Token from keychain (with biometrics)
+        AppServices.shared.auth0AccountService.signInWithAuthToken().done { [weak self] accessToken in
+            if let accessToken = accessToken {
+                // we've successfully signed into Auth0 with an accessToken
+                self?.dexcareSDKSignInAndLoad(token: accessToken)
+            } else {
+                self?.checkForAccessTokenAndLogin()
+            }
+        }
+        .catch { [weak self] error in
+            
+            switch error {
+                case AccountServiceError.userCancelled:
+                    // user cancelled out of biometrics, ignore
+                    // in this example, lets just show the auth0 UI again
+                    self?.checkForAccessTokenAndLogin()
+                    return
+                
+                default:
+                    self?.checkForAccessTokenAndLogin()
+                }
+            }
+    }
+    
+    private func setupSDKRefreshTokenDelegate() {
+        // when we set this, it tells the SDK to check with us for a new accessToken when any network call receives a 403.
+        // We MUST send back a token or a nil on that function (see func newTokenRequest(tokenCallback: @escaping TokenRequestCallback))
+        AppServices.shared.dexcareSDK.refreshTokenDelegate = self
     }
     
     private func configureDataSource() {
@@ -301,21 +332,20 @@ class DashboardViewController: BaseViewController {
         // Universal login method for Auth0
         //AppServices.shared.configuration.showUniversalLogin() {[weak self] token in
         // Lock Widget method
-        AppServices.shared.configuration.showLogin(onViewController: self) {[weak self] token in
+        AppServices.shared.auth0AccountService.showLogin(onViewController: self) {[weak self] token in
             guard let token = token else {
                 assertionFailure("Invalid token")
                 return
             }
-            // We've gotten a successful token from Auth0, lets pass that up into DexCareSDK so we're authenticated there
-            // Sign in to DexCareSDK with AccessToken
-            AppServices.shared.dexcareSDK.signIn(accessToken: token)
-            
-             // Don't do this is real life, save it to the keychain! Even better behind biometrics!
-            UserDefaults.standard.set(token, forKey: DashboardViewController.TokenUserDefaultKey)
-            
-            self?.loadCurrentUser()
-            self?.loadVirtualRegions()
+            self?.dexcareSDKSignInAndLoad(token: token)
         }
+    }
+    
+    func dexcareSDKSignInAndLoad(token: String) {
+        // We've gotten a successful token from Auth0, lets pass that up into DexCareSDK so we're authenticated there
+        // Sign in to DexCareSDK with AccessToken
+        AppServices.shared.dexcareSDK.signIn(accessToken: token)
+        self.loadInformation()
     }
     
     
@@ -631,4 +661,28 @@ extension ClinicTimeSlot: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(departmentId)
     }
+}
+
+extension DashboardViewController: RefreshTokenDelegate {
+    // The SDK has received a 403, lets try and refresh the token
+    func newTokenRequest(tokenCallback: @escaping TokenRequestCallback) {
+        
+        // lets try and renew are token we have saved
+        firstly {
+            AppServices.shared.auth0AccountService.renewToken()
+        }.done { token in
+            if token != nil {
+                print("Successfully renewed token")
+            } else {
+                print("Could not renew token")
+            }
+            // if token is nil, the sdk will fail the originating call
+            // if token is not nil, the sdk will retry the original call, and either succeed or fail back to the original point of entry
+            tokenCallback(token)
+        }.catch { error in
+            print("Error renewing token: \(error)")
+        }
+        
+    }
+    
 }

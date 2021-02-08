@@ -21,6 +21,8 @@ target 'DexCareSDK.iOS.SampleApp' do
   dexcare_pod
   auth0_pods
 
+  pod 'KeychainAccess'
+
   #Keyboard Avoidance on forms
   pod 'TPKeyboardAvoiding'
 end
