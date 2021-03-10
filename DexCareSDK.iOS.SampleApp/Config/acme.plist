@@ -24,6 +24,8 @@
 	<string></string>
 	<key>pushNotificationPlatform</key>
 	<string></string>
+	<key>practiceId</key>
+	<string></string>
 	<key>brand</key>
 	<string></string>
 </dict>

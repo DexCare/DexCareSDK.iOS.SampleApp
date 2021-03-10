@@ -6,9 +6,10 @@ import Foundation
 import MBProgressHUD
 import PromiseKit
 
-struct DashboardVirtualRegionViewModel: Equatable, Hashable {
+struct DashboardVirtualPracticeRegionViewModel: Equatable, Hashable {
     let regionId: String
     let regionName: String
+    let regionCode: String
     let isOpen: Bool
     let isBusy: Bool?
     let busyMessage: String?
@@ -65,19 +66,20 @@ struct ClinicDayTimeslotsViewModel: Equatable, Hashable {
     }
 }
 
-extension DashboardVirtualRegionViewModel {
-    init(withVirtualRegion region: Region) {
-        self.regionId = region.regionId
-        self.regionName = region.name
+extension DashboardVirtualPracticeRegionViewModel {
+    init(withVirtualPracticeRegion region: VirtualPracticeRegion) {
+        self.regionId = region.practiceRegionId
+        self.regionName = region.displayName
+        self.regionCode = region.regionCode
         self.isOpen = region.active
-        self.isBusy = region.availability.busy
-        self.busyMessage = region.availability.busyMessage
+        self.isBusy = region.busy
+        self.busyMessage = region.busyMessage
         
-        self.openHours = region.availability.operatingHours.compactMap {
+        self.openHours = region.availability.compactMap {
             let today = DateFormatter.dayString.string(from: Date())
             let weekday = DateFormatter.dayString.string(from: $0.start)
             if today == weekday {
-                 return DateFormatter.localizedString(from: $0.start, dateStyle: .none, timeStyle: .short) + " - " + DateFormatter.localizedString(from: $0.end, dateStyle: .none, timeStyle: .short)
+                return DateFormatter.localizedString(from: $0.start, dateStyle: .none, timeStyle: .short) + " - " + DateFormatter.localizedString(from: $0.end, dateStyle: .none, timeStyle: .short)
             } else {
                 return nil
             }
@@ -160,7 +162,7 @@ extension DashboardRetailVisitViewModel {
 enum DashboardSection: CaseIterable, Hashable {
     case retailVisits
     case retailClinics
-    case virtualRegions
+    case virtualPracticeRegions
 }
 
 class DashboardViewController: BaseViewController {
@@ -171,7 +173,8 @@ class DashboardViewController: BaseViewController {
 
     var allClinics: [Clinic] = []
     var scheduledlVisits: [ScheduledVisit] = []
-    var allVirtualRegions: [Region] = []
+    var allVirtualPracticeRegions: [VirtualPracticeRegion] = []
+    
     var allTimeslots: Dictionary<String, ClinicTimeSlot> = [:]
     var dataSource: UICollectionViewDiffableDataSource<DashboardSection, AnyHashable>! = nil
     
@@ -283,10 +286,10 @@ class DashboardViewController: BaseViewController {
                         }
                         
                         return cell
-                    case .virtualRegions:
+                    case .virtualPracticeRegions:
                         let cell = collectionView.dequeueReusableCell(ofType: VirtualRegionCollectionViewCell.self, for: indexPath)
-                        if let region = item as? DashboardVirtualRegionViewModel {
-                            cell.setupView(withRegion: region)
+                        if let region = item as? DashboardVirtualPracticeRegionViewModel {
+                            cell.setupView(withPracticeRegion: region)
                         }
                         if let text = item as? String {
                             cell.setupView(withString: text)
@@ -305,7 +308,7 @@ class DashboardViewController: BaseViewController {
             if case .retailVisits = DashboardSection.allCases[indexPath.section] {
                 headerView.headerLabel.text = "Scheduled Visits"
             }
-            if case .virtualRegions = DashboardSection.allCases[indexPath.section] {
+            if case .virtualPracticeRegions = DashboardSection.allCases[indexPath.section] {
                 headerView.headerLabel.text = "Virtual Visits"
             }
             else if case .retailClinics = DashboardSection.allCases[indexPath.section]  {
@@ -321,7 +324,7 @@ class DashboardViewController: BaseViewController {
     
     private func loadInformation() {
         loadCurrentUser()
-        loadVirtualRegions()
+        loadVirtualPracticeRegions()
         loadRetailClinics()
         loadRetailVisits()
     }
@@ -371,37 +374,39 @@ class DashboardViewController: BaseViewController {
         }
     }
     
-    private func loadVirtualRegions() {
-        AppServices.shared.dexcareSDK.virtualService.getRegions(
-            brandName: AppServices.shared.configuration.brand,
-            success: { [weak self] regions in
+    private func loadVirtualPracticeRegions() {
+        AppServices.shared.dexcareSDK.practiceService.getVirtualPractice(
+            practiceId: AppServices.shared.configuration.practiceId,
+            success: { [weak self] practices in
                 guard let strongSelf = self else { return }
-                strongSelf.allVirtualRegions = regions
+                strongSelf.allVirtualPracticeRegions = practices.practiceRegions
                 
                 let snapshot = strongSelf.snapshotForCurrentState()
                 strongSelf.dataSource.apply(snapshot, animatingDifferences: false)
-                
         }) { error in
-             print(error.localizedDescription)
+            print(error.localizedDescription)
         }
     }
     
-    private func checkRegionAvailability(regionId: String) {
+    
+    private func checkRegionAvailability(practiceRegion: DashboardVirtualPracticeRegionViewModel) {
         // before starting the booking process double check the availabilty of the region.
         MBProgressHUD.showAdded(to: self.view, animated: true)
-        AppServices.shared.dexcareSDK.virtualService.getRegionAvailability(
-            regionId: regionId,
+        AppServices.shared.dexcareSDK.practiceService.getVirtualPracticeRegionAvailability(
+            practiceRegionId: practiceRegion.regionId,
             success: { [weak self] availability in
                 MBProgressHUD.hide(for: self!.view, animated: true)
                 if availability.available {
-                    // Save Reigon Id for later use in booking virtual visits
-                    AppServices.shared.virtualService.currentRegionId = regionId
+                    // Save PracticeRegion Id for later use in booking virtual visits
+                    AppServices.shared.virtualService.currentPracticeId = AppServices.shared.configuration.practiceId
+                    AppServices.shared.virtualService.currentPracticeRegionId = practiceRegion.regionId
+                    AppServices.shared.virtualService.currentRegionId = practiceRegion.regionCode
                     // navigate to reason for visit
                     self?.navigateToReasonForVisit(visitType: .virtual)
                     
                 } else {
                     // region is not available - show error based on reason enum
-                    print("Region not available: \(String(describing: availability.reason?.rawValue))")
+                    print("Practice Region not available: \(String(describing: availability.reason?.rawValue))")
                 }
         }) { failed in
             MBProgressHUD.hide(for: self.view, animated: true)
@@ -491,14 +496,15 @@ class DashboardViewController: BaseViewController {
             snapshot.appendItems(["No retail clinics found"])
         }
         
-        snapshot.appendSections([DashboardSection.virtualRegions])
-        if allVirtualRegions.count > 0 {
-            snapshot.appendItems( allVirtualRegions.map { DashboardVirtualRegionViewModel(withVirtualRegion: $0) })
+        snapshot.appendSections([DashboardSection.virtualPracticeRegions])
+        if allVirtualPracticeRegions.count > 0 {
+            snapshot.appendItems( allVirtualPracticeRegions.map { DashboardVirtualPracticeRegionViewModel(withVirtualPracticeRegion: $0) })
         } else {
             // no virtual regions
             snapshot.appendItems(["No Virtual Regions found"])
         }
         return snapshot
+        
     }
     
     func generateLayout() -> UICollectionViewLayout {
@@ -510,7 +516,7 @@ class DashboardViewController: BaseViewController {
             switch (sectionLayoutKind) {
                 case .retailVisits: return self.generateRetailClinicLayout(isWide: isWideView)
                 case .retailClinics: return self.generateRetailClinicLayout(isWide: isWideView)
-                case .virtualRegions: return self.generateVirtualRegionsLayout(isWide: isWideView)
+                case .virtualPracticeRegions: return self.generateVirtualPracticeRegionsLayout(isWide: isWideView)
             }
         }
         return layout
@@ -543,7 +549,7 @@ class DashboardViewController: BaseViewController {
         return section
     }
     
-    func generateVirtualRegionsLayout(isWide: Bool) -> NSCollectionLayoutSection {
+    func generateVirtualPracticeRegionsLayout(isWide: Bool) -> NSCollectionLayoutSection {
         
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
@@ -578,7 +584,7 @@ extension DashboardViewController: UICollectionViewDelegate {
         switch DashboardSection.allCases[indexPath.section] {
             case .retailVisits: return false
             case .retailClinics: return false
-            case .virtualRegions: return true
+            case .virtualPracticeRegions: return true
         }
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -594,10 +600,10 @@ extension DashboardViewController: UICollectionViewDelegate {
                 guard let clinic = item as? DashboardRetailClinicViewModel else { return }
 
                 print("Selected: \(clinic.displayName)")
-            case .virtualRegions:
-                guard let region = item as? DashboardVirtualRegionViewModel else { return }
-                print("Selected \(region.regionName)")
-                checkRegionAvailability(regionId: region.regionId)
+            case .virtualPracticeRegions:
+                guard let practiceRegion = item as? DashboardVirtualPracticeRegionViewModel else { return }
+                print("Selected \(practiceRegion.regionName)")
+                checkRegionAvailability(practiceRegion: practiceRegion)
         }
        
     }

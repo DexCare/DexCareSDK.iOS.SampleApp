@@ -19,7 +19,7 @@ class Configuration: Decodable {
     var pushNotificationAppId: String
     var pushNotificationPlatform: String
     var brand: String
-    
+    var practiceId: String
     var loginEmail: String?
 }
 

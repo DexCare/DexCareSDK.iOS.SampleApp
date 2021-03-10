@@ -1,6 +1,5 @@
 # A private repo with the podspec. Please make sure you have github access before installing
 source 'https://cdn.cocoapods.org/'
-source 'git@github.com:Health-V2-Consortium/PodSpec-iOS.git'
 
 platform :ios, '11.0'
 inhibit_all_warnings!
@@ -11,7 +10,7 @@ def auth0_pods
 end
 
 def dexcare_pod
-  pod 'DexcareSDK', '~> 4.0.2'
+  pod 'DexcareSDK', :git => 'https://github.com/Dexcare/DexcareSDK-iOS.git'
 end
 
 target 'DexCareSDK.iOS.SampleApp' do

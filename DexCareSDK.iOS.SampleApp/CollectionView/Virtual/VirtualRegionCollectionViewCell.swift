@@ -15,7 +15,7 @@ class VirtualRegionCollectionViewCell: UICollectionViewCell, NibLoadableView {
         self.layer.backgroundColor = UIColor.clear.cgColor
     }
     
-    func setupView(withRegion region: DashboardVirtualRegionViewModel) {
+    func setupView(withPracticeRegion region: DashboardVirtualPracticeRegionViewModel) {
       
         if region.isBusy ?? false {
             let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: region.regionName)
@@ -33,6 +33,7 @@ class VirtualRegionCollectionViewCell: UICollectionViewCell, NibLoadableView {
         }
         
     }
+    
     
     func setupView(withString text: String) {
         regionNameLabel.text = text

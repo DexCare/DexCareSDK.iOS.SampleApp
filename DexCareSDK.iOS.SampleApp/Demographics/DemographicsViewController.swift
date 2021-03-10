@@ -237,7 +237,7 @@ class DemographicsViewController: BaseViewController {
     }
     
     func loadMyselfInformationIfAvailable() {
-        guard let firstDemographics = AppServices.shared.virtualService.currentDexcarePatient?.demographicLinks.first else {
+        guard let firstDemographics = AppServices.shared.virtualService.currentDexcarePatient?.demographicsLinks.first else {
             return
         }
         myselfInformation = PersonInformation(withPatientDemographics: firstDemographics)
@@ -315,7 +315,7 @@ struct PersonInformation {
         self.lastName = demographics.name.family
         self.birthDate = demographics.birthdate
         self.gender = demographics.gender
-        self.lastFourSSN.update(with: demographics.ssn)
+        self.lastFourSSN.update(with: demographics.last4SSN)
     }
     
     init() {

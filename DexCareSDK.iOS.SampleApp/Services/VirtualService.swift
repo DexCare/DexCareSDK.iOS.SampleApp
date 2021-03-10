@@ -17,16 +17,14 @@ class VirtualServiceHelper {
     var currentInsurancePayer: InsurancePayer?
     var currentInsuranceMemberId: String?
     var currentCatchmentArea: CatchmentArea?
-  
+    var currentPracticeId: String?
+    var currentPracticeRegionId: String?
+    
     func bookVirtualVisit(presentingViewController: UINavigationController, onCompletion: @escaping VisitCompletion, onSuccess: @escaping () -> Void) throws {
         
         firstly {
             try updatePatientDemographics()
         }.done { [weak self] in
-            
-            guard let regionId = self?.currentRegionId else {
-                throw "Missing RegionId"
-            }
             guard let reasonForVisit = self?.reasonForVisit else {
                 throw "Missing reason for visit"
             }
@@ -46,16 +44,23 @@ class VirtualServiceHelper {
             guard let dexcarePatient = self?.currentDexcarePatient else {
                 throw "Missing dexcarePatient"
             }
+            guard let practiceId = self?.currentPracticeId else {
+                throw "Missing practiceId"
+            }
+            
+            guard let practiceRegionId = self?.currentPracticeRegionId else {
+                throw "Missing practiceRegionId"
+            }
             
             let virtualVisitInformation = VirtualVisitInformation(
                 visitReason: reasonForVisit,
                 patientDeclaration: .self,
-                currentState: regionId,
                 acceptedTerms: true,
                 userEmail: patientEmail,
                 contactPhoneNumber: "(204)233-2332",
                 preTriageTags: [],
-                actorRelationshipToPatient: nil // set when creating a virtual visit appointment for a dependent
+                actorRelationshipToPatient: nil, // set when creating a virtual visit appointment for a dependent
+                practiceRegionId: practiceRegionId
             )
             
             
@@ -67,6 +72,7 @@ class VirtualServiceHelper {
                 catchmentArea: catchmentArea,
                 patientDexCarePatient: dexcarePatient,
                 actorDexCarePatient: nil, // not used when booking for self.
+                practiceId: practiceId,
                 onCompletion: onCompletion,
                 success: { [weak self] visitId in
                     // successfully started a virtual visit. Save the visit id in case we need to resume
@@ -203,11 +209,10 @@ class VirtualServiceHelper {
             email: email,
             gender: gender,
             ehrSystemName: nil, // EHR System will get filled in by SDK when VisitState/EHRSystem is passed in
-            ssn: lastFourSSN,
+            last4SSN: lastFourSSN,
             homePhone: phoneNumber,
             mobilePhone: nil, // SDK requires a home phone number, all other phone numbers are optional
-            workPhone: nil,
-            actorRelationshipToPatient: nil // only required when we are creating dependent demographics
+            workPhone: nil
         )
         return demographics
     }

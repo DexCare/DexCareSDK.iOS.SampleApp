@@ -158,11 +158,10 @@ class RetailServiceHelper {
             email: email,
             gender: gender,
             ehrSystemName: nil, // EHR System will get filled in by SDK when VisitState/EHRSystem is passed in
-            ssn: lastFourSSN,
+            last4SSN: lastFourSSN,
             homePhone: phoneNumber,
             mobilePhone: nil, // SDK requires a home phone number, all other phone numbers are optional
-            workPhone: nil,
-            actorRelationshipToPatient: nil // only required when we are creating dependent demographics
+            workPhone: nil
         )
         return demographics
     }
