@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="EfV-ra-AFP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="EfV-ra-AFP">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -29,7 +31,7 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="384" height="50"/>
                                                     </stackView>
                                                 </subviews>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstItem="LGY-Si-dHu" firstAttribute="leading" secondItem="sZh-Ws-x9J" secondAttribute="leading" id="7q0-Sk-zXl"/>
                                                     <constraint firstAttribute="height" constant="50" id="DrV-mn-KH4"/>
@@ -46,7 +48,7 @@
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bXh-Iq-cY9" userLabel="First Name Input View" customClass="InputView" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="354" height="70"/>
-                                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="70" id="Zjk-Bq-BJr"/>
                                                                 </constraints>
@@ -57,7 +59,7 @@
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TN5-ZI-ps2" userLabel="Last Name Input View" customClass="InputView" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="70" width="354" height="70"/>
-                                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="70" id="OnH-dP-yKu"/>
                                                                 </constraints>
@@ -68,7 +70,7 @@
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OfX-Qc-6sY" userLabel="Last Name Input View" customClass="InputView" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="140" width="354" height="70"/>
-                                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="70" id="MTr-le-DhQ"/>
                                                                 </constraints>
@@ -79,7 +81,7 @@
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YO0-S7-hme" userLabel="Birth Date Picker" customClass="DatePicker" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="210" width="354" height="70"/>
-                                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="OTHER_BIRTHDAY"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="70" id="4yV-rV-cMr"/>
@@ -91,7 +93,7 @@
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8AT-Lp-Ohg" userLabel="Gender Option Picker" customClass="OptionPicker" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="280" width="354" height="70"/>
-                                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="70" id="hd5-E1-zqb"/>
                                                                 </constraints>
@@ -102,7 +104,7 @@
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Ug-xY-6qP" userLabel="Last 4 SSN Input View" customClass="InputView" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="350" width="354" height="70"/>
-                                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="70" id="H3U-S0-hV2"/>
                                                                 </constraints>
@@ -114,14 +116,14 @@
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NYf-cf-sSv" userLabel="Spacer View">
                                                                 <rect key="frame" x="0.0" y="420" width="354" height="20"/>
-                                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="20" id="3z6-re-OIc"/>
                                                                 </constraints>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="03u-nc-HBV" userLabel="Phone Input View" customClass="InputView" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="440" width="354" height="70"/>
-                                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="70" id="Ejg-aA-BKu"/>
                                                                 </constraints>
@@ -132,7 +134,7 @@
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GP1-4J-CE5" userLabel="Address Line 1 Input View" customClass="InputView" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="510" width="354" height="70"/>
-                                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="70" id="7yp-5f-kw6"/>
                                                                 </constraints>
@@ -143,7 +145,7 @@
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UPf-JR-EAh" userLabel="Address Line 2 Input View" customClass="InputView" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="580" width="354" height="70"/>
-                                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="70" id="j5d-Il-lLB"/>
                                                                 </constraints>
@@ -154,7 +156,7 @@
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G9Z-S7-rkG" userLabel="City Input View" customClass="InputView" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="650" width="354" height="70"/>
-                                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="70" id="SUR-zl-0aa"/>
                                                                 </constraints>
@@ -168,7 +170,7 @@
                                                                 <subviews>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uXF-F6-iJJ" userLabel="State Option Picker" customClass="OptionPicker" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
                                                                         <rect key="frame" x="0.0" y="0.0" width="172" height="70"/>
-                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         <userDefinedRuntimeAttributes>
                                                                             <userDefinedRuntimeAttribute type="boolean" keyPath="showEmptyError" value="YES"/>
                                                                             <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="State"/>
@@ -176,14 +178,14 @@
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J0b-bp-Nh7" userLabel="Spacer View">
                                                                         <rect key="frame" x="172" y="0.0" width="10" height="70"/>
-                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="10" id="ha6-Ha-bJA"/>
                                                                         </constraints>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zuM-Tb-b10" customClass="InputView" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
                                                                         <rect key="frame" x="182" y="0.0" width="172" height="70"/>
-                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         <userDefinedRuntimeAttributes>
                                                                             <userDefinedRuntimeAttribute type="boolean" keyPath="showEmptyError" value="YES"/>
                                                                             <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Zip Code"/>
@@ -218,7 +220,7 @@
                                                                 </connections>
                                                             </button>
                                                         </subviews>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="bottom" secondItem="5Sm-yZ-0Eb" secondAttribute="bottom" constant="35" id="1cl-by-gUr"/>
                                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="5Sm-yZ-0Eb" secondAttribute="trailing" priority="250" constant="45" id="Rhp-zB-oqJ"/>
@@ -229,7 +231,7 @@
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HGj-BT-LdT" userLabel="Bottom Space View">
                                                         <rect key="frame" x="0.0" y="907" width="354" height="130"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="10" id="bge-1G-bIH"/>
                                                         </constraints>
@@ -237,7 +239,7 @@
                                                 </subviews>
                                             </stackView>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="sZh-Ws-x9J" secondAttribute="trailing" id="1mL-3e-sLL"/>
                                             <constraint firstItem="sZh-Ws-x9J" firstAttribute="leading" secondItem="yRf-XK-2Px" secondAttribute="leading" constant="30" id="2EB-E1-5kU"/>
@@ -258,14 +260,14 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="ktM-o9-1Si"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="ktM-o9-1Si" firstAttribute="trailing" secondItem="gYP-Bg-q6r" secondAttribute="trailing" id="QH5-3D-MiB"/>
                             <constraint firstAttribute="top" secondItem="gYP-Bg-q6r" secondAttribute="top" id="bwz-lr-inZ"/>
                             <constraint firstItem="ktM-o9-1Si" firstAttribute="leading" secondItem="gYP-Bg-q6r" secondAttribute="leading" id="mt7-Fx-jpP"/>
                             <constraint firstAttribute="bottomMargin" secondItem="gYP-Bg-q6r" secondAttribute="bottom" id="wmN-NU-3lV"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="ktM-o9-1Si"/>
                     </view>
                     <connections>
                         <outlet property="address2InputView" destination="UPf-JR-EAh" id="xOw-1G-Z2t"/>
@@ -288,10 +290,13 @@
             <point key="canvasLocation" x="-284" y="-293"/>
         </scene>
     </scenes>
+    <color key="tintColor" name="AccentColor"/>
     <resources>
         <namedColor name="AccentColor">
-            <color red="0.39560145547945208" green="0.26290867160220249" blue="0.49210996256379258" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.39599999785423279" green="0.2630000114440918" blue="0.49200001358985901" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
-    <color key="tintColor" name="AccentColor"/>
 </document>

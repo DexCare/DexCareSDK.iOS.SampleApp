@@ -159,6 +159,10 @@ public class DatePickerTextField: UITextField {
         datePickerView.datePickerMode = .date
         datePickerView.backgroundColor = .systemBackground
         datePickerView.date = Date()
+        if #available(iOS 13.4, *) {
+            // .wheels is old style
+            datePickerView.preferredDatePickerStyle = .wheels
+        }
         inputView = datePickerView
         
         datePickerView.addTarget(self, action: #selector(onDateValueChanged), for: .valueChanged)
@@ -180,7 +184,7 @@ public class DatePickerTextField: UITextField {
         toolbar.barStyle = .default
         
         self.toolbar = toolbar
-        
+
         inputAccessoryView = toolbar
     }
     

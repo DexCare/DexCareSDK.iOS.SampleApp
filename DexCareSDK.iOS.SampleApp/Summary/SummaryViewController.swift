@@ -3,7 +3,7 @@
 
 import Foundation
 import UIKit
-import DexcareSDK
+import DexcareiOSSDK
 import MBProgressHUD
 
 class SummaryViewController: BaseViewController {
@@ -19,7 +19,7 @@ class SummaryViewController: BaseViewController {
         self.navigationItem.title = "ALMOST DONE"
         
         insuranceOptionPicker.isEnabled = false
-        AppServices.shared.dexcareSDK.virtualService.getInsurancePayers(tenant: "acme", success: { [weak self] insurancePayers in
+        AppServices.shared.dexcareSDK.paymentService.getInsurancePayers(tenant: "acme", success: { [weak self] insurancePayers in
             self?.insuranceOptionPicker.isEnabled = true
             self?.insuranceOptionPicker.pickerItems = insurancePayers
             self?.insurancePayers = insurancePayers

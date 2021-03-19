@@ -1,7 +1,7 @@
 import Foundation
 import KeychainAccess
 import LocalAuthentication
-import DexcareSDK
+import DexcareiOSSDK
 import class Auth0.Credentials
 
 extension Keychain {

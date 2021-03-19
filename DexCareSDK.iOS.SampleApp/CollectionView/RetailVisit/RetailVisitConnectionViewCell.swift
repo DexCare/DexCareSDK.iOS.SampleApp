@@ -2,7 +2,7 @@
 
 import Foundation
 import UIKit
-import DexcareSDK
+import DexcareiOSSDK
 
 class RetailVisitCollectionViewCell: UICollectionViewCell, NibLoadableView {
     @IBOutlet weak var clinicNameLabel: UILabel!

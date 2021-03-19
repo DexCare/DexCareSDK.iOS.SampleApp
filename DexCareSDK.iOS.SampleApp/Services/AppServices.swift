@@ -1,7 +1,7 @@
 //  Copyright © 2020 DexCare. All rights reserved.
 
 import Foundation
-import DexcareSDK
+import DexcareiOSSDK
 
 class AppServices {
     static var shared: AppServices!

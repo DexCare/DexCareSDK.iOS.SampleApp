@@ -89,10 +89,11 @@
 		E8054BEE253F22D200BB52DA /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		E8054BF1253F2C9300BB52DA /* SummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewController.swift; sourceTree = "<group>"; };
 		E8054BF3253F31DE00BB52DA /* Summary.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Summary.storyboard; sourceTree = "<group>"; };
+		E8066B4025FFAE7200D8E43A /* DexcareSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = DexcareSDK.xcframework; path = ../DexcareSDK.iOS/xcframework/DexcareSDK.xcframework; sourceTree = "<group>"; };
+		E8066B5825FFB3F700D8E43A /* DexcareiOSSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = DexcareiOSSDK.xcframework; path = ../DexcareSDK.iOS/xcframework/DexcareiOSSDK.xcframework; sourceTree = "<group>"; };
 		E8301F48257010F1004A6209 /* RetailClinicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetailClinicCollectionViewCell.swift; sourceTree = "<group>"; };
 		E8301F4A25701121004A6209 /* RetailClinicCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RetailClinicCollectionViewCell.xib; sourceTree = "<group>"; };
 		E864371A25CDA1F700C0FFD1 /* KeychainLoginStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainLoginStore.swift; sourceTree = "<group>"; };
-		E867EC0725D1829300EC5F11 /* DexCareSDK.iOS.SampleApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DexCareSDK.iOS.SampleApp.entitlements; sourceTree = "<group>"; };
 		E89C19BA25CDB05C0001C6CD /* BiometricsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricsService.swift; sourceTree = "<group>"; };
 		E89C99E225CC9614009B7BAC /* Auth0Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth0Manager.swift; sourceTree = "<group>"; };
 		E8A8C9FA258A947100644C91 /* RetailVisitConnectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetailVisitConnectionViewCell.swift; sourceTree = "<group>"; };
@@ -125,6 +126,8 @@
 		C07C392CE8E4F6054C41750B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E8066B5825FFB3F700D8E43A /* DexcareiOSSDK.xcframework */,
+				E8066B4025FFAE7200D8E43A /* DexcareSDK.xcframework */,
 				20C463B0685C1970A8F1E76D /* Pods_DexCareSDK_iOS_SampleApp.framework */,
 			);
 			name = Frameworks;
@@ -151,7 +154,6 @@
 		E8054B9B2538940400BB52DA /* DexCareSDK.iOS.SampleApp */ = {
 			isa = PBXGroup;
 			children = (
-				E867EC0725D1829300EC5F11 /* DexCareSDK.iOS.SampleApp.entitlements */,
 				E8054BF0253F2C8600BB52DA /* Summary */,
 				E8054BE9253F211900BB52DA /* ReasonForVisit */,
 				E8054BCC253DD27800BB52DA /* Validation */,
@@ -592,8 +594,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = DexCareSDK.iOS.SampleApp/DexCareSDK.iOS.SampleApp.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = ZU6GR6B2FY;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = DexCareSDK.iOS.SampleApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -602,6 +605,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dexcare.acmetestapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -613,8 +617,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = DexCareSDK.iOS.SampleApp/DexCareSDK.iOS.SampleApp.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = ZU6GR6B2FY;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = DexCareSDK.iOS.SampleApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -623,6 +628,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dexcare.acmetestapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

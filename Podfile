@@ -10,7 +10,7 @@ def auth0_pods
 end
 
 def dexcare_pod
-  pod 'DexcareSDK', :git => 'https://github.com/Dexcare/DexcareSDK-iOS.git'
+  pod 'DexcareSDK', :git => 'https://github.com/Dexcare/DexcareSDK-iOS.git', :tag => '6.0.0'
 end
 
 target 'DexCareSDK.iOS.SampleApp' do
@@ -20,8 +20,18 @@ target 'DexCareSDK.iOS.SampleApp' do
   dexcare_pod
   auth0_pods
 
+
   pod 'KeychainAccess'
 
   #Keyboard Avoidance on forms
   pod 'TPKeyboardAvoiding'
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      # Needed for Xcode12 xcframework
+      config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
+    end
+  end
 end

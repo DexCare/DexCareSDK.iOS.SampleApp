@@ -2,7 +2,7 @@
 
 import Foundation
 import UIKit
-import DexcareSDK
+import DexcareiOSSDK
 
 class DemographicsViewController: BaseViewController {
     // MARK: Outlets for MYSELF Demographics
@@ -388,6 +388,8 @@ extension Gender {
             case .male: return "Male"
             case .female: return "Female"
             case .other, .unknown: return "Other"
+            @unknown default:
+                return "Other"
         }
     }
     

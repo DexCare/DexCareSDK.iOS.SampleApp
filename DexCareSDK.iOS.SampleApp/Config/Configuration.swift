@@ -1,7 +1,7 @@
 //  Copyright © 2020 DexCare. All rights reserved.
 
 import Foundation
-import DexcareSDK
+import DexcareiOSSDK
 import Lock
 import PromiseKit
 import Auth0
