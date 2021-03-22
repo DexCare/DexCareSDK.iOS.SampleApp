@@ -17,16 +17,16 @@
 	<key>dexcarePcpUrl</key>
 	<string></string>
 	<key>userAgent</key>
-	<string></string>
+	<string>Acme</string>
 	<key>tenantName</key>
-	<string></string>
+	<string>acme</string>
 	<key>pushNotificationAppId</key>
 	<string></string>
 	<key>pushNotificationPlatform</key>
 	<string></string>
-	<key>practiceId</key>
-	<string></string>
 	<key>brand</key>
+	<string>acme</string>
+	<key>practiceId</key>
 	<string></string>
 </dict>
 </plist>

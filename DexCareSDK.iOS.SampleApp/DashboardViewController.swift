@@ -406,10 +406,23 @@ class DashboardViewController: BaseViewController {
                     
                 } else {
                     // region is not available - show error based on reason enum
+                    var reasonString = ""
+                    switch availability.reason {
+                        case .noOncallProviders:
+                            reasonString = "No on call providers"
+                        case .offHours:
+                            reasonString = "Off hours."
+                        case .regionBusy:
+                            reasonString = "Region is busy - try again later"
+                        default:
+                            reasonString = "Try again later"
+                    }
+                    self?.showAlert(title: "Not available", message: reasonString)
                     print("Practice Region not available: \(String(describing: availability.reason?.rawValue))")
                 }
         }) { failed in
             MBProgressHUD.hide(for: self.view, animated: true)
+            self.showAlert(title: "error", message: failed.localizedDescription)
             print(failed.localizedDescription)
         }
     }
@@ -443,6 +456,7 @@ class DashboardViewController: BaseViewController {
 
         }) { error in
             print("Error loading retail clinics: \(error)")
+            self.showAlert(title: "Error loading retail clinics", message: error.localizedDescription)
         }
     }
   
@@ -469,6 +483,7 @@ class DashboardViewController: BaseViewController {
                 strongSelf.dataSource.apply(snapshot, animatingDifferences: true)
         }) { error in
             print("Error loading retail visits: \(error)")
+            self.showAlert(title: "Error loading retail visits", message: error.localizedDescription)
         }
     }
     
@@ -594,15 +609,10 @@ extension DashboardViewController: UICollectionViewDelegate {
         switch DashboardSection.allCases[indexPath.section] {
             case .retailVisits:
                 guard let visit = item as? DashboardRetailVisitViewModel else { return }
-                
-                print("Selected: \(visit.clinicName)")
             case .retailClinics:
                 guard let clinic = item as? DashboardRetailClinicViewModel else { return }
-
-                print("Selected: \(clinic.displayName)")
             case .virtualPracticeRegions:
                 guard let practiceRegion = item as? DashboardVirtualPracticeRegionViewModel else { return }
-                print("Selected \(practiceRegion.regionName)")
                 checkRegionAvailability(practiceRegion: practiceRegion)
         }
        

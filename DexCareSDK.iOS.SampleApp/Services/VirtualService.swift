@@ -20,7 +20,7 @@ class VirtualServiceHelper {
     var currentPracticeId: String?
     var currentPracticeRegionId: String?
     
-    func bookVirtualVisit(presentingViewController: UINavigationController, onCompletion: @escaping VisitCompletion, onSuccess: @escaping () -> Void) throws {
+    func bookVirtualVisit(presentingViewController: UINavigationController, onCompletion: @escaping VisitCompletion, onSuccess: @escaping () -> Void, failure: @escaping (Error) -> Void) throws {
         
         firstly {
             try updatePatientDemographics()
@@ -81,12 +81,12 @@ class VirtualServiceHelper {
                     onSuccess()
                 },
                 failure: { error in
-                    print("error starting virtual visit: \(error)")
+                    failure("error starting virtual visit: \(error)")
             }
             )
         }
         .catch { error in
-           print("error starting virtual visit: \(error)")
+            failure("error starting virtual visit: \(error)")
         }
     
     }

@@ -47,6 +47,7 @@
 		E89C99E325CC9614009B7BAC /* Auth0Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89C99E225CC9614009B7BAC /* Auth0Manager.swift */; };
 		E8A8C9FB258A947100644C91 /* RetailVisitConnectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A8C9FA258A947100644C91 /* RetailVisitConnectionViewCell.swift */; };
 		E8A8C9FD258A94F400644C91 /* RetailVisitCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8A8C9FC258A94F400644C91 /* RetailVisitCollectionViewCell.xib */; };
+		E8C4DDF726053EC10046E626 /* ViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C4DDF626053EC10046E626 /* ViewController+.swift */; };
 		E8EC422E256EC6A3003C6D51 /* TimeslotCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EC422D256EC6A3003C6D51 /* TimeslotCollectionViewCell.swift */; };
 		E8EC4230256F0658003C6D51 /* RetailService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EC422F256F0658003C6D51 /* RetailService.swift */; };
 /* End PBXBuildFile section */
@@ -98,6 +99,7 @@
 		E89C99E225CC9614009B7BAC /* Auth0Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth0Manager.swift; sourceTree = "<group>"; };
 		E8A8C9FA258A947100644C91 /* RetailVisitConnectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetailVisitConnectionViewCell.swift; sourceTree = "<group>"; };
 		E8A8C9FC258A94F400644C91 /* RetailVisitCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RetailVisitCollectionViewCell.xib; sourceTree = "<group>"; };
+		E8C4DDF626053EC10046E626 /* ViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+.swift"; sourceTree = "<group>"; };
 		E8EC422D256EC6A3003C6D51 /* TimeslotCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeslotCollectionViewCell.swift; sourceTree = "<group>"; };
 		E8EC422F256F0658003C6D51 /* RetailService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetailService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -222,6 +224,7 @@
 			children = (
 				E8054BC12539E86800BB52DA /* ReusableView.swift */,
 				E8054BC52539FBB900BB52DA /* Collection.swift */,
+				E8C4DDF626053EC10046E626 /* ViewController+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -442,6 +445,7 @@
 				E8054BB72538DEFF00BB52DA /* ConsoleLogger.swift in Sources */,
 				E8054BCB253DD1A000BB52DA /* DemographicsViewController.swift in Sources */,
 				E8054BBF2539E7D900BB52DA /* VirtualRegionCollectionViewCell.swift in Sources */,
+				E8C4DDF726053EC10046E626 /* ViewController+.swift in Sources */,
 				E8054BE8253F1D8900BB52DA /* VirtualService.swift in Sources */,
 				E8054BD6253DDB5300BB52DA /* InputView.swift in Sources */,
 				E8054BDC253DE89C00BB52DA /* OptionPicker.swift in Sources */,

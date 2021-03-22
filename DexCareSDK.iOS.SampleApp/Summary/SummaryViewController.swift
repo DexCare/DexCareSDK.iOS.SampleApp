@@ -23,8 +23,8 @@ class SummaryViewController: BaseViewController {
             self?.insuranceOptionPicker.isEnabled = true
             self?.insuranceOptionPicker.pickerItems = insurancePayers
             self?.insurancePayers = insurancePayers
-        }) { error in
-            print(error)
+        }) { [weak self] error in
+            self?.showAlert(title: "Error", message: "No Insurance Payers: \(error.localizedDescription)")
         }
         
         insuranceOptionPicker.textField.on(.editingDidEnd) { [weak self] in
@@ -67,16 +67,19 @@ class SummaryViewController: BaseViewController {
             catch {
                 print("ERROR starting virtual visit:\(error)")
                 MBProgressHUD.hide(for: self.view, animated: true)
+                self.showAlert(title: "Error", message: "ERROR starting virtual visit:\(error.localizedDescription)")
             }
         } else {
             MBProgressHUD.showAdded(to: self.view, animated: true)
             AppServices.shared.retailService.bookVisit().done {
                 print("VISIT SUCCESSFULLY booked")
                 MBProgressHUD.hide(for: self.view, animated: true)
+                self.showAlert(title: "Success", message: "Visit Successfully booked")
                 // lets go back to the dashboard
                 self.navigationController?.popToRootViewController(animated: true)
             }.catch { error in
                 print("ERROR booking retail visit:\(error)")
+                self.showAlert(title: "Error", message: "ERROR booking retail:\(error.localizedDescription)")
                 MBProgressHUD.hide(for: self.view, animated: true)
             }
         }
