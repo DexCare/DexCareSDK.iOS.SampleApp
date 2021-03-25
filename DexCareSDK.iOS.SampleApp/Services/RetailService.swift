@@ -7,6 +7,9 @@ import PromiseKit
 class RetailServiceHelper {
     var myselfInformation: PersonInformation?
     var addressInformation: PersonDemographicAddress?
+    var dependentInformation: PersonInformation?
+    var dependentAddressInformation: PersonDemographicAddress?
+    var dependentEmail: String?
     
     var reasonForVisit: String?
     var timeslot: TimeSlot?
@@ -14,36 +17,59 @@ class RetailServiceHelper {
     var userEmail: String?
     var phoneNumber: String?
     var currentDexcarePatient: DexcarePatient?
+    var relationshipToPatient: RelationshipToPatient?
+    var isDependentBooking: Bool = false
     
     func bookVisit() -> Promise<Void> {
         guard let reasonForVisit = reasonForVisit else { return Promise(error: "Missing reason for visit") }
         guard let timeslot = timeslot else { return Promise(error: "Missing timeslot") }
-        guard let userEmail = userEmail else { return Promise(error: "Missing userEmail") }
-        guard let phoneNumber = phoneNumber ?? addressInformation?.phoneNumber else { return Promise(error: "Missing phoneNumber") }
         guard let ehrSystemName = ehrSystemName else { return Promise(error: "Missing ehrSystemName") }
-        guard let currentDexcarePatient = currentDexcarePatient else { return Promise(error: "Missing currentDexcarePatient") }
+         
+        var combindUserEmail: String = ""
+        var combinedPhoneNumber: String = ""
+        var patientDeclaration: PatientDeclaration = .`self`
+        
+        if isDependentBooking {
+            guard let email = dependentEmail else { return Promise(error: "Missing userEmail") }
+            guard let dependentPhone = phoneNumber ?? dependentAddressInformation?.phoneNumber else { return Promise(error: "Missing phoneNumber") }
+            
+            combinedPhoneNumber = dependentPhone
+            combindUserEmail = email
+            patientDeclaration = .other
+            
+        } else {
+            guard let email = userEmail else { return Promise(error: "Missing userEmail") }
+            guard let patientPhoneNumber = phoneNumber ?? addressInformation?.phoneNumber else { return Promise(error: "Missing phoneNumber") }
+            
+            combinedPhoneNumber = patientPhoneNumber
+            combindUserEmail = email
+        }
+        
+        
         
         let visitInformation = RetailVisitInformation(
             visitReason: reasonForVisit,
-            patientDeclaration: .`self`,
-            userEmail: userEmail,
-            contactPhoneNumber: phoneNumber,
-            actorRelationshipToPatient: nil // set when making a retail appointment for a dependent (eg: child)
+            patientDeclaration: patientDeclaration,
+            userEmail: combindUserEmail,
+            contactPhoneNumber: combinedPhoneNumber,
+            actorRelationshipToPatient: relationshipToPatient // set nil when making a retail appointment "myself"
         )
            
         let dexcareSDK = AppServices.shared.dexcareSDK
 
         return firstly {
             try updatePatientDemographics()
-        }.then {
+        }.then { patient in
+            try self.updateDependentPatientDemographics().map { (patient, $0)}
+        }.then { (patient, dependentPatient) in
             return Promise { seal in
                 dexcareSDK.retailService.scheduleRetailAppointment(
                     paymentMethod: .`self`,
                     visitInformation: visitInformation,
                     timeslot: timeslot,
                     ehrSystemName: ehrSystemName,
-                    patientDexCarePatient: currentDexcarePatient,
-                    actorDexCarePatient: nil,
+                    patientDexCarePatient: self.isDependentBooking ? dependentPatient! : patient,
+                    actorDexCarePatient:  self.isDependentBooking ? patient : nil,
                     success: { visitId in
                         // save this
                         seal.fulfill(())
@@ -57,7 +83,7 @@ class RetailServiceHelper {
     }
     
     
-    func updatePatientDemographics() throws -> Promise<Void>{
+    func updatePatientDemographics() throws -> Promise<DexcarePatient>{
         
         guard let ehrSystem = ehrSystemName else {
             throw "Missing ehrSystemName"
@@ -69,7 +95,7 @@ class RetailServiceHelper {
             throw "Missing myselfInformation"
         }
         
-        let patientDemographics = try buildMyselfDemographics(myselfInformation: myselfInformation, myselfAddress: addressInformation)
+        let patientDemographics = try buildMyselfDemographics(email: userEmail, myselfInformation: myselfInformation, myselfAddress: addressInformation)
         let dexcareSDK = AppServices.shared.dexcareSDK
         
         return Promise { seal in
@@ -78,7 +104,7 @@ class RetailServiceHelper {
                 patientDemographics: patientDemographics,
                 success: { [weak self] patient in
                     self?.currentDexcarePatient = patient
-                    seal.fulfill(())
+                    seal.fulfill(patient)
                 }, failure: { error in
                     print("error saving patient: \(error)")
                     seal.reject(error)
@@ -86,9 +112,39 @@ class RetailServiceHelper {
         }
     }
     
-    private func buildMyselfDemographics(myselfInformation: PersonInformation, myselfAddress: PersonDemographicAddress) throws -> PatientDemographics {
+    func updateDependentPatientDemographics() throws -> Promise<DexcarePatient?>{
+        if !isDependentBooking {
+            return Promise.value(nil)
+        }
+        guard let ehrSystem = ehrSystemName else {
+            throw "Missing ehrSystemName"
+        }
+        guard let myselfInformation = dependentInformation else {
+            throw "Missing myselfInformation"
+        }
+        guard let addressInformation = dependentAddressInformation else {
+            throw "Missing myselfInformation"
+        }
         
-        guard let email = userEmail else {
+        let patientDemographics = try buildMyselfDemographics(email: dependentEmail, myselfInformation: myselfInformation, myselfAddress: addressInformation)
+        let dexcareSDK = AppServices.shared.dexcareSDK
+        
+        return Promise { seal in
+            dexcareSDK.patientService.findOrCreateDependentPatient(
+                inEhrSystem: ehrSystem,
+                dependentPatientDemographics: patientDemographics,
+                success: { [weak self] patient in
+                    seal.fulfill(patient)
+                }, failure: { error in
+                    print("error saving patient: \(error)")
+                    seal.reject(error)
+                })
+        }
+    }
+    
+    private func buildMyselfDemographics(email: String?, myselfInformation: PersonInformation, myselfAddress: PersonDemographicAddress) throws -> PatientDemographics {
+        
+        guard let email = email else {
             throw "Missing actor email from logged in account"
         }
         

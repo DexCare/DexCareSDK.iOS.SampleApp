@@ -61,7 +61,11 @@ class SummaryViewController: BaseViewController {
                 },
                     onSuccess: {
                         MBProgressHUD.hide(for: self.view, animated: true)
-                })
+                },
+                    failure: {  error in
+                        MBProgressHUD.hide(for: self.view, animated: true)
+                        self.showAlert(title: "Error", message: error.localizedDescription)
+                    })
                 
             }
             catch {

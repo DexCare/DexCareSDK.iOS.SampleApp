@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="1017" translatesAutoresizingMaskIntoConstraints="NO" id="yRf-XK-2Px" userLabel="ContentView">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1087"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="2092"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sZh-Ws-x9J" userLabel="Head View">
                                                 <rect key="frame" x="30" y="0.0" width="384" height="50"/>
@@ -41,10 +41,208 @@
                                                 </constraints>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="250" insetsLayoutMarginsFromSafeArea="NO" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="sfB-Zr-J80" userLabel="Demographics Stack View">
-                                                <rect key="frame" x="30" y="50" width="354" height="1037"/>
+                                                <rect key="frame" x="30" y="50" width="354" height="2042"/>
                                                 <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZB0-O5-XUK">
+                                                        <rect key="frame" x="0.0" y="0.0" width="354" height="75"/>
+                                                        <subviews>
+                                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="9yo-Y9-ewm">
+                                                                <rect key="frame" x="111.5" y="0.0" width="131" height="31"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="30" id="SBn-Mr-oL1"/>
+                                                                </constraints>
+                                                                <segments>
+                                                                    <segment title="First"/>
+                                                                    <segment title="Second"/>
+                                                                </segments>
+                                                                <connections>
+                                                                    <action selector="segmentValueChanged" destination="EfV-ra-AFP" eventType="valueChanged" id="wUT-Of-g2G"/>
+                                                                </connections>
+                                                            </segmentedControl>
+                                                        </subviews>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        <constraints>
+                                                            <constraint firstItem="9yo-Y9-ewm" firstAttribute="top" secondItem="ZB0-O5-XUK" secondAttribute="top" id="AJe-cx-ud5"/>
+                                                            <constraint firstItem="9yo-Y9-ewm" firstAttribute="centerX" secondItem="ZB0-O5-XUK" secondAttribute="centerX" id="B0X-OL-jes"/>
+                                                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="9yo-Y9-ewm" secondAttribute="bottom" id="hHp-V6-qyb"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="u2L-Bv-Ycx" userLabel="DependentStackView">
+                                                        <rect key="frame" x="0.0" y="75" width="354" height="930"/>
+                                                        <subviews>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c3q-DN-9JC" userLabel="First Name Input View" customClass="InputView" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="0.0" width="354" height="70"/>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="70" id="awp-Q7-v4Q"/>
+                                                                </constraints>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="showEmptyError" value="YES"/>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="First Name"/>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </view>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vHn-gc-YWU" userLabel="Last Name Input View" customClass="InputView" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="70" width="354" height="70"/>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="70" id="DS8-mX-nOR"/>
+                                                                </constraints>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="showEmptyError" value="YES"/>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Last Name"/>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </view>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8XP-xJ-ymJ" userLabel="Last Name Input View" customClass="InputView" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="140" width="354" height="70"/>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="70" id="9Wn-5t-zI1"/>
+                                                                </constraints>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="showEmptyError" value="YES"/>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Patient Email"/>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </view>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wsW-Mr-bhf" userLabel="Birth Date Picker" customClass="DatePicker" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="210" width="354" height="70"/>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                <accessibility key="accessibilityConfiguration" identifier="OTHER_BIRTHDAY"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="70" id="z4a-KZ-tD9"/>
+                                                                </constraints>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="showEmptyError" value="YES"/>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Birth Date"/>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </view>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7wF-Ws-6A4" userLabel="Gender Option Picker" customClass="OptionPicker" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="280" width="354" height="70"/>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="70" id="BY6-yy-Y3b"/>
+                                                                </constraints>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="showEmptyError" value="YES"/>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Gender"/>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </view>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ih9-a6-cLP" userLabel="Last 4 SSN Input View" customClass="InputView" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="350" width="354" height="70"/>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="70" id="GSk-8v-KkQ"/>
+                                                                </constraints>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="showEmptyError" value="YES"/>
+                                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isSecureTextEntry" value="YES"/>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Last 4 of SSN"/>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </view>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vb2-BH-Ylm" userLabel="Spacer View">
+                                                                <rect key="frame" x="0.0" y="420" width="354" height="20"/>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="20" id="cpF-Qx-Mym"/>
+                                                                </constraints>
+                                                            </view>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hxi-Fj-RN9" userLabel="Phone Input View" customClass="InputView" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="440" width="354" height="70"/>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="70" id="zX6-li-uXD"/>
+                                                                </constraints>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="showEmptyError" value="YES"/>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Phone Number"/>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </view>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sqX-aX-RJ4" userLabel="Address Line 1 Input View" customClass="InputView" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="510" width="354" height="70"/>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="70" id="2BO-9G-bpm"/>
+                                                                </constraints>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="showEmptyError" value="YES"/>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Address Line 1"/>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </view>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ec6-wQ-4tJ" userLabel="Address Line 2 Input View" customClass="InputView" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="580" width="354" height="70"/>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="70" id="14U-Se-awd"/>
+                                                                </constraints>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="showEmptyError" value="YES"/>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Address Line2"/>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </view>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oEf-Cs-0lO" userLabel="City Input View" customClass="InputView" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="650" width="354" height="70"/>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="70" id="oCL-1i-Cuw"/>
+                                                                </constraints>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="showEmptyError" value="YES"/>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="City"/>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </view>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aT9-qJ-P4s" userLabel="State &amp; Zip Stack View">
+                                                                <rect key="frame" x="0.0" y="720" width="354" height="70"/>
+                                                                <subviews>
+                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PPY-UX-u0s" userLabel="State Option Picker" customClass="OptionPicker" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="172" height="70"/>
+                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="showEmptyError" value="YES"/>
+                                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="State"/>
+                                                                        </userDefinedRuntimeAttributes>
+                                                                    </view>
+                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tsA-HB-zhv" userLabel="Spacer View">
+                                                                        <rect key="frame" x="172" y="0.0" width="10" height="70"/>
+                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" constant="10" id="E6i-oT-f6b"/>
+                                                                        </constraints>
+                                                                    </view>
+                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pmZ-C3-VsR" customClass="InputView" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
+                                                                        <rect key="frame" x="182" y="0.0" width="172" height="70"/>
+                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="showEmptyError" value="YES"/>
+                                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Zip Code"/>
+                                                                        </userDefinedRuntimeAttributes>
+                                                                    </view>
+                                                                </subviews>
+                                                                <constraints>
+                                                                    <constraint firstItem="pmZ-C3-VsR" firstAttribute="width" secondItem="PPY-UX-u0s" secondAttribute="width" id="WmF-eE-lhV"/>
+                                                                    <constraint firstAttribute="height" constant="70" id="ufc-cM-de4"/>
+                                                                </constraints>
+                                                            </stackView>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="txc-hM-SqD" userLabel="Spacer View">
+                                                                <rect key="frame" x="0.0" y="790" width="354" height="70"/>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="10" id="KqT-hS-oxG"/>
+                                                                </constraints>
+                                                            </view>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZWk-T3-PBI" userLabel="Gender Option Picker" customClass="OptionPicker" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="860" width="354" height="70"/>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="70" id="3Gs-KL-nr4"/>
+                                                                </constraints>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="showEmptyError" value="YES"/>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="RelationshipToPatient"/>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </view>
+                                                        </subviews>
+                                                    </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="kqL-yG-C1K" userLabel="Myself Form Stack View">
-                                                        <rect key="frame" x="0.0" y="0.0" width="354" height="790"/>
+                                                        <rect key="frame" x="0.0" y="1005" width="354" height="790"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bXh-Iq-cY9" userLabel="First Name Input View" customClass="InputView" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="354" height="70"/>
@@ -200,7 +398,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B3v-ra-Ib2" userLabel="Continue Button Container View">
-                                                        <rect key="frame" x="0.0" y="790" width="354" height="117"/>
+                                                        <rect key="frame" x="0.0" y="1795" width="354" height="117"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Sm-yZ-0Eb" userLabel="Continue Button">
                                                                 <rect key="frame" x="68" y="38" width="218" height="44"/>
@@ -230,7 +428,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HGj-BT-LdT" userLabel="Bottom Space View">
-                                                        <rect key="frame" x="0.0" y="907" width="354" height="130"/>
+                                                        <rect key="frame" x="0.0" y="1912" width="354" height="130"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="10" id="bge-1G-bIH"/>
@@ -273,14 +471,30 @@
                         <outlet property="address2InputView" destination="UPf-JR-EAh" id="xOw-1G-Z2t"/>
                         <outlet property="addressInputView" destination="GP1-4J-CE5" id="srp-lt-gLK"/>
                         <outlet property="birthdatePicker" destination="YO0-S7-hme" id="htK-lY-hoO"/>
+                        <outlet property="childAddressLine1InputView" destination="sqX-aX-RJ4" id="1G1-pO-xgb"/>
+                        <outlet property="childAddressLine2InputView" destination="ec6-wQ-4tJ" id="mUP-L5-d41"/>
+                        <outlet property="childBirthdatePicker" destination="wsW-Mr-bhf" id="w9m-wK-rbV"/>
+                        <outlet property="childCityInputView" destination="oEf-Cs-0lO" id="Pi1-Xc-alT"/>
+                        <outlet property="childEmailInputView" destination="8XP-xJ-ymJ" id="hWm-to-JyZ"/>
+                        <outlet property="childFirstNameInputView" destination="c3q-DN-9JC" id="OFt-Ah-Vav"/>
+                        <outlet property="childGenderPicker" destination="7wF-Ws-6A4" id="Uz9-vZ-O1d"/>
+                        <outlet property="childLastFourSSNInputView" destination="ih9-a6-cLP" id="gR2-Sp-sKU"/>
+                        <outlet property="childLastNameInputView" destination="vHn-gc-YWU" id="Esk-da-Z2U"/>
+                        <outlet property="childPhoneInputView" destination="Hxi-Fj-RN9" id="8Mz-YM-equ"/>
+                        <outlet property="childPostalCodeInputView" destination="pmZ-C3-VsR" id="0yO-pE-zm8"/>
+                        <outlet property="childStateOptionPicker" destination="PPY-UX-u0s" id="OhX-mR-2Dv"/>
                         <outlet property="cityInputView" destination="G9Z-S7-rkG" id="cQj-Eb-Miu"/>
                         <outlet property="continueButton" destination="5Sm-yZ-0Eb" id="7F0-Yb-Oi3"/>
+                        <outlet property="dependentStackView" destination="u2L-Bv-Ycx" id="Jry-St-Et8"/>
                         <outlet property="emailInputView" destination="OfX-Qc-6sY" id="zxV-2i-UKX"/>
                         <outlet property="firstNameInputView" destination="bXh-Iq-cY9" id="5Iq-fn-psb"/>
                         <outlet property="genderPicker" destination="8AT-Lp-Ohg" id="ib3-Sh-J96"/>
                         <outlet property="lastFourSSNInputView" destination="7Ug-xY-6qP" id="Jst-3e-3GD"/>
                         <outlet property="lastNameInputView" destination="TN5-ZI-ps2" id="ple-LJ-7L6"/>
+                        <outlet property="myselfStackView" destination="kqL-yG-C1K" id="PEj-dj-PGP"/>
                         <outlet property="phoneInputView" destination="03u-nc-HBV" id="l8T-5E-DWG"/>
+                        <outlet property="relationshipToPatientPicker" destination="ZWk-T3-PBI" id="rbX-yB-rhw"/>
+                        <outlet property="segmentControl" destination="9yo-Y9-ewm" id="Kgi-6O-xF5"/>
                         <outlet property="stateOptionPicker" destination="uXF-F6-iJJ" id="c3t-6j-IKh"/>
                         <outlet property="zipInputView" destination="zuM-Tb-b10" id="SH7-cG-KMy"/>
                     </connections>

@@ -1,7 +1,7 @@
 # A private repo with the podspec. Please make sure you have github access before installing
 source 'https://cdn.cocoapods.org/'
 
-platform :ios, '11.0'
+platform :ios, '12.0'
 inhibit_all_warnings!
 
 def auth0_pods

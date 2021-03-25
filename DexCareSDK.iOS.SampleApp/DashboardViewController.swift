@@ -353,15 +353,13 @@ class DashboardViewController: BaseViewController {
     
     
     private func loadCurrentUser() {
-        if didShowLogin {
-            return
-        }
         print("Loading Patient")
         AppServices.shared.dexcareSDK.patientService.getPatient(success: { dexcarePatient in
             AppServices.shared.virtualService.currentDexcarePatient = dexcarePatient
             AppServices.shared.retailService.currentDexcarePatient = dexcarePatient
             // we've gotten the dexcarepatient successfully with a jwt token
         }) { error in
+          
             print("Error loading patient: \(error)")
             switch error {
                 case .unauthorized:
