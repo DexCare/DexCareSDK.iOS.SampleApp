@@ -26,6 +26,8 @@ class VirtualServiceHelper {
     var relationshipToPatient: RelationshipToPatient?
     var isDependentBooking: Bool = false
     
+    var paymentType: PaymentMethod? = nil
+    
     func bookVirtualVisit(presentingViewController: UINavigationController, onCompletion: @escaping VisitCompletion, onSuccess: @escaping () -> Void, failure: @escaping (Error) -> Void) throws {
         
         if isDependentBooking {
@@ -47,9 +49,15 @@ class VirtualServiceHelper {
             guard let reasonForVisit = self?.reasonForVisit else {
                 throw "Missing reason for visit"
             }
+            var providerIdString: String? = nil
+            var memberIdString: String? = nil
             
-            guard let providerId = self?.currentInsurancePayer?.payerId, let memberId = self?.currentInsuranceMemberId else {
-                throw "Missing Insurance Payer information"
+            if self?.paymentType == nil {
+                guard let providerId = self?.currentInsurancePayer?.payerId, let memberId = self?.currentInsuranceMemberId else {
+                    throw "Missing Insurance Payer information"
+                }
+                providerIdString = providerId
+                memberIdString = memberId
             }
             var combinedEmail: String?
             if isDependentBooking {
@@ -106,7 +114,7 @@ class VirtualServiceHelper {
             let dexcareSDK = AppServices.shared.dexcareSDK
             dexcareSDK.virtualService.startVirtualVisit(
                 presentingViewController: presentingViewController,
-                paymentMethod: PaymentMethod.insuranceManualSelf(memberId: memberId, providerId: providerId),
+                paymentMethod: self?.paymentType ??  PaymentMethod.insuranceManualSelf(memberId: memberIdString!, providerId: providerIdString!),
                 virtualVisitInformation: virtualVisitInformation,
                 catchmentArea: catchmentArea,
                 patientDexCarePatient: dexcarePatient,

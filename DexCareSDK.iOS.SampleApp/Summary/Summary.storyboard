@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -17,11 +19,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="EJ0-od-8jA">
-                                <rect key="frame" x="16" y="60" width="382" height="200"/>
+                                <rect key="frame" x="16" y="60" width="382" height="436"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e8g-lh-sxh" userLabel="Gender Option Picker" customClass="OptionPicker" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="382" height="70"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Insurance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RHB-Y2-P6G" userLabel="Insurance Payment">
+                                        <rect key="frame" x="0.0" y="0.0" width="382" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e8g-lh-sxh" userLabel="InsurancePicker" customClass="OptionPicker" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="35.5" width="382" height="70"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="70" id="8Ss-s8-aNt"/>
                                         </constraints>
@@ -30,9 +38,9 @@
                                             <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Insurance"/>
                                         </userDefinedRuntimeAttributes>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UyN-0O-sEf" userLabel="Last 4 SSN Input View" customClass="InputView" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="85" width="382" height="70"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UyN-0O-sEf" userLabel="InsuranceMemberInput" customClass="InputView" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="120.5" width="382" height="70"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="70" id="mjg-wL-BzS"/>
                                         </constraints>
@@ -42,27 +50,68 @@
                                             <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Insurance Member Id"/>
                                         </userDefinedRuntimeAttributes>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NSc-pu-fe8">
-                                        <rect key="frame" x="0.0" y="170" width="382" height="30"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RO5-Cx-jpN">
+                                        <rect key="frame" x="0.0" y="205.5" width="382" height="20"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="O49-bS-lL8"/>
+                                        </constraints>
+                                    </view>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="dk1-wI-Ros">
+                                        <rect key="frame" x="0.0" y="240.5" width="382" height="150.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coupon Code" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kOi-Mi-bR5">
+                                                <rect key="frame" x="0.0" y="0.0" width="382" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BXp-XZ-3oA" userLabel="CouponCode" customClass="InputView" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="35.5" width="382" height="70"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="70" id="Y9H-8V-2xR"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="showEmptyError" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isSecureTextEntry" value="NO"/>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Coupon Code"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NSc-pu-fe8">
+                                                <rect key="frame" x="0.0" y="120.5" width="382" height="30"/>
+                                                <state key="normal" title="Apply Coupon">
+                                                    <color key="titleColor" name="AccentColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="applyCoupon" destination="G8q-lP-i9q" eventType="touchUpInside" id="D34-H6-eiJ"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JvE-Yo-Xh9">
+                                        <rect key="frame" x="0.0" y="406" width="382" height="30"/>
                                         <state key="normal" title="Book Visit">
                                             <color key="titleColor" name="AccentColor"/>
                                         </state>
                                         <connections>
-                                            <action selector="bookVirtuaVisit" destination="G8q-lP-i9q" eventType="touchUpInside" id="so6-sm-mZk"/>
+                                            <action selector="bookVirtuaVisit" destination="G8q-lP-i9q" eventType="touchUpInside" id="Yol-4y-6Nb"/>
                                         </connections>
                                     </button>
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="3eS-Et-H3M"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="3eS-Et-H3M" firstAttribute="trailing" secondItem="EJ0-od-8jA" secondAttribute="trailing" constant="16" id="R06-rN-cfS"/>
                             <constraint firstItem="EJ0-od-8jA" firstAttribute="leading" secondItem="3eS-Et-H3M" secondAttribute="leading" constant="16" id="TYe-wX-VTX"/>
                             <constraint firstItem="EJ0-od-8jA" firstAttribute="top" secondItem="3eS-Et-H3M" secondAttribute="top" constant="16" id="kPI-cd-lPR"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="3eS-Et-H3M"/>
                     </view>
                     <connections>
+                        <outlet property="couponCodeInputView" destination="BXp-XZ-3oA" id="7Vy-7s-OlD"/>
+                        <outlet property="couponCodeStackView" destination="dk1-wI-Ros" id="6Co-Fg-3PL"/>
                         <outlet property="insuranceMemberInputView" destination="UyN-0O-sEf" id="lr6-X9-upf"/>
                         <outlet property="insuranceOptionPicker" destination="e8g-lh-sxh" id="BxM-gQ-rKn"/>
                     </connections>
@@ -72,10 +121,13 @@
             <point key="canvasLocation" x="-96" y="-199"/>
         </scene>
     </scenes>
+    <color key="tintColor" name="AccentColor"/>
     <resources>
         <namedColor name="AccentColor">
-            <color red="0.39560145547945208" green="0.26290867160220249" blue="0.49210996256379258" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.39599999785423279" green="0.2630000114440918" blue="0.49200001358985901" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
-    <color key="tintColor" name="AccentColor"/>
 </document>
