@@ -199,6 +199,11 @@ class DashboardViewController: BaseViewController {
         configureDataSource()
         
         setupSDKRefreshTokenDelegate()
+        
+        // setup Dexcare Customization Options
+//        let customizationOptions = CustomizationOptions(customStrings: nil, tytoCareConfig: TytoCareConfig(helpURL: URL(string: "https://www.dexcarehealth.com")!))
+//
+//        AppServices.shared.dexcareSDK.customizationOptions = customizationOptions
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -358,6 +363,7 @@ class DashboardViewController: BaseViewController {
             AppServices.shared.virtualService.currentDexcarePatient = dexcarePatient
             AppServices.shared.retailService.currentDexcarePatient = dexcarePatient
             // we've gotten the dexcarepatient successfully with a jwt token
+            dump(dexcarePatient)
         }) { error in
           
             print("Error loading patient: \(error)")

@@ -30,11 +30,8 @@ class VirtualServiceHelper {
     
     func bookVirtualVisit(presentingViewController: UINavigationController, onCompletion: @escaping VisitCompletion, onSuccess: @escaping () -> Void, failure: @escaping (Error) -> Void) throws {
         
-        if isDependentBooking {
-            
-        } else {
-            try bookMyselfVirtualVisit(presentingViewController: presentingViewController, onCompletion: onCompletion, onSuccess: onSuccess, failure: failure)
-        }
+        try bookMyselfVirtualVisit(presentingViewController: presentingViewController, onCompletion: onCompletion, onSuccess: onSuccess, failure: failure)
+        
     }
     
     func bookMyselfVirtualVisit(presentingViewController: UINavigationController, onCompletion: @escaping VisitCompletion, onSuccess: @escaping () -> Void, failure: @escaping (Error) -> Void) throws {

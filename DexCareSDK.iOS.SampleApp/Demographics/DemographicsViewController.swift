@@ -515,6 +515,13 @@ class DemographicsViewController: BaseViewController {
         cityInputView.text = myselfAddress.address.city
         stateOptionPicker.text = myselfAddress.address.state
         zipInputView.text = myselfAddress.address.postalCode
+        
+        emailInputView.text = firstDemographics.email
+        if visitType == .virtual {
+            AppServices.shared.virtualService.patientEmail = emailInputView.text ?? ""
+        } else {
+            AppServices.shared.retailService.userEmail = emailInputView.text ?? ""
+        }
     }
     
     var isDependent: Bool {
@@ -668,8 +675,6 @@ extension Gender {
             case .male: return "Male"
             case .female: return "Female"
             case .other, .unknown: return "Other"
-            @unknown default:
-                return "Other"
         }
     }
     

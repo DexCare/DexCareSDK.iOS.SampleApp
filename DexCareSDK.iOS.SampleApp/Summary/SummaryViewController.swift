@@ -29,7 +29,7 @@ class SummaryViewController: BaseViewController {
         }
         
         insuranceOptionPicker.isEnabled = false
-        AppServices.shared.dexcareSDK.paymentService.getInsurancePayers(tenant: "acme", success: { [weak self] insurancePayers in
+        AppServices.shared.dexcareSDK.paymentService.getInsurancePayers(tenant: AppServices.shared.configuration.brand, success: { [weak self] insurancePayers in
             self?.insuranceOptionPicker.isEnabled = true
             self?.insuranceOptionPicker.pickerItems = insurancePayers
             self?.insurancePayers = insurancePayers
@@ -91,9 +91,11 @@ class SummaryViewController: BaseViewController {
                         self?.navigationController?.popToRootViewController(animated: true)
                 },
                     onSuccess: {
+                        
                         MBProgressHUD.hide(for: self.view, animated: true)
                 },
                     failure: {  error in
+                        print("ERROR starting virtual visit:\(error)")
                         MBProgressHUD.hide(for: self.view, animated: true)
                         self.showAlert(title: "Error", message: String(describing: error))
                     })
