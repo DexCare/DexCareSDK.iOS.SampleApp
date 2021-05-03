@@ -48,10 +48,8 @@
 		E8A8C9FB258A947100644C91 /* RetailVisitConnectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A8C9FA258A947100644C91 /* RetailVisitConnectionViewCell.swift */; };
 		E8A8C9FD258A94F400644C91 /* RetailVisitCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8A8C9FC258A94F400644C91 /* RetailVisitCollectionViewCell.xib */; };
 		E8C4DDF726053EC10046E626 /* ViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C4DDF626053EC10046E626 /* ViewController+.swift */; };
-		E8D0E55C263C718C0007E279 /* hammerhead.plist in Resources */ = {isa = PBXBuildFile; fileRef = E8D0E55B263C718C0007E279 /* hammerhead.plist */; };
 		E8EC422E256EC6A3003C6D51 /* TimeslotCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EC422D256EC6A3003C6D51 /* TimeslotCollectionViewCell.swift */; };
 		E8EC4230256F0658003C6D51 /* RetailService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EC422F256F0658003C6D51 /* RetailService.swift */; };
-		E8FF6EB62630C0F100D5AE84 /* frosh.plist in Resources */ = {isa = PBXBuildFile; fileRef = E8FF6EB52630C0F100D5AE84 /* frosh.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -102,11 +100,9 @@
 		E8A8C9FA258A947100644C91 /* RetailVisitConnectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetailVisitConnectionViewCell.swift; sourceTree = "<group>"; };
 		E8A8C9FC258A94F400644C91 /* RetailVisitCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RetailVisitCollectionViewCell.xib; sourceTree = "<group>"; };
 		E8C4DDF626053EC10046E626 /* ViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+.swift"; sourceTree = "<group>"; };
-		E8D0E55B263C718C0007E279 /* hammerhead.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = hammerhead.plist; sourceTree = "<group>"; };
 		E8E43CD5263C928C000D43BB /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		E8EC422D256EC6A3003C6D51 /* TimeslotCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeslotCollectionViewCell.swift; sourceTree = "<group>"; };
 		E8EC422F256F0658003C6D51 /* RetailService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetailService.swift; sourceTree = "<group>"; };
-		E8FF6EB52630C0F100D5AE84 /* frosh.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = frosh.plist; sourceTree = "<group>"; };
 		E8FF6EBA2630CBAD00D5AE84 /* DexCareSDK.iOS.SampleApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DexCareSDK.iOS.SampleApp.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -191,8 +187,6 @@
 			children = (
 				E8054BB12538AACB00BB52DA /* Configuration.swift */,
 				E8054BB32538ACB900BB52DA /* acme.plist */,
-				E8D0E55B263C718C0007E279 /* hammerhead.plist */,
-				E8FF6EB52630C0F100D5AE84 /* frosh.plist */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -376,11 +370,9 @@
 				E8054BD2253DD38A00BB52DA /* Demographics.storyboard in Resources */,
 				E8A8C9FD258A94F400644C91 /* RetailVisitCollectionViewCell.xib in Resources */,
 				E8054BB42538ACB900BB52DA /* acme.plist in Resources */,
-				E8FF6EB62630C0F100D5AE84 /* frosh.plist in Resources */,
 				E8054BC42539EADC00BB52DA /* VirtualRegionCollectionViewCell.xib in Resources */,
 				E8054BED253F214A00BB52DA /* ReasonForVisit.storyboard in Resources */,
 				E8054BF4253F31DE00BB52DA /* Summary.storyboard in Resources */,
-				E8D0E55C263C718C0007E279 /* hammerhead.plist in Resources */,
 				E8054BA42538940400BB52DA /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -621,7 +613,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.dexcarehealth.acmetestapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dexcarehealth.acmetestapps;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "DexcareSDK SampleApp";
 				SWIFT_VERSION = 5.0;
@@ -646,7 +638,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.dexcarehealth.acmetestapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dexcarehealth.acmetestapps;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "DexcareSDK SampleApp";
 				SWIFT_VERSION = 5.0;

@@ -29,13 +29,10 @@ class VirtualServiceHelper {
     var paymentType: PaymentMethod? = nil
     
     func bookVirtualVisit(presentingViewController: UINavigationController, onCompletion: @escaping VisitCompletion, onSuccess: @escaping () -> Void, failure: @escaping (Error) -> Void) throws {
-        
         try bookMyselfVirtualVisit(presentingViewController: presentingViewController, onCompletion: onCompletion, onSuccess: onSuccess, failure: failure)
-        
     }
     
     func bookMyselfVirtualVisit(presentingViewController: UINavigationController, onCompletion: @escaping VisitCompletion, onSuccess: @escaping () -> Void, failure: @escaping (Error) -> Void) throws {
-            
         firstly {
             try updatePatientDemographics()
         }.then { patient in
