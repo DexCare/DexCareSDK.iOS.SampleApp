@@ -82,6 +82,68 @@ class RetailServiceHelper {
         }
     }
     
+    func bookProviderVisit() -> Promise<Void> {
+        guard let reasonForVisit = reasonForVisit else { return Promise(error: "Missing reason for visit") }
+        guard let timeslot = timeslot else { return Promise(error: "Missing timeslot") }
+        guard let ehrSystemName = ehrSystemName else { return Promise(error: "Missing ehrSystemName") }
+        
+        var combindUserEmail: String = ""
+        var combinedPhoneNumber: String = ""
+        var patientDeclaration: PatientDeclaration = .`self`
+        
+        if isDependentBooking {
+            guard let email = dependentEmail else { return Promise(error: "Missing userEmail") }
+            guard let dependentPhone = phoneNumber ?? dependentAddressInformation?.phoneNumber else { return Promise(error: "Missing phoneNumber") }
+            
+            combinedPhoneNumber = dependentPhone
+            combindUserEmail = email
+            patientDeclaration = .other
+            
+        } else {
+            guard let email = userEmail else { return Promise(error: "Missing userEmail") }
+            guard let patientPhoneNumber = phoneNumber ?? addressInformation?.phoneNumber else { return Promise(error: "Missing phoneNumber") }
+            
+            combinedPhoneNumber = patientPhoneNumber
+            combindUserEmail = email
+        }
+        
+        let providerVisitInformation = ProviderVisitInformation(
+            visitReason: "Test visit reason from integrated DexcareSDK iOS Tests - ProviderBooking",
+            patientDeclaration: .self,
+            userEmail: combindUserEmail,
+            contactPhoneNumber: "(204)555-2322",
+            nationalProviderId: timeslot.providerNationalId,
+            visitTypeId: timeslot.visitTypeId,
+            ehrSystemName: ehrSystemName,
+            actorRelationshipToPatient: relationshipToPatient // set nil when making a retail appointment "myself"
+        )
+        
+        let dexcareSDK = AppServices.shared.dexcareSDK
+        
+        return firstly {
+            try updatePatientDemographics()
+        }.then { patient in
+            try self.updateDependentPatientDemographics().map { (patient, $0)}
+        }.then { (patient, dependentPatient) in
+            return Promise { seal in
+             
+                dexcareSDK.providerService.scheduleProviderVisit(
+                    paymentMethod: .self,
+                    providerVisitInformation: providerVisitInformation,
+                    timeSlot: timeslot,
+                    ehrSystemName: ehrSystemName,
+                    patientDexCarePatient: self.isDependentBooking ? dependentPatient! : patient,
+                    actorDexCarePatient: self.isDependentBooking ? patient : nil,
+                    success: { response in
+                        seal.fulfill(())
+                    },
+                    failure: { error in
+                        seal.reject(error)
+                    }
+                )
+            }
+        }
+    }
     
     func updatePatientDemographics() throws -> Promise<DexcarePatient>{
         

@@ -548,7 +548,7 @@ class DemographicsViewController: BaseViewController {
                 AppServices.shared.virtualService.addressInformation = myselfAddress
                 AppServices.shared.virtualService.dependentInformation = dependentInformation
                 AppServices.shared.virtualService.dependentAddressInformation = dependentAddress
-            case .retail:
+            case .retail, .provider:
                 // save demographic information for later use in booking retail visits
                 AppServices.shared.retailService.myselfInformation = myselfInformation
                 AppServices.shared.retailService.addressInformation = myselfAddress

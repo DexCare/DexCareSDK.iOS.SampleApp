@@ -7,13 +7,12 @@ import PromiseKit
 import Auth0
 
 class Configuration: Decodable {
-    var auth0ClientId: String
-    var auth0Domain: String
+    var idpClientId: String
+    var idpDomain: String
     var dexcareDomain: String
     var dexcareFhirOrchUrl: String
     var dexcareFhirOrchApiKey: String
     var dexcareVirtualVisitUrl: String
-    var dexcarePcpUrl: String
     var userAgent: String
     var tenantName: String
     var pushNotificationAppId: String
@@ -21,6 +20,7 @@ class Configuration: Decodable {
     var brand: String
     var practiceId: String
     var loginEmail: String?
+    var providerId: String?
 }
 
 extension Configuration {
@@ -36,16 +36,17 @@ extension Configuration {
             pushNotificationPlatform: pushNotificationPlatform,
             virtualVisitUrl: URL(string: dexcareVirtualVisitUrl)!
         )
+        
         let environment = Environment(
             fhirOrchUrl: URL(string: dexcareFhirOrchUrl)!,
             virtualVisitConfiguration: virtualVisitConfig,
             dexcareAPIKey: dexcareFhirOrchApiKey
         )
+        
         return DexcareConfiguration(
             environment: environment,
             userAgent: userAgent,
             domain: dexcareDomain,
-            customStrings: nil,
             logger: ConsoleLogger()
         )
     }

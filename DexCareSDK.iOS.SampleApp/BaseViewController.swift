@@ -7,6 +7,7 @@ enum VisitType {
     case none
     case retail
     case virtual
+    case provider
 }
 
 class BaseViewController: UIViewController {

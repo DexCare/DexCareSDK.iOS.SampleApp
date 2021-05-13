@@ -2,9 +2,9 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>auth0ClientId</key>
+	<key>idpClientId</key>
 	<string></string>
-	<key>auth0Domain</key>
+	<key>idpDomain</key>
 	<string></string>
 	<key>dexcareDomain</key>
 	<string></string>
@@ -13,8 +13,6 @@
 	<key>dexcareFhirOrchApiKey</key>
 	<string></string>
 	<key>dexcareVirtualVisitUrl</key>
-	<string></string>
-	<key>dexcarePcpUrl</key>
 	<string></string>
 	<key>userAgent</key>
 	<string>Acme</string>
@@ -27,6 +25,8 @@
 	<key>brand</key>
 	<string>acme</string>
 	<key>practiceId</key>
+	<string></string>
+	<key>providerId</key>
 	<string></string>
 </dict>
 </plist>

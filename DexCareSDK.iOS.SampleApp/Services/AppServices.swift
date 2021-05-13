@@ -23,8 +23,8 @@ class AppServices {
     }()
     
     lazy var auth0AccountService = Auth0AccountManager (
-        auth0ClientId: configuration.auth0ClientId,
-        auth0Domain: configuration.auth0Domain
+        auth0ClientId: configuration.idpClientId,
+        auth0Domain: configuration.idpDomain
     )
     
     lazy var biometricsService: BiometricsServiceType = BiometricsService()

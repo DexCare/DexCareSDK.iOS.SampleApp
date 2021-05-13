@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0573F7615CCB0C90CBDAFF7F /* Pods_DexCareSDK_iOS_SampleApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20C463B0685C1970A8F1E76D /* Pods_DexCareSDK_iOS_SampleApp.framework */; };
 		E8054B9D2538940400BB52DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8054B9C2538940400BB52DA /* AppDelegate.swift */; };
 		E8054B9F2538940400BB52DA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8054B9E2538940400BB52DA /* SceneDelegate.swift */; };
 		E8054BA12538940400BB52DA /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8054BA02538940400BB52DA /* DashboardViewController.swift */; };
@@ -50,12 +49,13 @@
 		E8C4DDF726053EC10046E626 /* ViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C4DDF626053EC10046E626 /* ViewController+.swift */; };
 		E8EC422E256EC6A3003C6D51 /* TimeslotCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EC422D256EC6A3003C6D51 /* TimeslotCollectionViewCell.swift */; };
 		E8EC4230256F0658003C6D51 /* RetailService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EC422F256F0658003C6D51 /* RetailService.swift */; };
+		F10CF0EEF87787D336766D53 /* Pods_DexCareSDK_iOS_SampleApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7D8180F0AF9DEBAAB4629C9 /* Pods_DexCareSDK_iOS_SampleApp.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		05CE8685134995871F192EF6 /* Pods-DexCareSDK.iOS.SampleApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DexCareSDK.iOS.SampleApp.release.xcconfig"; path = "Target Support Files/Pods-DexCareSDK.iOS.SampleApp/Pods-DexCareSDK.iOS.SampleApp.release.xcconfig"; sourceTree = "<group>"; };
-		20C463B0685C1970A8F1E76D /* Pods_DexCareSDK_iOS_SampleApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DexCareSDK_iOS_SampleApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		23FE463290A5C007D0C01AA7 /* Pods-DexCareSDK.iOS.SampleApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DexCareSDK.iOS.SampleApp.debug.xcconfig"; path = "Target Support Files/Pods-DexCareSDK.iOS.SampleApp/Pods-DexCareSDK.iOS.SampleApp.debug.xcconfig"; sourceTree = "<group>"; };
+		2625E9058B299992E538565E /* Pods-DexCareSDK.iOS.SampleApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DexCareSDK.iOS.SampleApp.release.xcconfig"; path = "Target Support Files/Pods-DexCareSDK.iOS.SampleApp/Pods-DexCareSDK.iOS.SampleApp.release.xcconfig"; sourceTree = "<group>"; };
+		6FC4597FF9137690A32EE581 /* Pods-DexCareSDK.iOS.SampleApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DexCareSDK.iOS.SampleApp.debug.xcconfig"; path = "Target Support Files/Pods-DexCareSDK.iOS.SampleApp/Pods-DexCareSDK.iOS.SampleApp.debug.xcconfig"; sourceTree = "<group>"; };
+		E7D8180F0AF9DEBAAB4629C9 /* Pods_DexCareSDK_iOS_SampleApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DexCareSDK_iOS_SampleApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8054B992538940400BB52DA /* DexCareSDK.iOS.SampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DexCareSDK.iOS.SampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8054B9C2538940400BB52DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E8054B9E2538940400BB52DA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -95,6 +95,7 @@
 		E8301F48257010F1004A6209 /* RetailClinicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetailClinicCollectionViewCell.swift; sourceTree = "<group>"; };
 		E8301F4A25701121004A6209 /* RetailClinicCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RetailClinicCollectionViewCell.xib; sourceTree = "<group>"; };
 		E864371A25CDA1F700C0FFD1 /* KeychainLoginStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainLoginStore.swift; sourceTree = "<group>"; };
+		E87B6005264C192400E9B6D6 /* waitingRoomCustom.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = waitingRoomCustom.mp4; sourceTree = "<group>"; };
 		E89C19BA25CDB05C0001C6CD /* BiometricsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricsService.swift; sourceTree = "<group>"; };
 		E89C99E225CC9614009B7BAC /* Auth0Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth0Manager.swift; sourceTree = "<group>"; };
 		E8A8C9FA258A947100644C91 /* RetailVisitConnectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetailVisitConnectionViewCell.swift; sourceTree = "<group>"; };
@@ -111,7 +112,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0573F7615CCB0C90CBDAFF7F /* Pods_DexCareSDK_iOS_SampleApp.framework in Frameworks */,
+				F10CF0EEF87787D336766D53 /* Pods_DexCareSDK_iOS_SampleApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,8 +122,8 @@
 		83374C1FAD4C1C802B3C6ACC /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				23FE463290A5C007D0C01AA7 /* Pods-DexCareSDK.iOS.SampleApp.debug.xcconfig */,
-				05CE8685134995871F192EF6 /* Pods-DexCareSDK.iOS.SampleApp.release.xcconfig */,
+				6FC4597FF9137690A32EE581 /* Pods-DexCareSDK.iOS.SampleApp.debug.xcconfig */,
+				2625E9058B299992E538565E /* Pods-DexCareSDK.iOS.SampleApp.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -133,7 +134,7 @@
 				E8E43CD5263C928C000D43BB /* AVFoundation.framework */,
 				E8066B5825FFB3F700D8E43A /* DexcareiOSSDK.xcframework */,
 				E8066B4025FFAE7200D8E43A /* DexcareSDK.xcframework */,
-				20C463B0685C1970A8F1E76D /* Pods_DexCareSDK_iOS_SampleApp.framework */,
+				E7D8180F0AF9DEBAAB4629C9 /* Pods_DexCareSDK_iOS_SampleApp.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -176,6 +177,7 @@
 				E8054BE5253E8DBE00BB52DA /* Validation.strings */,
 				E8054BA52538940700BB52DA /* Assets.xcassets */,
 				E8054BA72538940700BB52DA /* LaunchScreen.storyboard */,
+				E87B6005264C192400E9B6D6 /* waitingRoomCustom.mp4 */,
 				E8054BAA2538940700BB52DA /* Info.plist */,
 				E8054BEE253F22D200BB52DA /* BaseViewController.swift */,
 			);
@@ -310,11 +312,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E8054BAD2538940700BB52DA /* Build configuration list for PBXNativeTarget "DexCareSDK.iOS.SampleApp" */;
 			buildPhases = (
-				AFA3A337B19432D374166CE7 /* [CP] Check Pods Manifest.lock */,
+				E3687B710F4873F6B3CEBD3B /* [CP] Check Pods Manifest.lock */,
 				E8054B952538940400BB52DA /* Sources */,
 				E8054B962538940400BB52DA /* Frameworks */,
 				E8054B972538940400BB52DA /* Resources */,
-				332CE17BFA996A72C3E473E5 /* [CP] Embed Pods Frameworks */,
+				F06988E0DCD6E5432C5D1D7B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -380,24 +382,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		332CE17BFA996A72C3E473E5 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-DexCareSDK.iOS.SampleApp/Pods-DexCareSDK.iOS.SampleApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-DexCareSDK.iOS.SampleApp/Pods-DexCareSDK.iOS.SampleApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DexCareSDK.iOS.SampleApp/Pods-DexCareSDK.iOS.SampleApp-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AFA3A337B19432D374166CE7 /* [CP] Check Pods Manifest.lock */ = {
+		E3687B710F4873F6B3CEBD3B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -417,6 +402,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F06988E0DCD6E5432C5D1D7B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DexCareSDK.iOS.SampleApp/Pods-DexCareSDK.iOS.SampleApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DexCareSDK.iOS.SampleApp/Pods-DexCareSDK.iOS.SampleApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DexCareSDK.iOS.SampleApp/Pods-DexCareSDK.iOS.SampleApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -598,7 +600,7 @@
 		};
 		E8054BAE2538940700BB52DA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 23FE463290A5C007D0C01AA7 /* Pods-DexCareSDK.iOS.SampleApp.debug.xcconfig */;
+			baseConfigurationReference = 6FC4597FF9137690A32EE581 /* Pods-DexCareSDK.iOS.SampleApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = DexCareSDK.iOS.SampleApp/DexCareSDK.iOS.SampleApp.entitlements;
@@ -623,7 +625,7 @@
 		};
 		E8054BAF2538940700BB52DA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 05CE8685134995871F192EF6 /* Pods-DexCareSDK.iOS.SampleApp.release.xcconfig */;
+			baseConfigurationReference = 2625E9058B299992E538565E /* Pods-DexCareSDK.iOS.SampleApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = DexCareSDK.iOS.SampleApp/DexCareSDK.iOS.SampleApp.entitlements;

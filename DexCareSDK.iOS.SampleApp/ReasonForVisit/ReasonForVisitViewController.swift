@@ -36,9 +36,10 @@ class ReasonForVisitViewController: BaseViewController {
     
     @IBAction func nextButtonTapped(_ sender: Any) {
         switch visitType {
+            // currently this test app only uses provider booking as virtual
             case .virtual:
                 AppServices.shared.virtualService.reasonForVisit = reasonForVisit
-            case .retail:
+            case .retail, .provider:
                 AppServices.shared.retailService.reasonForVisit = reasonForVisit
             case .none:
                 return

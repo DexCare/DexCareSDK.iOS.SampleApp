@@ -37,6 +37,25 @@ class RetailClinicCollectionViewCell: UICollectionViewCell, NibLoadableView {
         clinicNameLabel.text = text
     }
     
+    func setupView(withProvider provider: DashboardProviderVisitViewModel) {
+        timeslotHeaderLabel.text = "Timeslots"
+        timeSlotStackView.isHidden = false
+        
+        self.backgroundColor = UIColor.systemGray2
+        self.clinicNameLabel.text = provider.displayName
+        
+        for view in timeSlotStackView.arrangedSubviews {
+            timeSlotStackView.removeArrangedSubview(view)
+        }
+        
+        if let timeslot = provider.timeslot {
+            timeslotCount.text = timeslot.dayHeader
+            addTimeSlots(timeslots: timeslot.timeslots ?? [])
+        } else {
+            timeslotCount.text = "Loading timeslots"
+        }
+    }
+    
     @objc func timeslotTapped(_ sender: TimeButton) {
         onTimeslotTap?(sender.timeslot)
     }

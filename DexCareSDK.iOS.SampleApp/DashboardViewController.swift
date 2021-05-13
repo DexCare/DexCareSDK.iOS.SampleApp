@@ -36,6 +36,18 @@ struct DashboardRetailClinicViewModel: Equatable, Hashable {
     }
 }
 
+struct DashboardProviderVisitViewModel: Equatable, Hashable {
+    let providerId: String
+    let ehrSystemName: String
+    let displayName: String
+    
+    var timeslot: ProviderDayTimeslotsViewModel?
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(providerId)
+    }
+}
+
 struct DashboardRetailVisitViewModel: Equatable, Hashable {
     let visitId: String
     let clinicName: String
@@ -57,6 +69,16 @@ struct TimeslotsViewModel: Equatable, Hashable {
 }
 
 struct ClinicDayTimeslotsViewModel: Equatable, Hashable {
+    let id: UUID
+    let dayHeader: String
+    let timeslots: [TimeslotsViewModel]?
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id.hashValue)
+    }
+}
+
+struct ProviderDayTimeslotsViewModel: Equatable, Hashable {
     let id: UUID
     let dayHeader: String
     let timeslots: [TimeslotsViewModel]?
@@ -91,11 +113,58 @@ extension DashboardVirtualPracticeRegionViewModel {
 extension ClinicDayTimeslotsViewModel {
     init(withClinic clinic: Clinic, clinicTimeSlot: ClinicTimeSlot?) {
         self.id = UUID()
+        
         // For simplicity of the Test App - I'm only grabbing the first day. There could be multiple days of timeslots
         if let scheduleDay = clinicTimeSlot?.scheduleDays.first {
             
             // N.B. display dates and times in the time zone of the clinic, regardless of user's time zone
             let timezone = TimeZone(identifier: clinic.timezone)!
+            let retailCalendar = Calendar(for: timezone)
+            let headerDateFormatter: DateFormatter = retailCalendar.timeSlotShortDateFormatter()
+            let timeSlotDateFormatter: DateFormatter = retailCalendar.timeSlotDateFormatter()
+            
+            
+            // N.B. scheduleDay.date reflects the start of the schedule day as if the clinic were in UTC-0
+            // Convert the date to be the start of the day at the actual clinic location
+            let timeZoneOffset = TimeInterval(-timezone.secondsFromGMT())
+            let correctedDate = scheduleDay.date.addingTimeInterval(timeZoneOffset)
+            
+            var dayHeaderString = ""
+            if let relativeDate = retailCalendar.todayOrTomorrowString(from: correctedDate) {
+                dayHeaderString = relativeDate + " • "
+            }
+            dayHeaderString += headerDateFormatter.string(from: correctedDate)
+            
+            if scheduleDay.timeSlots.count == 0 {
+                self.dayHeader = "No available time today"
+                self.timeslots = []
+            } else {
+                self.dayHeader = dayHeaderString
+                self.timeslots = scheduleDay.timeSlots.map {
+                    return TimeslotsViewModel(timeslotId: $0.slotId, timeLabel: timeSlotDateFormatter.string(from: $0.slotDateTime), timeslot: $0)
+                }
+            }
+            
+        } else {
+            self.dayHeader = "Loading timeslots"
+            self.timeslots = nil
+        }
+    }
+}
+
+extension ProviderDayTimeslotsViewModel {
+    init(withProvider provider: Provider, timeslot: ProviderTimeSlot?) {
+        self.id = UUID()
+        // For simplicity of the Test App - I'm only grabbing the first day (that has timeslots). There could be multiple days of timeslots
+        
+        let scheduleDay = timeslot?.scheduleDays.first {
+            $0.timeSlots.count > 0
+        }
+        
+        if let timeslot = timeslot, let scheduleDay = scheduleDay {
+            
+            // N.B. display dates and times in the time zone of the clinic, regardless of user's time zone
+            let timezone = TimeZone(identifier: timeslot.timezoneString)!
             let retailCalendar = Calendar(for: timezone)
             let headerDateFormatter: DateFormatter = retailCalendar.timeSlotShortDateFormatter()
             let timeSlotDateFormatter: DateFormatter = retailCalendar.timeSlotDateFormatter()
@@ -159,10 +228,20 @@ extension DashboardRetailVisitViewModel {
     }
 }
 
+extension DashboardProviderVisitViewModel {
+    init(withProvider provider: Provider, timeslot: ProviderDayTimeslotsViewModel) {
+        self.providerId = provider.providerNationalId
+        self.ehrSystemName = provider.departments.first!.ehrSystemName
+        self.displayName = provider.name
+        self.timeslot = timeslot
+    }
+}
+
 enum DashboardSection: CaseIterable, Hashable {
     case retailVisits
     case retailClinics
     case virtualPracticeRegions
+    case providerBooking
 }
 
 class DashboardViewController: BaseViewController {
@@ -177,6 +256,9 @@ class DashboardViewController: BaseViewController {
     
     var allTimeslots: Dictionary<String, ClinicTimeSlot> = [:]
     var dataSource: UICollectionViewDiffableDataSource<DashboardSection, AnyHashable>! = nil
+    
+    var provider: Provider?
+    var providerTimeslot: ProviderTimeSlot?
     
     @IBOutlet weak var collectionView: UICollectionView! {
         didSet {
@@ -201,9 +283,12 @@ class DashboardViewController: BaseViewController {
         setupSDKRefreshTokenDelegate()
         
         // setup Dexcare Customization Options
-//        let customizationOptions = CustomizationOptions(customStrings: nil, tytoCareConfig: TytoCareConfig(helpURL: URL(string: "https://www.dexcarehealth.com")!))
-//
-//        AppServices.shared.dexcareSDK.customizationOptions = customizationOptions
+        let customizationOptions = CustomizationOptions(
+            customStrings: nil,
+            tytoCareConfig: TytoCareConfig(helpURL: URL(string: "https://www.google.com")!),
+            virtualConfig: VirtualConfig(showWaitingRoomVideo: true, waitingRoomVideoURL: Bundle.main.url(forResource: "waitingRoomCustom", withExtension: "mp4"))
+        )
+        AppServices.shared.dexcareSDK.customizationOptions = customizationOptions
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -301,6 +386,25 @@ class DashboardViewController: BaseViewController {
                         }
                         
                         return cell
+                    case .providerBooking:
+                        let cell = collectionView.dequeueReusableCell(ofType: RetailClinicCollectionViewCell.self, for: indexPath)
+                        
+                        if let provider = item as? DashboardProviderVisitViewModel {
+                            cell.setupView(withProvider: provider)
+                            
+                            cell.onTimeslotTap = { [weak self] timeslot in
+                                if let timeslot = timeslot {
+                                    AppServices.shared.retailService.timeslot = timeslot
+                                    AppServices.shared.retailService.ehrSystemName = provider.ehrSystemName
+                                    self?.navigateToReasonForVisit(visitType: .provider)
+                                }
+                            }
+                        }
+                        if let text = item as? String {
+                            cell.setupView(withString: text)
+                        }
+                        
+                        return cell
                 }
         }
         
@@ -319,6 +423,9 @@ class DashboardViewController: BaseViewController {
             else if case .retailClinics = DashboardSection.allCases[indexPath.section]  {
                 headerView.headerLabel.text = "Retail Clinics"
             }
+            if case .providerBooking = DashboardSection.allCases[indexPath.section] {
+                headerView.headerLabel.text = "Provider Booking"
+            }
             
             return headerView
         }
@@ -332,6 +439,7 @@ class DashboardViewController: BaseViewController {
         loadVirtualPracticeRegions()
         loadRetailClinics()
         loadRetailVisits()
+        loadProvider()
     }
 
     private func checkForAccessTokenAndLogin() {
@@ -477,6 +585,76 @@ class DashboardViewController: BaseViewController {
         }
     }
     
+    private func loadProvider() {
+        // environment doesn't have providers
+        guard let providerId = AppServices.shared.configuration.providerId else { return }
+        
+        firstly {
+            loadProviderTimeslots(providerNationalId: providerId)
+        }.done { [weak self] (provider, providerTimeslot) in
+            guard let strongSelf = self else { return }
+            
+            strongSelf.provider = provider
+            strongSelf.providerTimeslot = providerTimeslot
+            
+            let snapshot = strongSelf.snapshotForCurrentState()
+            strongSelf.dataSource.apply(snapshot, animatingDifferences: true)
+        }
+    }
+    
+    private func loadProviderTimeslots(providerNationalId: String) -> Promise<(Provider, ProviderTimeSlot)> {
+        return Promise { seal in
+            AppServices.shared.dexcareSDK.providerService.getProvider(
+                providerNationalId: providerNationalId) { provider in
+                
+                // Providers can have various "VisitTypes", in this example we will be booking against "NewPatient" types
+                
+                // Grab visitType with shortName `"shortName": "NewPatient",`
+                guard let visitType = provider.visitTypes.first(where: {$0.shortName == "NewPatient"}) else {
+                    seal.reject("No New Patient VisitType found")
+                    return
+                }
+                
+                // Providers can technically have multiple departments, but for the most part only have 1.
+                guard let department = provider.departments.first else {
+                    seal.reject("No departments found")
+                    return
+                }
+                
+                // We don't _have_ to call `getMaxLookaheadDays`. This will tell us how far ahead we can search for timeslots.
+                AppServices.shared.dexcareSDK.providerService.getMaxLookaheadDays(
+                    visitTypeShortName: visitType.shortName!,
+                    ehrSystemName: department.ehrSystemName) { maxLookAheadDays in
+                    
+                    let startDate = Date()
+                    let endDate = Calendar.current.date(byAdding: .day, value: maxLookAheadDays, to: startDate) ?? Date()
+                    
+                    // We used the maxLookAheadDays here for example, but the start/endDate can be anything inside Today to Today + MaxLookahead Days
+                    AppServices.shared.dexcareSDK.providerService.getProviderTimeslots(
+                        providerNationalId: providerNationalId,
+                        visitTypeId: visitType.visitTypeId,
+                        startDate: startDate,
+                        endDate: endDate) { providerTimeSlot in
+                        
+                        seal.fulfill((provider, providerTimeSlot))
+                        
+                    } failure: { error in
+                        seal.reject(error)
+                    }
+
+                } failure: { error in
+                    seal.reject(error)
+                }
+
+                
+                
+            } failure: { error in
+                seal.reject(error)
+            }
+
+        }
+    }
+    
     private func loadRetailVisits() {
         AppServices.shared.dexcareSDK.appointmentService.getRetailVisits(
             success: { [weak self] scheduledVisits in
@@ -522,6 +700,14 @@ class DashboardViewController: BaseViewController {
             // no virtual regions
             snapshot.appendItems(["No Virtual Regions found"])
         }
+        
+        snapshot.appendSections([DashboardSection.providerBooking])
+        if let provider = provider, let timeslot = providerTimeslot {
+            snapshot.appendItems( [DashboardProviderVisitViewModel(withProvider: provider, timeslot: ProviderDayTimeslotsViewModel(withProvider: provider, timeslot: timeslot))])
+        } else {
+            snapshot.appendItems(["No Provider Timeslots found"])
+        }
+        
         return snapshot
         
     }
@@ -536,6 +722,7 @@ class DashboardViewController: BaseViewController {
                 case .retailVisits: return self.generateRetailClinicLayout(isWide: isWideView)
                 case .retailClinics: return self.generateRetailClinicLayout(isWide: isWideView)
                 case .virtualPracticeRegions: return self.generateVirtualPracticeRegionsLayout(isWide: isWideView)
+                case .providerBooking: return self.generateRetailClinicLayout(isWide: isWideView)
             }
         }
         return layout
@@ -604,6 +791,7 @@ extension DashboardViewController: UICollectionViewDelegate {
             case .retailVisits: return false
             case .retailClinics: return false
             case .virtualPracticeRegions: return true
+            case .providerBooking: return false
         }
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -618,6 +806,8 @@ extension DashboardViewController: UICollectionViewDelegate {
             case .virtualPracticeRegions:
                 guard let practiceRegion = item as? DashboardVirtualPracticeRegionViewModel else { return }
                 checkRegionAvailability(practiceRegion: practiceRegion)
+            case .providerBooking:
+                return
         }
        
     }

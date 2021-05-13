@@ -1,7 +1,7 @@
 # A private repo with the podspec. Please make sure you have github access before installing
 source 'https://cdn.cocoapods.org/'
 
-platform :ios, '12.0'
+platform :ios, '13.0'
 inhibit_all_warnings!
 
 def auth0_pods
@@ -10,7 +10,7 @@ def auth0_pods
 end
 
 def dexcare_pod
- pod 'DexcareSDK', :git => 'https://github.com/Dexcare/DexcareSDK-iOS.git', :tag => '6.1.1'
+ pod 'DexcareSDK', :git => 'https://github.com/Dexcare/DexcareSDK-iOS.git', :tag => '6.1.6'
 end
 
 target 'DexCareSDK.iOS.SampleApp' do
@@ -19,7 +19,6 @@ target 'DexCareSDK.iOS.SampleApp' do
   # Pods for DexCareSDK.iOS.SampleApp
   dexcare_pod
   auth0_pods
-
 
   pod 'KeychainAccess'
 
