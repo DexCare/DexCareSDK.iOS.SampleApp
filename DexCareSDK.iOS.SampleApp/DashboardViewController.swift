@@ -576,7 +576,7 @@ class DashboardViewController: BaseViewController {
         return Promise { seal in
             AppServices.shared.dexcareSDK.retailService.getTimeSlots(
                 departmentName: departmentName,
-                allowedVisitType: nil,
+                visitTypeShortName: nil,
                 success: { timeslots in
                     seal.fulfill(timeslots)
             }) { error in
@@ -610,7 +610,7 @@ class DashboardViewController: BaseViewController {
                 // Providers can have various "VisitTypes", in this example we will be booking against "NewPatient" types
                 
                 // Grab visitType with shortName `"shortName": "NewPatient",`
-                guard let visitType = provider.visitTypes.first(where: {$0.shortName == "NewPatient"}) else {
+                guard let visitType = provider.visitTypes.first(where: {$0.shortName == VisitTypeShortName.newPatient}) else {
                     seal.reject("No New Patient VisitType found")
                     return
                 }

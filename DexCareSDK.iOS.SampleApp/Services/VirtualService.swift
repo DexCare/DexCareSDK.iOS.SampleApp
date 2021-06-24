@@ -104,8 +104,7 @@ class VirtualServiceHelper {
                 actorRelationshipToPatient: combinedRelationship, // set when creating a virtual visit appointment for a dependent
                 practiceRegionId: practiceRegionId
             )
-            
-            
+   
             let dexcareSDK = AppServices.shared.dexcareSDK
             dexcareSDK.virtualService.startVirtualVisit(
                 presentingViewController: presentingViewController,
@@ -305,4 +304,45 @@ class VirtualServiceHelper {
         )
         return demographics
     }
+    
+    func getStripeToken(cardNumber: String, cardMonth: String, cardYear: String, cardCVC: String) -> Promise<String>  {
+        /// In this simple example, we are using Stripe's Rest API in order to get the payment token
+        /// You can also install the Stripe SDK which provides other means of getting the token as well as UI elements to help you.
+        
+        let tokenBuilder = URLRequestBuilder(baseURL: URL(string: "https://api.stripe.com/v1")!)
+        
+        let bearerToken = AppServices.shared.configuration.stripeKey!
+        
+        let request = tokenBuilder.post("tokens").token(bearerToken).queryItems([
+            "card[number]": cardNumber,
+            "card[exp_month]": cardMonth,
+            "card[exp_year]": cardYear,
+            "card[cvc]": cardCVC
+        ])
+        
+        return Promise { seal in
+            URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let error = error {
+                    print("ERROR  getting stripe token: \(error)")
+                    seal.reject(error)
+                } else {
+                    guard let data = data else {
+                        print("Empty data")
+                        seal.reject("Empty data returned")
+                        return
+                    }
+                    
+                    do {
+                        // only need the ID out of the response
+                        let object = try JSONDecoder().decode(StripeResponseObject.self, from: data)
+                        seal.fulfill(object.id)
+                    }
+                    catch {
+                        seal.reject("error decoding stripe response: \(error)")
+                    }
+                }
+            }.resume()
+        }
+    }
 }
+
