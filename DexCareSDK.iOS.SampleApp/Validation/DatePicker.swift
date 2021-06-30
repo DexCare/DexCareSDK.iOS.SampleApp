@@ -214,6 +214,15 @@ public extension DateFormatter {
         dateFormatter.dateStyle = .medium
         return dateFormatter
     }()
+    
+    /// Returns a date formatter with the format "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'" (2018-07-04T18:15:32.453Z)
+    static let iso8601Full: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.timeZone = TimeZone(abbreviation: "GMT")
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        return formatter
+    }()
+    
 }
 
 extension Date {

@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="EJ0-od-8jA">
-                                <rect key="frame" x="16" y="60" width="382" height="436"/>
+                                <rect key="frame" x="16" y="60" width="382" height="685.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Insurance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RHB-Y2-P6G" userLabel="Insurance Payment">
                                         <rect key="frame" x="0.0" y="0.0" width="382" height="20.5"/>
@@ -51,14 +51,14 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RO5-Cx-jpN">
-                                        <rect key="frame" x="0.0" y="205.5" width="382" height="20"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <rect key="frame" x="0.0" y="205.5" width="382" height="2"/>
+                                        <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="20" id="O49-bS-lL8"/>
+                                            <constraint firstAttribute="height" constant="2" id="O49-bS-lL8"/>
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="dk1-wI-Ros">
-                                        <rect key="frame" x="0.0" y="240.5" width="382" height="150.5"/>
+                                        <rect key="frame" x="0.0" y="222.5" width="382" height="150.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coupon Code" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kOi-Mi-bR5">
                                                 <rect key="frame" x="0.0" y="0.0" width="382" height="20.5"/>
@@ -89,8 +89,92 @@
                                             </button>
                                         </subviews>
                                     </stackView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="icj-KX-g8V">
+                                        <rect key="frame" x="0.0" y="388" width="382" height="2"/>
+                                        <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="2" id="gqv-UM-nAW"/>
+                                        </constraints>
+                                    </view>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="I97-Wy-9S9">
+                                        <rect key="frame" x="0.0" y="405" width="382" height="235.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CreditCard Payment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EiD-EM-9N6">
+                                                <rect key="frame" x="0.0" y="0.0" width="382" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="evk-bo-Y0A" userLabel="CouponCode" customClass="InputView" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="35.5" width="382" height="70"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="70" id="eGr-FH-SdQ"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="showEmptyError" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isSecureTextEntry" value="NO"/>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Credit card number"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="KXF-6n-UGV">
+                                                <rect key="frame" x="0.0" y="120.5" width="382" height="70"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vNw-c5-jgt" userLabel="CouponCode" customClass="InputView" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="117.5" height="70"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="70" id="6XG-b1-BYg"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="showEmptyError" value="YES"/>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isSecureTextEntry" value="NO"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="9"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4B2-Hl-Ffq" userLabel="CouponCode" customClass="InputView" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
+                                                        <rect key="frame" x="132.5" y="0.0" width="117" height="70"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="70" id="UR7-2W-5vn"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="showEmptyError" value="YES"/>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isSecureTextEntry" value="NO"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="2021"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="udw-1t-Cy2" userLabel="CouponCode" customClass="InputView" customModule="DexCareSDK_iOS_SampleApp" customModuleProvider="target">
+                                                        <rect key="frame" x="264.5" y="0.0" width="117.5" height="70"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="70" id="bWi-Hm-TJo"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="showEmptyError" value="YES"/>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isSecureTextEntry" value="NO"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="CVC"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="4B2-Hl-Ffq" firstAttribute="width" secondItem="vNw-c5-jgt" secondAttribute="width" id="gex-ih-car"/>
+                                                    <constraint firstItem="udw-1t-Cy2" firstAttribute="width" secondItem="vNw-c5-jgt" secondAttribute="width" id="tUZ-GX-wIW"/>
+                                                </constraints>
+                                            </stackView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nll-ZO-nDf">
+                                                <rect key="frame" x="0.0" y="205.5" width="382" height="30"/>
+                                                <state key="normal" title="Validate Credit Card">
+                                                    <color key="titleColor" name="AccentColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="validateCreditCard" destination="G8q-lP-i9q" eventType="touchUpInside" id="HRp-22-eIS"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JvE-Yo-Xh9">
-                                        <rect key="frame" x="0.0" y="406" width="382" height="30"/>
+                                        <rect key="frame" x="0.0" y="655.5" width="382" height="30"/>
                                         <state key="normal" title="Book Visit">
                                             <color key="titleColor" name="AccentColor"/>
                                         </state>
@@ -110,6 +194,10 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="cardCVCInputView" destination="udw-1t-Cy2" id="nTy-45-lfm"/>
+                        <outlet property="cardMonthInputView" destination="vNw-c5-jgt" id="ILW-kl-Uzw"/>
+                        <outlet property="cardNumberInputView" destination="evk-bo-Y0A" id="uYj-9L-u6Q"/>
+                        <outlet property="cardYearInputView" destination="4B2-Hl-Ffq" id="59A-by-2Zf"/>
                         <outlet property="couponCodeInputView" destination="BXp-XZ-3oA" id="7Vy-7s-OlD"/>
                         <outlet property="couponCodeStackView" destination="dk1-wI-Ros" id="6Co-Fg-3PL"/>
                         <outlet property="insuranceMemberInputView" destination="UyN-0O-sEf" id="lr6-X9-upf"/>
@@ -126,6 +214,9 @@
         <namedColor name="AccentColor">
             <color red="0.39599999785423279" green="0.2630000114440918" blue="0.49200001358985901" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

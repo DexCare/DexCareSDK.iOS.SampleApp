@@ -5,6 +5,7 @@ import Foundation
 import UIKit
 import DexcareiOSSDK
 import MBProgressHUD
+import PromiseKit
 
 class SummaryViewController: BaseViewController {
 
@@ -15,7 +16,12 @@ class SummaryViewController: BaseViewController {
     @IBOutlet weak var visitCostLabel: UILabel!
     @IBOutlet weak var couponCodeStackView: UIStackView!
     
+    @IBOutlet weak var cardNumberInputView: InputView!
+    @IBOutlet weak var cardMonthInputView: InputView!
+    @IBOutlet weak var cardYearInputView: InputView!
+    @IBOutlet weak var cardCVCInputView: InputView!
     
+
     var insurancePayers: [InsurancePayer] = []
     var visitType: VisitType = .none
     
@@ -79,6 +85,40 @@ class SummaryViewController: BaseViewController {
 
     }
     
+    @IBAction func validateCreditCard() {
+        guard let cardNumber = cardNumberInputView.text, !cardNumber.isEmpty else {
+            self.showAlert(title: "Error", message: "Missing credit card number")
+            return
+        }
+        guard let cardMonth = cardMonthInputView.text, !cardMonth.isEmpty else {
+            self.showAlert(title: "Error", message: "Missing credit card month")
+            return
+        }
+        
+        guard let cardYear = cardYearInputView.text, !cardYear.isEmpty else {
+            self.showAlert(title: "Error", message: "Missing credit card year")
+            return
+        }
+        
+        guard let cardCVC = cardCVCInputView.text, !cardCVC.isEmpty else {
+            self.showAlert(title: "Error", message: "Missing credit card cvc")
+            return
+        }
+        
+        MBProgressHUD.showAdded(to: self.view, animated: true)
+        firstly {
+            AppServices.shared.virtualService.getStripeToken(cardNumber: cardNumber, cardMonth: cardMonth, cardYear: cardYear, cardCVC: cardCVC)
+        }.done { token in
+            MBProgressHUD.hide(for: self.view, animated: true)
+            AppServices.shared.virtualService.paymentType = PaymentMethod.creditCard(stripeToken: token)
+            self.showAlert(title: "Success", message: "Credit card has been validated")
+        }.catch { error in
+            MBProgressHUD.hide(for: self.view, animated: true)
+            self.showAlert(title: "Error", message: String(describing: error))
+        }
+        
+    }
+        
     @IBAction func bookVirtuaVisit() {
         switch visitType {
             case .virtual:

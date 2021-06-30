@@ -21,6 +21,7 @@ class Configuration: Decodable {
     var practiceId: String
     var loginEmail: String?
     var providerId: String?
+    var stripeKey: String?
 }
 
 extension Configuration {
