@@ -1,11 +1,10 @@
 //  Copyright © 2020 DexCare. All rights reserved.
 
-import Foundation
 import DexcareiOSSDK
+import Foundation
 import PromiseKit
 
 class VirtualServiceHelper {
-   
     var currentRegionId: String?
     var myselfInformation: PersonInformation?
     var addressInformation: PersonDemographicAddress?
@@ -14,8 +13,8 @@ class VirtualServiceHelper {
     var dependentEmail: String?
     
     var reasonForVisit: String?
-    
-    var patientEmail:String?
+
+    var patientEmail: String?
     var currentDexcarePatient: DexcarePatient?
     var currentVisitId: String?
     var currentInsurancePayer: InsurancePayer?
@@ -25,28 +24,27 @@ class VirtualServiceHelper {
     var currentPracticeRegionId: String?
     var relationshipToPatient: RelationshipToPatient?
     var isDependentBooking: Bool = false
-    
-    var paymentType: PaymentMethod? = nil
 
-    
+    var paymentType: PaymentMethod?
+
     func bookVirtualVisit(presentingViewController: UINavigationController, onCompletion: @escaping VisitCompletion, onSuccess: @escaping () -> Void, failure: @escaping (Error) -> Void) throws {
         try bookMyselfVirtualVisit(presentingViewController: presentingViewController, onCompletion: onCompletion, onSuccess: onSuccess, failure: failure)
     }
-    
+
     func bookMyselfVirtualVisit(presentingViewController: UINavigationController, onCompletion: @escaping VisitCompletion, onSuccess: @escaping () -> Void, failure: @escaping (Error) -> Void) throws {
         firstly {
             try updatePatientDemographics()
         }.then { patient in
-            try self.updateDependentDemographics().map { (patient, $0)}
-        }.done { [weak self] (patient, dependentPatient) in
+            try self.updateDependentDemographics().map { (patient, $0) }
+        }.done { [weak self] patient, dependentPatient in
             let isDependentBooking = self?.isDependentBooking ?? false
-            
+
             guard let reasonForVisit = self?.reasonForVisit else {
                 throw "Missing reason for visit"
             }
-            var providerIdString: String? = nil
-            var memberIdString: String? = nil
-            
+            var providerIdString: String?
+            var memberIdString: String?
+
             if self?.paymentType == nil {
                 guard let providerId = self?.currentInsurancePayer?.payerId, let memberId = self?.currentInsuranceMemberId else {
                     throw "Missing Insurance Payer information"
@@ -63,57 +61,67 @@ class VirtualServiceHelper {
             guard let patientEmail = combinedEmail else {
                 throw "Missing patient email"
             }
-            
+
             guard let catchmentArea = self?.currentCatchmentArea else {
                 throw "Missing catchmentArea"
             }
-           
+
             var combinedPatient: DexcarePatient?
             if isDependentBooking {
                 combinedPatient = dependentPatient
             } else {
                 combinedPatient = patient
             }
-            
+
             guard let dexcarePatient = combinedPatient else {
                 throw "Missing dexcarePatient"
             }
             guard let practiceId = self?.currentPracticeId else {
                 throw "Missing practiceId"
             }
-            
+
             guard let practiceRegionId = self?.currentPracticeRegionId else {
                 throw "Missing practiceRegionId"
             }
-            
-            var combinedRelationship: RelationshipToPatient? = nil
+            guard let currentRegionId = self?.currentRegionId else {
+                throw "Missing regionId (homeMarket)"
+            }
+            var combinedRelationship: RelationshipToPatient?
             if isDependentBooking {
                 combinedRelationship = self?.relationshipToPatient
                 if combinedRelationship == nil {
                     throw "Missing relationshipToPatient"
                 }
             }
-            
-            let virtualVisitInformation = VirtualVisitInformation(
-                visitReason: reasonForVisit,
-                patientDeclaration: isDependentBooking ? .other : .self,
+
+            let virtualVisitDetails = VirtualVisitDetails(
                 acceptedTerms: true,
+                assignmentQualifiers: nil,
+                patientDeclaration: isDependentBooking ? .other : .self,
+                stateLicensure: currentRegionId,
+                visitReason: reasonForVisit,
+                visitTypeName: .virtual,
                 userEmail: patientEmail,
                 contactPhoneNumber: "(204)233-2332",
-                preTriageTags: [],
-                actorRelationshipToPatient: combinedRelationship, // set when creating a virtual visit appointment for a dependent
-                practiceRegionId: practiceRegionId
-            )
-   
-            let dexcareSDK = AppServices.shared.dexcareSDK
-            dexcareSDK.virtualService.startVirtualVisit(
-                presentingViewController: presentingViewController,
-                paymentMethod: self?.paymentType ??  PaymentMethod.insuranceManualSelf(memberId: memberIdString!, providerId: providerIdString!),
-                virtualVisitInformation: virtualVisitInformation,
-                catchmentArea: catchmentArea,
-                patientDexCarePatient: dexcarePatient,
-                actorDexCarePatient: patient, // not used when booking for self.
                 practiceId: practiceId,
+                assessmentToolUsed: nil,
+                brand: nil,
+                interpreterLanguage: nil,
+                preTriageTags: nil,
+                urgency: nil,
+                actorRelationshipToPatient: combinedRelationship,
+                homeMarket: nil,
+                initialStatus: nil
+            )
+            
+
+            let dexcareSDK = AppServices.shared.dexcareSDK
+            dexcareSDK.virtualService.createVirtualVisit(
+                presentingViewController: presentingViewController,
+                dexcarePatient: dexcarePatient,
+                virtualVisitDetails: virtualVisitDetails,
+                paymentMethod: self?.paymentType ?? PaymentMethod.insuranceManualSelf(memberId: memberIdString!, providerId: providerIdString!),
+                actor: patient, // not used when booking for self.,
                 onCompletion: onCompletion,
                 success: { [weak self] visitId in
                     // successfully started a virtual visit. Save the visit id in case we need to resume
@@ -123,16 +131,15 @@ class VirtualServiceHelper {
                 },
                 failure: { error in
                     failure("error starting virtual visit: \(error)")
-            }
+                }
             )
         }
         .catch { error in
             failure("error starting virtual visit: \(error)")
         }
     }
-    
-    func updatePatientDemographics() throws -> Promise<DexcarePatient>{
-        
+
+    func updatePatientDemographics() throws -> Promise<DexcarePatient> {
         guard let regionId = currentRegionId else {
             throw "Missing RegionId"
         }
@@ -142,11 +149,11 @@ class VirtualServiceHelper {
         guard let addressInformation = addressInformation else {
             throw "Missing addressInformation"
         }
-        
+
         let patientDemographics = try buildMyselfDemographics(patientEmail: patientEmail, myselfInformation: myselfInformation, myselfAddress: addressInformation)
         let dexcareSDK = AppServices.shared.dexcareSDK
         let brand: String = AppServices.shared.configuration.brand
-        
+
         return firstly {
             // Based on the region and user address, we get a Catchment Area that includes an EHRSystem
             return Promise<CatchmentArea> { resolver in
@@ -156,12 +163,13 @@ class VirtualServiceHelper {
                     residenceZipCode: addressInformation.address.postalCode,
                     brand: brand, success: { catchmentArea in
                         resolver.fulfill(catchmentArea)
-                    }) { error in
-                        resolver.reject(error)
                     }
+                ) { error in
+                    resolver.reject(error)
                 }
+            }
         }.then { catchmentArea in
-            return Promise { seal in
+            Promise { seal in
                 dexcareSDK.patientService.findOrCreatePatient(
                     inEhrSystem: catchmentArea.ehrSystem,
                     patientDemographics: patientDemographics,
@@ -171,13 +179,13 @@ class VirtualServiceHelper {
                     }, failure: { error in
                         print("error saving patient: \(error)")
                         seal.reject(error)
-                })
+                    }
+                )
             }
         }
     }
-    
-    func updateDependentDemographics() throws -> Promise<DexcarePatient?>{
-        
+
+    func updateDependentDemographics() throws -> Promise<DexcarePatient?> {
         if !isDependentBooking {
             return Promise.value(nil)
         }
@@ -190,12 +198,12 @@ class VirtualServiceHelper {
         guard let addressInformation = dependentAddressInformation else {
             throw "Missing addressInformation"
         }
-        
+
         let patientDemographics = try buildMyselfDemographics(patientEmail: dependentEmail, myselfInformation: dependentInformation, myselfAddress: addressInformation)
-        
+
         let dexcareSDK = AppServices.shared.dexcareSDK
         let brand: String = AppServices.shared.configuration.brand
-        
+
         return firstly {
             // Based on the region and user address, we get a Catchment Area that includes an EHRSystem
             return Promise<CatchmentArea> { resolver in
@@ -205,12 +213,13 @@ class VirtualServiceHelper {
                     residenceZipCode: addressInformation.address.postalCode,
                     brand: brand, success: { catchmentArea in
                         resolver.fulfill(catchmentArea)
-                    }) { error in
+                    }
+                ) { error in
                     resolver.reject(error)
                 }
             }
         }.then { catchmentArea in
-            return Promise { seal in
+            Promise { seal in
                 dexcareSDK.patientService.findOrCreateDependentPatient(
                     inEhrSystem: catchmentArea.ehrSystem,
                     dependentPatientDemographics: patientDemographics,
@@ -220,17 +229,17 @@ class VirtualServiceHelper {
                     }, failure: { error in
                         print("error saving patient: \(error)")
                         seal.reject(error)
-                    })
+                    }
+                )
             }
         }
     }
-    
+
     private func buildMyselfDemographics(patientEmail: String?, myselfInformation: PersonInformation, myselfAddress: PersonDemographicAddress) throws -> PatientDemographics {
-        
         guard let email = patientEmail else {
             throw "Missing actor email from logged in account"
         }
-        
+
         guard let firstName = myselfInformation.firstName else {
             throw "Missing actor first name from demographics form"
         }
@@ -251,19 +260,18 @@ class VirtualServiceHelper {
         guard !city.isEmpty else {
             throw "Missing actor city from demographics form"
         }
-        
+
         let state = myselfAddress.address.state
         guard !state.isEmpty else {
             throw "Missing actor state from demographics form"
         }
-        
-        
+
         let lastFourSSN: String
         lastFourSSN = myselfInformation.lastFourSSN.value
         guard lastFourSSN.count == myselfInformation.lastFourSSN.maxLength else {
             throw "Missing actor last 4 social security number from demographics form"
         }
-        
+
         let postalCode = myselfAddress.address.postalCode
         guard !postalCode.isEmpty else {
             throw "Missing actor postal code from demographics form"
@@ -273,7 +281,7 @@ class VirtualServiceHelper {
             throw "Missing actor phone number from demographics form"
         }
         let addressLine2 = myselfAddress.address.line2
-        
+
         let name = HumanName(
             family: lastName,
             given: firstName,
@@ -289,7 +297,7 @@ class VirtualServiceHelper {
             state: state,
             postalCode: postalCode
         )
-        
+
         let demographics = PatientDemographics(
             name: name,
             addresses: [address],
@@ -304,24 +312,24 @@ class VirtualServiceHelper {
         )
         return demographics
     }
-    
-    func getStripeToken(cardNumber: String, cardMonth: String, cardYear: String, cardCVC: String) -> Promise<String>  {
+
+    func getStripeToken(cardNumber: String, cardMonth: String, cardYear: String, cardCVC: String) -> Promise<String> {
         /// In this simple example, we are using Stripe's Rest API in order to get the payment token
         /// You can also install the Stripe SDK which provides other means of getting the token as well as UI elements to help you.
-        
+
         let tokenBuilder = URLRequestBuilder(baseURL: URL(string: "https://api.stripe.com/v1")!)
-        
+
         let bearerToken = AppServices.shared.configuration.stripeKey!
-        
+
         let request = tokenBuilder.post("tokens").token(bearerToken).queryItems([
             "card[number]": cardNumber,
             "card[exp_month]": cardMonth,
             "card[exp_year]": cardYear,
-            "card[cvc]": cardCVC
+            "card[cvc]": cardCVC,
         ])
-        
+
         return Promise { seal in
-            URLSession.shared.dataTask(with: request) { (data, response, error) in
+            URLSession.shared.dataTask(with: request) { data, _, error in
                 if let error = error {
                     print("ERROR  getting stripe token: \(error)")
                     seal.reject(error)
@@ -331,13 +339,12 @@ class VirtualServiceHelper {
                         seal.reject("Empty data returned")
                         return
                     }
-                    
+
                     do {
                         // only need the ID out of the response
                         let object = try JSONDecoder().decode(StripeResponseObject.self, from: data)
                         seal.fulfill(object.id)
-                    }
-                    catch {
+                    } catch {
                         seal.reject("error decoding stripe response: \(error)")
                     }
                 }
@@ -345,4 +352,3 @@ class VirtualServiceHelper {
         }
     }
 }
-

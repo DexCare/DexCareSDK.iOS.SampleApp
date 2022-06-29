@@ -1,40 +1,36 @@
 //  Copyright © 2020 DexCare. All rights reserved.
 
-import Foundation
 import DexcareiOSSDK
+import Foundation
 protocol Validator {
-    
     func checkForValidationErrors(_: String) -> ValidationResult
 }
 
 protocol DateValidator {
-    
     func checkForValidationErrors(_: Date) -> ValidationResult
 }
 
 extension Validator {
     func checkForValidationErrors(_ value: String?, required: Bool = true) -> ValidationResult {
         let value = value ?? ""
-        if !required && value == "" {
+        if !required, value == "" {
             return .valid
         }
         return checkForValidationErrors(value)
     }
 }
 
-
 // MARK: - Convenience struct
 
-struct Validators {
-    
+enum Validators {
     static let NonEmptyTextValidator = ClosureValidator { value in
         if value.trimmingCharacters(in: .whitespaces).isEmpty {
             return .invalid([ValidationError(localizedErrorMessage: localizedString("NonEmptyMessage"), localizedRecoverySuggestion: localizedString("NonEmptyRecovery"))])
         }
-        
+
         return .valid
     }
-    
+
     static let EmailAddress = EmailAddressValidator()
     static let PhoneNumber = PhoneNumberValidator()
     static let StateCode = StateCodeValidator()
@@ -50,8 +46,8 @@ struct Validators {
         characters.insert(charactersIn: "-")
         return characters
     }()
-    static let alphaAndSpacesCharactersOnly = CompositeValidator(validators: [ CharacterSetValidator(characterSet: alphaAndSpacesCharacterSet), Validators.NonEmptyTextValidator])
-    
+
+    static let alphaAndSpacesCharactersOnly = CompositeValidator(validators: [CharacterSetValidator(characterSet: alphaAndSpacesCharacterSet), Validators.NonEmptyTextValidator])
 }
 
 // MARK: - Email Validation
@@ -73,30 +69,28 @@ private enum EmailConstants {
 }
 
 struct EmailAddressValidator: Validator {
-    
     private let validators: Validator
-    
+
     init() {
         validators = CompositeValidator(validators: [MaximumLengthValidator(length: EmailConstants.maxLength),
                                                      emailFormatValidator])
     }
-    
+
     private let emailFormatValidator = ClosureValidator { value in
         let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.]+\\.[A-Za-z]{2,64}" // DexcareSDK.EmailValidator.EMAIL_VALIDATION_REGEX
-        
+
         if !NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: value) {
             return .invalid([ValidationError(localizedErrorMessage: localizedString("ValidEmailMessage"),
                                              localizedRecoverySuggestion: localizedString("ValidEmailRecovery"))])
         }
-        
+
         return .valid
     }
-    
+
     func checkForValidationErrors(_ value: String) -> ValidationResult {
         return validators.checkForValidationErrors(value)
     }
 }
-
 
 // MARK: - Phone Validation
 
@@ -105,7 +99,7 @@ struct EmailAddressValidator: Validator {
  - min length = 10
  - max length = 14
  - checks for valid US phone characters
- 
+
  Valid Examples:
  - (123) 123-1234
  - 123 123 1234
@@ -123,16 +117,14 @@ private enum PhoneConstants {
 }
 
 struct PhoneNumberValidator: Validator {
-    
     private let validators: Validator
-    
+
     init() {
         validators = CompositeValidator(validators: [phoneFormatValidator,
                                                      MinimumLengthValidator(length: PhoneConstants.minLength),
-                                                     MaximumLengthValidator(length: PhoneConstants.maxLength)
-        ])
+                                                     MaximumLengthValidator(length: PhoneConstants.maxLength)])
     }
-    
+
     // https://jira.dig.engineering/browse/MOB-4875
     //  Epic Requirements:
     //       - 10 digit phone numbers
@@ -145,15 +137,15 @@ struct PhoneNumberValidator: Validator {
     //   We handle only 10 digit numbers until we update the autoformatting to handle 11 digit numbers
     private let phoneFormatValidator = ClosureValidator { value in
         let phoneRegex = PhoneValidator.PHONE_VALIDATION_REGEX
-        
+
         var number = value.removingNonNumericCharacters()
-        
+
         let areaCodeFirstDigit = number[safe: number.startIndex] // the first digit
         if areaCodeFirstDigit == "0" || areaCodeFirstDigit == "1" {
             return .invalid([ValidationError(localizedErrorMessage: localizedString("InvalidPhoneAreaCodeCannotBeginWith0Or1"),
                                              localizedRecoverySuggestion: nil)])
         }
-        
+
         if number.count > 1 {
             let areaCodeSecondDigit = number[number.index(number.startIndex, offsetBy: 1)] // the second digit
             if areaCodeSecondDigit == "9" {
@@ -161,23 +153,22 @@ struct PhoneNumberValidator: Validator {
                                                  localizedRecoverySuggestion: nil)])
             }
         }
-        
-        if number.count > 3{
+
+        if number.count > 3 {
             let firstDigitAfterAreaCode = number[number.index(number.startIndex, offsetBy: 3)] // the fourth digit
             if firstDigitAfterAreaCode == "0" || firstDigitAfterAreaCode == "1" {
                 return .invalid([ValidationError(localizedErrorMessage: localizedString("InvalidPhoneFirstDigitAfterAreaCodeCannotBeginWith0Or1"), localizedRecoverySuggestion: nil)])
             }
         }
-        
-        
+
         if !NSPredicate(format: "SELF MATCHES %@", phoneRegex).evaluate(with: value) {
             return .invalid([ValidationError(localizedErrorMessage: localizedString("ValidPhoneMessage"),
                                              localizedRecoverySuggestion: localizedString("ValidPhoneRecovery"))])
         }
-        
+
         return .valid
     }
-    
+
     func checkForValidationErrors(_ value: String) -> ValidationResult {
         return validators.checkForValidationErrors(value)
     }
@@ -186,26 +177,24 @@ struct PhoneNumberValidator: Validator {
 // MARK: - Internal Validators
 
 struct ClosureValidator: Validator {
-    
     let checkForValidationErrors: (String) -> ValidationResult
-    
+
     init(checkForValidationErrors: @escaping (String) -> ValidationResult) {
         self.checkForValidationErrors = checkForValidationErrors
     }
-    
+
     func checkForValidationErrors(_ value: String) -> ValidationResult {
         return checkForValidationErrors(value)
     }
 }
 
 struct CompositeValidator: Validator {
-    
     private let validators: [Validator]
-    
+
     init(validators: [Validator]) {
         self.validators = validators
     }
-    
+
     func checkForValidationErrors(_ value: String) -> ValidationResult {
         let results = validators.compactMap { $0.checkForValidationErrors(value) }
         return ValidationResult.merge(results: results)
@@ -213,36 +202,35 @@ struct CompositeValidator: Validator {
 }
 
 struct MinimumAgeYearValidator: DateValidator {
-    
     private let minimum: Int
-    
+
     init(minimum: Int) {
         self.minimum = minimum
     }
-    
+
     func checkForValidationErrors(_ date: Date) -> ValidationResult {
         if date > Calendar.current.date(byAdding: .year, value: -minimum, to: Date())! {
             let errorMessage = String(format: localizedString("MinAgeMessage"), minimum)
             return .invalid([ValidationError(localizedErrorMessage: errorMessage, localizedRecoverySuggestion: nil)])
         }
-        
+
         return .valid
     }
 }
+
 struct MinimumAgeMonthValidator: DateValidator {
-    
     private let minimum: Int
-    
+
     init(minimum: Int) {
         self.minimum = minimum
     }
-    
+
     func checkForValidationErrors(_ date: Date) -> ValidationResult {
         if date > Calendar.current.date(byAdding: .month, value: -minimum, to: Date())! {
             let errorMessage = String(format: localizedString("MinAgeMonthMessage"), minimum)
             return .invalid([ValidationError(localizedErrorMessage: errorMessage, localizedRecoverySuggestion: nil)])
         }
-        
+
         return .valid
     }
 }
@@ -253,85 +241,81 @@ struct BirthDateInPastValidator: DateValidator {
             let errorMessage = localizedString("InvalidBirthDateMessage")
             return .invalid([ValidationError(localizedErrorMessage: errorMessage, localizedRecoverySuggestion: nil)])
         }
-        
+
         return .valid
     }
 }
 
 struct MinimumLengthValidator: Validator {
-    
     private let length: Int
-    
+
     init(length: Int) {
         self.length = length
     }
-    
+
     func checkForValidationErrors(_ value: String) -> ValidationResult {
         if value.count < length {
             let errorMessage = String(format: localizedString("MinLengthMessage"), length)
             return .invalid([ValidationError(localizedErrorMessage: errorMessage, localizedRecoverySuggestion: nil)])
         }
-        
+
         return .valid
     }
 }
 
 struct MaximumLengthValidator: Validator {
-    
     private let length: Int
-    
+
     init(length: Int) {
         self.length = length
     }
-    
+
     func checkForValidationErrors(_ value: String) -> ValidationResult {
         if value.count > length {
             let errorMessage = String(format: localizedString("MaxLengthMessage"), length)
             return .invalid([ValidationError(localizedErrorMessage: errorMessage, localizedRecoverySuggestion: nil)])
         }
-        
+
         return .valid
     }
 }
 
 struct CharacterSetValidator: Validator {
-    
     enum Constants {
         static let invalidCharacterMessageSingular = localizedString("invalidCharacterMessageSingular")
         static let invalidCharacterMessagePlural = localizedString("invalidCharacterMessagePlural")
     }
-    
+
     private let characterSet: CharacterSet
-    
+
     init(characterSet: CharacterSet) {
         self.characterSet = characterSet
     }
-    
+
     func checkForValidationErrors(_ value: String) -> ValidationResult {
         let invalidCharacters = value.components(separatedBy: characterSet).joined(separator: "")
         if invalidCharacters.isEmpty { return .valid }
-        
+
         let invalidCharactersSet = Set(invalidCharacters)
         let invalidCharactersString = invalidCharactersSet.sorted().map { "\($0)" }.joined(separator: ", ")
-        
+
         let errorFormat = invalidCharactersSet.count == 1 ? Constants.invalidCharacterMessageSingular
             : Constants.invalidCharacterMessagePlural
-        
+
         let errorMessage = String(format: errorFormat, invalidCharactersString)
         return .invalid([ValidationError(localizedErrorMessage: errorMessage, localizedRecoverySuggestion: nil)])
     }
 }
 
-
 public struct StateCodeValidator: Validator {
-    
     func checkForValidationErrors(_ stateCode: String) -> ValidationResult {
         if UnitedStatesISO3166SubdivisionsValidator.isValid(code: stateCode) {
             return .valid
         } else {
             return .invalid([ValidationError(
                 localizedErrorMessage: localizedString("invalidStateCodeErrorMessage"),
-                localizedRecoverySuggestion: nil)])
+                localizedRecoverySuggestion: nil
+            )])
         }
     }
 }
@@ -340,11 +324,11 @@ public struct StateCodeValidator: Validator {
  Validates US Zip Codes and can handle the basic 5 digit as well as the +4 option
  - min length = 5
  - max length = 9
- 
+
  Valid Examples, without dash:
  - 123451234
  - 123453123
- 
+
  Valid Examples, with dash:
  - 12345-1234
  - 12345
@@ -355,13 +339,13 @@ public struct ZipCodeValidator: Validator {
     public let characterSet: CharacterSet
     public let shortOnly: Bool
     public let dashRequired: Bool
-    
+
     init(dashRequired: Bool = false, shortOnly: Bool = true) {
         minLength = 5
         maxLength = shortOnly ? 5 : (dashRequired ? 10 : 9)
         self.shortOnly = shortOnly
         self.dashRequired = dashRequired
-        
+
         characterSet = {
             var characterSet = CharacterSet.decimalDigits
             if dashRequired {
@@ -370,53 +354,51 @@ public struct ZipCodeValidator: Validator {
             return characterSet
         }()
     }
-    
+
     func checkForValidationErrors(_ value: String) -> ValidationResult {
         let zipCodeRegex = shortOnly ? "^\\d{5}$" : (dashRequired ? "^\\d{5}(?:-\\d{4})?$" : "^\\d{5}|\\d{9}$")
-        
+
         if !NSPredicate(format: "SELF MATCHES %@", zipCodeRegex).evaluate(with: value) {
             let longFormatHint = dashRequired ? "xxxxx-xxxx" : "xxxxxxxxx"
             let rawErrorMessage = localizedString("invalidZIPErrorMessage")
             let errorMessage = shortOnly ? localizedString("invalidZIP5Characters") : String(format: rawErrorMessage, longFormatHint)
-            
+
             return .invalid([
                 ValidationError(
                     localizedErrorMessage: errorMessage,
                     localizedRecoverySuggestion: localizedString("invalidZIPRecoveryMessage")
-                )])
+                ),
+            ])
         }
         return .valid
     }
-    
 }
 
 public struct LastFourSSNValidator: Validator {
     enum Constants {
         static let minLength = 4
         static let maxLength = 4
-        static let validCharacterSet: CharacterSet = {
-            return CharacterSet.decimalDigits
-        }()
+        static let validCharacterSet: CharacterSet = .decimalDigits
     }
+
     private let validators: Validator
-    
+
     init() {
         validators = CompositeValidator(validators: [MinimumLengthValidator(length: Constants.minLength),
                                                      MaximumLengthValidator(length: Constants.maxLength), Validators.NonEmptyTextValidator])
     }
-    
+
     func checkForValidationErrors(_ value: String) -> ValidationResult {
         return validators.checkForValidationErrors(value)
     }
 }
 
-
 func localizedString(_ key: String, comment: String = "") -> String {
     return NSLocalizedString(key, tableName: "Validation", bundle: Bundle.main, comment: comment)
 }
 
-extension String {
-    public func removingNonNumericCharacters() -> String {
+public extension String {
+    func removingNonNumericCharacters() -> String {
         return replacingOccurrences(of: "[^0-9]", with: "", options: .regularExpression)
     }
 }

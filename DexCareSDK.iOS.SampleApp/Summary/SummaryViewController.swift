@@ -1,39 +1,37 @@
 
 //  Copyright © 2020 DexCare. All rights reserved.
 
-import Foundation
-import UIKit
 import DexcareiOSSDK
+import Foundation
 import MBProgressHUD
 import PromiseKit
+import UIKit
 
 class SummaryViewController: BaseViewController {
+    @IBOutlet var insuranceOptionPicker: OptionPicker!
+    @IBOutlet var insuranceMemberInputView: InputView!
 
-    @IBOutlet weak var insuranceOptionPicker: OptionPicker!
-    @IBOutlet weak var insuranceMemberInputView: InputView!
-    
-    @IBOutlet weak var couponCodeInputView: InputView!
-    @IBOutlet weak var visitCostLabel: UILabel!
-    @IBOutlet weak var couponCodeStackView: UIStackView!
-    
-    @IBOutlet weak var cardNumberInputView: InputView!
-    @IBOutlet weak var cardMonthInputView: InputView!
-    @IBOutlet weak var cardYearInputView: InputView!
-    @IBOutlet weak var cardCVCInputView: InputView!
-    
+    @IBOutlet var couponCodeInputView: InputView!
+    @IBOutlet var visitCostLabel: UILabel!
+    @IBOutlet var couponCodeStackView: UIStackView!
+
+    @IBOutlet var cardNumberInputView: InputView!
+    @IBOutlet var cardMonthInputView: InputView!
+    @IBOutlet var cardYearInputView: InputView!
+    @IBOutlet var cardCVCInputView: InputView!
 
     var insurancePayers: [InsurancePayer] = []
     var visitType: VisitType = .none
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "ALMOST DONE"
-        
+        navigationItem.title = "ALMOST DONE"
+
         // Coupon code can only be used on virtual payments
         if visitType != .virtual {
             couponCodeStackView.isHidden = true
         }
-        
+
         insuranceOptionPicker.isEnabled = false
         AppServices.shared.dexcareSDK.paymentService.getInsurancePayers(tenant: AppServices.shared.configuration.brand, success: { [weak self] insurancePayers in
             self?.insuranceOptionPicker.isEnabled = true
@@ -42,16 +40,16 @@ class SummaryViewController: BaseViewController {
         }) { [weak self] error in
             self?.showAlert(title: "Error", message: "No Insurance Payers: \(error.localizedDescription)")
         }
-        
+
         insuranceOptionPicker.textField.on(.editingDidEnd) { [weak self] in
             guard let selectedRow = self?.insuranceOptionPicker.optionsPicker.selectedRow(inComponent: 0) else { return }
-            
+
             guard let insurancePayer = self?.insurancePayers[safe: selectedRow] else { return }
-            
+
             AppServices.shared.virtualService.currentInsurancePayer = insurancePayer
             AppServices.shared.virtualService.paymentType = nil
         }
-        
+
         insuranceMemberInputView.textField.textContentType = .name
         insuranceMemberInputView.textField.autocorrectionType = .no
         insuranceMemberInputView.textField.spellCheckingType = .no
@@ -63,16 +61,15 @@ class SummaryViewController: BaseViewController {
             AppServices.shared.virtualService.paymentType = nil
         }
     }
-    
+
     @IBAction func applyCoupon() {
-        
         guard let coupon = couponCodeInputView.text, !coupon.isEmpty else {
-            self.showAlert(title: "Error", message: "Missing coupon code")
+            showAlert(title: "Error", message: "Missing coupon code")
             return
         }
-        
-        MBProgressHUD.showAdded(to: self.view, animated: true)
-        // checks to make sure the coupon code is valid. 
+
+        MBProgressHUD.showAdded(to: view, animated: true)
+        // checks to make sure the coupon code is valid.
         AppServices.shared.dexcareSDK.paymentService.verifyCouponCode(couponCode: coupon) { couponAmount in
             MBProgressHUD.hide(for: self.view, animated: true)
             self.showAlert(title: "Success", message: "Coupon code is valid with: $\(couponAmount)")
@@ -82,30 +79,29 @@ class SummaryViewController: BaseViewController {
             self.showAlert(title: "Error", message: error.localizedDescription)
             self.couponCodeInputView.text = ""
         }
-
     }
-    
+
     @IBAction func validateCreditCard() {
         guard let cardNumber = cardNumberInputView.text, !cardNumber.isEmpty else {
-            self.showAlert(title: "Error", message: "Missing credit card number")
+            showAlert(title: "Error", message: "Missing credit card number")
             return
         }
         guard let cardMonth = cardMonthInputView.text, !cardMonth.isEmpty else {
-            self.showAlert(title: "Error", message: "Missing credit card month")
+            showAlert(title: "Error", message: "Missing credit card month")
             return
         }
-        
+
         guard let cardYear = cardYearInputView.text, !cardYear.isEmpty else {
-            self.showAlert(title: "Error", message: "Missing credit card year")
+            showAlert(title: "Error", message: "Missing credit card year")
             return
         }
-        
+
         guard let cardCVC = cardCVCInputView.text, !cardCVC.isEmpty else {
-            self.showAlert(title: "Error", message: "Missing credit card cvc")
+            showAlert(title: "Error", message: "Missing credit card cvc")
             return
         }
-        
-        MBProgressHUD.showAdded(to: self.view, animated: true)
+
+        MBProgressHUD.showAdded(to: view, animated: true)
         firstly {
             AppServices.shared.virtualService.getStripeToken(cardNumber: cardNumber, cardMonth: cardMonth, cardYear: cardYear, cardCVC: cardCVC)
         }.done { token in
@@ -116,72 +112,66 @@ class SummaryViewController: BaseViewController {
             MBProgressHUD.hide(for: self.view, animated: true)
             self.showAlert(title: "Error", message: String(describing: error))
         }
-        
     }
-        
+
     @IBAction func bookVirtuaVisit() {
         switch visitType {
-            case .virtual:
-                do {
-                    MBProgressHUD.showAdded(to: self.view, animated: true)
-                    try AppServices.shared.virtualService.bookVirtualVisit(
-                        presentingViewController: self.navigationController!,
-                        onCompletion: { [weak self] visitCompletionReason in
-                            print("VISIT SUCCESSFULLY COMPLETED: \(visitCompletionReason)")
-                            // lets go back to the dashboard
-                            self?.navigationController?.popToRootViewController(animated: true)
-                        },
-                        onSuccess: {
-                            
-                            MBProgressHUD.hide(for: self.view, animated: true)
-                        },
-                        failure: {  error in
-                            print("ERROR starting virtual visit:\(error)")
-                            MBProgressHUD.hide(for: self.view, animated: true)
-                            self.showAlert(title: "Error", message: String(describing: error))
-                        })
-                    
-                }
-                catch {
-                    print("ERROR starting virtual visit:\(error)")
-                    MBProgressHUD.hide(for: self.view, animated: true)
-                    self.showAlert(title: "Error", message: "ERROR starting virtual visit:\(error.localizedDescription)")
-                }
-            
-            case .retail:
-                MBProgressHUD.showAdded(to: self.view, animated: true)
-                AppServices.shared.retailService.bookVisit().done {
-                    print("VISIT SUCCESSFULLY booked")
-                    MBProgressHUD.hide(for: self.view, animated: true)
-                    self.showAlert(title: "Success", message: "Visit Successfully booked")
-                    // lets go back to the dashboard
-                    self.navigationController?.popToRootViewController(animated: true)
-                }.catch { error in
-                    print("ERROR booking retail visit:\(error)")
-                    self.showAlert(title: "Error", message: "ERROR booking retail:\(error.localizedDescription)")
-                    MBProgressHUD.hide(for: self.view, animated: true)
-                }
-            
-            
-            case .provider:
-                MBProgressHUD.showAdded(to: self.view, animated: true)
-                AppServices.shared.retailService.bookProviderVisit().done {
-                    print("VISIT SUCCESSFULLY booked")
-                    MBProgressHUD.hide(for: self.view, animated: true)
-                    self.showAlert(title: "Success", message: "Provider Visit Successfully booked")
-                    // lets go back to the dashboard
-                    self.navigationController?.popToRootViewController(animated: true)
-                }.catch { error in
-                    print("ERROR booking provider visit:\(error)")
-                    self.showAlert(title: "Error", message: "ERROR booking retail:\(error.localizedDescription)")
-                    MBProgressHUD.hide(for: self.view, animated: true)
-                }
-            
-                
-            case .none:
-                print("No visit type selected")
+        case .virtual:
+            do {
+                MBProgressHUD.showAdded(to: view, animated: true)
+                try AppServices.shared.virtualService.bookVirtualVisit(
+                    presentingViewController: navigationController!,
+                    onCompletion: { [weak self] visitCompletionReason in
+                        print("VISIT SUCCESSFULLY COMPLETED: \(visitCompletionReason)")
+                        // lets go back to the dashboard
+                        self?.navigationController?.popToRootViewController(animated: true)
+                    },
+                    onSuccess: {
+                        MBProgressHUD.hide(for: self.view, animated: true)
+                    },
+                    failure: { error in
+                        print("ERROR starting virtual visit:\(error)")
+                        MBProgressHUD.hide(for: self.view, animated: true)
+                        self.showAlert(title: "Error", message: String(describing: error))
+                    }
+                )
+            } catch {
+                print("ERROR starting virtual visit:\(error)")
+                MBProgressHUD.hide(for: view, animated: true)
+                showAlert(title: "Error", message: "ERROR starting virtual visit:\(error.localizedDescription)")
+            }
+
+        case .retail:
+            MBProgressHUD.showAdded(to: view, animated: true)
+            AppServices.shared.retailService.bookVisit().done {
+                print("VISIT SUCCESSFULLY booked")
+                MBProgressHUD.hide(for: self.view, animated: true)
+                self.showAlert(title: "Success", message: "Visit Successfully booked")
+                // lets go back to the dashboard
+                self.navigationController?.popToRootViewController(animated: true)
+            }.catch { error in
+                print("ERROR booking retail visit:\(error)")
+                self.showAlert(title: "Error", message: "ERROR booking retail:\(error.localizedDescription)")
+                MBProgressHUD.hide(for: self.view, animated: true)
+            }
+
+        case .provider:
+            MBProgressHUD.showAdded(to: view, animated: true)
+            AppServices.shared.retailService.bookProviderVisit().done {
+                print("VISIT SUCCESSFULLY booked")
+                MBProgressHUD.hide(for: self.view, animated: true)
+                self.showAlert(title: "Success", message: "Provider Visit Successfully booked")
+                // lets go back to the dashboard
+                self.navigationController?.popToRootViewController(animated: true)
+            }.catch { error in
+                print("ERROR booking provider visit:\(error)")
+                self.showAlert(title: "Error", message: "ERROR booking retail:\(error.localizedDescription)")
+                MBProgressHUD.hide(for: self.view, animated: true)
+            }
+
+        case .none:
+            print("No visit type selected")
         }
-            
     }
 }
 
@@ -189,11 +179,11 @@ extension InsurancePayer: OptionPickerMappable {
     public func matches(textFieldTitle: String) -> Bool {
         return name == textFieldTitle
     }
-    
+
     public func textFieldTitle() -> String {
         return name
     }
-    
+
     public func pickerTitle() -> String {
         return name
     }

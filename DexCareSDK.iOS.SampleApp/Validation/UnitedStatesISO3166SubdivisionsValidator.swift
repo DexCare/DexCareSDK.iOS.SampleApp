@@ -6,11 +6,10 @@ import Foundation
 /// - seealso: https://www.iso.org/obp/ui/#iso:code:3166:US
 /// - example: The code "WA" is valid and maps to the full ISO code "US-WA"
 class UnitedStatesISO3166SubdivisionsValidator {
-    
     private enum Constants {
         static let codeLength = 2
     }
-    
+
     /// Known United States state codes
     static let stateCodes: [String] = [
         "AL",
@@ -62,14 +61,14 @@ class UnitedStatesISO3166SubdivisionsValidator {
         "WA",
         "WV",
         "WI",
-        "WY"
+        "WY",
     ]
-    
+
     /// Known United States district codes
     static let districtCodes: [String] = [
-        "DC"
+        "DC",
     ]
-    
+
     /// Known United States outlying area codes
     static let outlyingAreaCodes: [String] = [
         "AS",
@@ -77,9 +76,9 @@ class UnitedStatesISO3166SubdivisionsValidator {
         "MP",
         "PR",
         "UM",
-        "VI"
+        "VI",
     ]
-    
+
     static func isValid(code: String) -> Bool {
         let uppercaseCode = code.uppercased()
         return stateCodes.contains(uppercaseCode)
@@ -88,8 +87,7 @@ class UnitedStatesISO3166SubdivisionsValidator {
     }
 }
 
-class UnitedStatesISO3166SubdivisionsConverter {
-    
+enum UnitedStatesISO3166SubdivisionsConverter {
     private static var statesDictionary = [
         "Alabama": "AL",
         "Alaska": "AK",
@@ -133,7 +131,7 @@ class UnitedStatesISO3166SubdivisionsConverter {
         "Oklahoma": "OK",
         "Oregon": "OR",
         "Pennsylvania": "PA",
-        "Puerto Rico" : "PR",
+        "Puerto Rico": "PR",
         "Rhode Island": "RI",
         "South Carolina": "SC",
         "South Dakota": "SD",
@@ -146,19 +144,18 @@ class UnitedStatesISO3166SubdivisionsConverter {
         "Washington": "WA",
         "West Virginia": "WV",
         "Wisconsin": "WI",
-        "Wyoming": "WY"
+        "Wyoming": "WY",
     ]
-    
+
     static func stateCodeFor(_ stateText: String?) -> String? {
         guard let stateText = stateText else { return nil }
-        
+
         let upperCase = stateText.uppercased()
-        
+
         guard !statesDictionary.values.contains(upperCase) else { return upperCase }
-        
+
         guard let stateCode = statesDictionary[stateText.capitalized] else { return nil }
-        
+
         return stateCode
     }
 }
-

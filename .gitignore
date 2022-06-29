@@ -10,3 +10,5 @@ DexCareSDK.iOS.SampleApp.xcworkspace/xcuserdata/mattkiazyk.xcuserdatad/xcdebugge
 DexCareSDK.iOS.SampleApp/Config/acme-hm.plist
 
 DexCareSDK.iOS.SampleApp/Config/acme-froedtert.plist
+
+DexCareSDK.iOS.SampleApp/Config/frosh.plist

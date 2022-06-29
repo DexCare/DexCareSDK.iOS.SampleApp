@@ -3,7 +3,6 @@ import Foundation
 import LocalAuthentication
 import PromiseKit
 
-
 // sourcery: AutoMockable
 public protocol BiometricsServiceType {
     // sourcery: DefaultMockValue = true
@@ -23,11 +22,11 @@ public enum BiometryType {
 
 public class BiometricsService: BiometricsServiceType {
     let context = LAContext()
-    
+
     public var hasBiometrics: Bool {
         return context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
     }
-    
+
     public var type: BiometryType {
         // context.biometryType defaults to .none until after first call to canEvaluatePolicy
         guard context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil) else {
@@ -35,19 +34,20 @@ public class BiometricsService: BiometricsServiceType {
         }
         // convert LABiometryType to BiometryType
         switch context.biometryType {
-            case .touchID: return .touchID
-            case .faceID:  return .faceID
-            case .none:    return .none
-            @unknown default: return .none
+        case .touchID: return .touchID
+        case .faceID: return .faceID
+        case .none: return .none
+        @unknown default: return .none
         }
     }
 }
+
 extension BiometryType: CustomStringConvertible {
     public var description: String {
         switch self {
-            case .none: return ""
-            case .touchID: return "TouchID"
-            case .faceID:  return "FaceID"
+        case .none: return ""
+        case .touchID: return "TouchID"
+        case .faceID: return "FaceID"
         }
     }
 }

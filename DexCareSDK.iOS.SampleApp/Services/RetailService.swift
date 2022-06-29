@@ -1,7 +1,7 @@
 //  Copyright © 2020 DexCare. All rights reserved.
 
-import Foundation
 import DexcareiOSSDK
+import Foundation
 import PromiseKit
 
 class RetailServiceHelper {
@@ -10,7 +10,7 @@ class RetailServiceHelper {
     var dependentInformation: PersonInformation?
     var dependentAddressInformation: PersonDemographicAddress?
     var dependentEmail: String?
-    
+
     var reasonForVisit: String?
     var timeslot: TimeSlot?
     var ehrSystemName: String?
@@ -19,34 +19,32 @@ class RetailServiceHelper {
     var currentDexcarePatient: DexcarePatient?
     var relationshipToPatient: RelationshipToPatient?
     var isDependentBooking: Bool = false
-    
+
     func bookVisit() -> Promise<Void> {
         guard let reasonForVisit = reasonForVisit else { return Promise(error: "Missing reason for visit") }
         guard let timeslot = timeslot else { return Promise(error: "Missing timeslot") }
         guard let ehrSystemName = ehrSystemName else { return Promise(error: "Missing ehrSystemName") }
-         
-        var combindUserEmail: String = ""
-        var combinedPhoneNumber: String = ""
+
+        var combindUserEmail = ""
+        var combinedPhoneNumber = ""
         var patientDeclaration: PatientDeclaration = .`self`
-        
+
         if isDependentBooking {
             guard let email = dependentEmail else { return Promise(error: "Missing userEmail") }
             guard let dependentPhone = phoneNumber ?? dependentAddressInformation?.phoneNumber else { return Promise(error: "Missing phoneNumber") }
-            
+
             combinedPhoneNumber = dependentPhone
             combindUserEmail = email
             patientDeclaration = .other
-            
+
         } else {
             guard let email = userEmail else { return Promise(error: "Missing userEmail") }
             guard let patientPhoneNumber = phoneNumber ?? addressInformation?.phoneNumber else { return Promise(error: "Missing phoneNumber") }
-            
+
             combinedPhoneNumber = patientPhoneNumber
             combindUserEmail = email
         }
-        
-        
-        
+
         let visitInformation = RetailVisitInformation(
             visitReason: reasonForVisit,
             patientDeclaration: patientDeclaration,
@@ -54,59 +52,59 @@ class RetailServiceHelper {
             contactPhoneNumber: combinedPhoneNumber,
             actorRelationshipToPatient: relationshipToPatient // set nil when making a retail appointment "myself"
         )
-           
+
         let dexcareSDK = AppServices.shared.dexcareSDK
 
         return firstly {
             try updatePatientDemographics()
         }.then { patient in
-            try self.updateDependentPatientDemographics().map { (patient, $0)}
-        }.then { (patient, dependentPatient) in
-            return Promise { seal in
+            try self.updateDependentPatientDemographics().map { (patient, $0) }
+        }.then { patient, dependentPatient in
+            Promise { seal in
                 dexcareSDK.retailService.scheduleRetailAppointment(
                     paymentMethod: .`self`,
                     visitInformation: visitInformation,
                     timeslot: timeslot,
                     ehrSystemName: ehrSystemName,
                     patientDexCarePatient: self.isDependentBooking ? dependentPatient! : patient,
-                    actorDexCarePatient:  self.isDependentBooking ? patient : nil,
-                    success: { visitId in
+                    actorDexCarePatient: self.isDependentBooking ? patient : nil,
+                    success: { _ in
                         // save this
                         seal.fulfill(())
-                    }) { failedReason in
-                        print("Failed to book a retail visit: \(failedReason)")
-                        seal.reject(failedReason)
                     }
-                
+                ) { failedReason in
+                    print("Failed to book a retail visit: \(failedReason)")
+                    seal.reject(failedReason)
+                }
             }
         }
     }
-    
+
     func bookProviderVisit() -> Promise<Void> {
         guard let reasonForVisit = reasonForVisit else { return Promise(error: "Missing reason for visit") }
         guard let timeslot = timeslot else { return Promise(error: "Missing timeslot") }
         guard let ehrSystemName = ehrSystemName else { return Promise(error: "Missing ehrSystemName") }
-        
-        var combindUserEmail: String = ""
-        var combinedPhoneNumber: String = ""
+
+        var combindUserEmail = ""
+        var combinedPhoneNumber = ""
         var patientDeclaration: PatientDeclaration = .`self`
-        
+
         if isDependentBooking {
             guard let email = dependentEmail else { return Promise(error: "Missing userEmail") }
             guard let dependentPhone = phoneNumber ?? dependentAddressInformation?.phoneNumber else { return Promise(error: "Missing phoneNumber") }
-            
+
             combinedPhoneNumber = dependentPhone
             combindUserEmail = email
             patientDeclaration = .other
-            
+
         } else {
             guard let email = userEmail else { return Promise(error: "Missing userEmail") }
             guard let patientPhoneNumber = phoneNumber ?? addressInformation?.phoneNumber else { return Promise(error: "Missing phoneNumber") }
-            
+
             combinedPhoneNumber = patientPhoneNumber
             combindUserEmail = email
         }
-        
+
         let providerVisitInformation = ProviderVisitInformation(
             visitReason: "Test visit reason from integrated DexcareSDK iOS Tests - ProviderBooking",
             patientDeclaration: .self,
@@ -117,16 +115,16 @@ class RetailServiceHelper {
             ehrSystemName: ehrSystemName,
             actorRelationshipToPatient: relationshipToPatient // set nil when making a retail appointment "myself"
         )
-        
+
         let dexcareSDK = AppServices.shared.dexcareSDK
-        
+
         return firstly {
             try updatePatientDemographics()
         }.then { patient in
-            try self.updateDependentPatientDemographics().map { (patient, $0)}
-        }.then { (patient, dependentPatient) in
-            return Promise { seal in
-             
+            try self.updateDependentPatientDemographics().map { (patient, $0) }
+        }.then { patient, dependentPatient in
+            Promise { seal in
+
                 dexcareSDK.providerService.scheduleProviderVisit(
                     paymentMethod: .self,
                     providerVisitInformation: providerVisitInformation,
@@ -134,7 +132,7 @@ class RetailServiceHelper {
                     ehrSystemName: ehrSystemName,
                     patientDexCarePatient: self.isDependentBooking ? dependentPatient! : patient,
                     actorDexCarePatient: self.isDependentBooking ? patient : nil,
-                    success: { response in
+                    success: { _ in
                         seal.fulfill(())
                     },
                     failure: { error in
@@ -144,9 +142,8 @@ class RetailServiceHelper {
             }
         }
     }
-    
-    func updatePatientDemographics() throws -> Promise<DexcarePatient>{
-        
+
+    func updatePatientDemographics() throws -> Promise<DexcarePatient> {
         guard let ehrSystem = ehrSystemName else {
             throw "Missing ehrSystemName"
         }
@@ -156,10 +153,10 @@ class RetailServiceHelper {
         guard let addressInformation = addressInformation else {
             throw "Missing myselfInformation"
         }
-        
+
         let patientDemographics = try buildMyselfDemographics(email: userEmail, myselfInformation: myselfInformation, myselfAddress: addressInformation)
         let dexcareSDK = AppServices.shared.dexcareSDK
-        
+
         return Promise { seal in
             dexcareSDK.patientService.findOrCreatePatient(
                 inEhrSystem: ehrSystem,
@@ -170,11 +167,12 @@ class RetailServiceHelper {
                 }, failure: { error in
                     print("error saving patient: \(error)")
                     seal.reject(error)
-            })
+                }
+            )
         }
     }
-    
-    func updateDependentPatientDemographics() throws -> Promise<DexcarePatient?>{
+
+    func updateDependentPatientDemographics() throws -> Promise<DexcarePatient?> {
         if !isDependentBooking {
             return Promise.value(nil)
         }
@@ -187,10 +185,10 @@ class RetailServiceHelper {
         guard let addressInformation = dependentAddressInformation else {
             throw "Missing myselfInformation"
         }
-        
+
         let patientDemographics = try buildMyselfDemographics(email: dependentEmail, myselfInformation: myselfInformation, myselfAddress: addressInformation)
         let dexcareSDK = AppServices.shared.dexcareSDK
-        
+
         return Promise { seal in
             dexcareSDK.patientService.findOrCreateDependentPatient(
                 inEhrSystem: ehrSystem,
@@ -200,16 +198,16 @@ class RetailServiceHelper {
                 }, failure: { error in
                     print("error saving patient: \(error)")
                     seal.reject(error)
-                })
+                }
+            )
         }
     }
-    
+
     private func buildMyselfDemographics(email: String?, myselfInformation: PersonInformation, myselfAddress: PersonDemographicAddress) throws -> PatientDemographics {
-        
         guard let email = email else {
             throw "Missing actor email from logged in account"
         }
-        
+
         guard let firstName = myselfInformation.firstName else {
             throw "Missing actor first name from demographics form"
         }
@@ -230,19 +228,18 @@ class RetailServiceHelper {
         guard !city.isEmpty else {
             throw "Missing actor city from demographics form"
         }
-        
+
         let state = myselfAddress.address.state
         guard !state.isEmpty else {
             throw "Missing actor state from demographics form"
         }
-        
-        
+
         let lastFourSSN: String
         lastFourSSN = myselfInformation.lastFourSSN.value
         guard lastFourSSN.count == myselfInformation.lastFourSSN.maxLength else {
             throw "Missing actor last 4 social security number from demographics form"
         }
-        
+
         let postalCode = myselfAddress.address.postalCode
         guard !postalCode.isEmpty else {
             throw "Missing actor postal code from demographics form"
@@ -252,7 +249,7 @@ class RetailServiceHelper {
             throw "Missing actor phone number from demographics form"
         }
         let addressLine2 = myselfAddress.address.line2
-        
+
         let name = HumanName(
             family: lastName,
             given: firstName,
@@ -268,7 +265,7 @@ class RetailServiceHelper {
             state: state,
             postalCode: postalCode
         )
-        
+
         let demographics = PatientDemographics(
             name: name,
             addresses: [address],
@@ -283,5 +280,4 @@ class RetailServiceHelper {
         )
         return demographics
     }
-    
 }

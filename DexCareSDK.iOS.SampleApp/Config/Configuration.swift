@@ -1,10 +1,10 @@
 //  Copyright © 2020 DexCare. All rights reserved.
 
-import Foundation
+import Auth0
 import DexcareiOSSDK
+import Foundation
 import Lock
 import PromiseKit
-import Auth0
 
 class Configuration: Decodable {
     var idpClientId: String
@@ -30,20 +30,20 @@ extension Configuration {
         static let email = "email"
         static let scope = "openid offline_access"
     }
-    
+
     var dexcareConfiguration: DexcareConfiguration {
         let virtualVisitConfig = VirtualVisitConfiguration(
             pushNotificationAppId: pushNotificationAppId,
             pushNotificationPlatform: pushNotificationPlatform,
             virtualVisitUrl: URL(string: dexcareVirtualVisitUrl)!
         )
-        
+
         let environment = Environment(
             fhirOrchUrl: URL(string: dexcareFhirOrchUrl)!,
             virtualVisitConfiguration: virtualVisitConfig,
             dexcareAPIKey: dexcareFhirOrchApiKey
         )
-        
+
         return DexcareConfiguration(
             environment: environment,
             userAgent: userAgent,
@@ -57,25 +57,25 @@ extension Configuration {
     static func loadDefault() -> Configuration {
         return Configuration.load(tenantName: "acme")
     }
-    
+
     static func load(tenantName: String) -> Configuration {
         let decoder = PropertyListDecoder()
-        
+
         guard let plistURL = Bundle.main.url(forResource: tenantName, withExtension: "plist") else {
             fatalError("Could not find plist with name: \(tenantName)")
         }
-        
+
         guard
-            let data = try? Data.init(contentsOf: plistURL) else {
-                fatalError("Error finding plist with name: \(tenantName)")
+            let data = try? Data(contentsOf: plistURL)
+        else {
+            fatalError("Error finding plist with name: \(tenantName)")
         }
-        
+
         do {
             let config = try decoder.decode(Configuration.self, from: data)
             return config
         } catch {
             fatalError("Error creating Configuration object from from plist with name: \(tenantName) - \(error)")
         }
-        
     }
 }
