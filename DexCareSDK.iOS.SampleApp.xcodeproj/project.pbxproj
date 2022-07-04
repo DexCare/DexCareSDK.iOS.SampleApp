@@ -614,10 +614,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = DexCareSDK.iOS.SampleApp/DexCareSDK.iOS.SampleApp.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 7;
-				DEVELOPMENT_TEAM = ZU6GR6B2FY;
+				DEVELOPMENT_TEAM = TWMU66U8N2;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = DexCareSDK.iOS.SampleApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -625,9 +625,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.dexcarehealth.acmetestapps;
+				PRODUCT_BUNDLE_IDENTIFIER = org.dexcare.DexcareSDK.SampleApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "DexcareSDK SampleApp";
+				PROVISIONING_PROFILE_SPECIFIER = "Matt K Development Profile";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -639,10 +639,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = DexCareSDK.iOS.SampleApp/DexCareSDK.iOS.SampleApp.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 7;
-				DEVELOPMENT_TEAM = ZU6GR6B2FY;
+				DEVELOPMENT_TEAM = TWMU66U8N2;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = DexCareSDK.iOS.SampleApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -650,9 +650,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.dexcarehealth.acmetestapps;
+				PRODUCT_BUNDLE_IDENTIFIER = org.dexcare.DexcareSDK.SampleApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "DexcareSDK SampleApp";
+				PROVISIONING_PROFILE_SPECIFIER = "Matt K Development Profile";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

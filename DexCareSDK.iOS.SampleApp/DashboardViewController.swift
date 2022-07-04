@@ -292,6 +292,7 @@ class DashboardViewController: BaseViewController {
 
         if !didShowLogin {
             signInWithBiometrics()
+            return
         }
 
         if didShowLogin {

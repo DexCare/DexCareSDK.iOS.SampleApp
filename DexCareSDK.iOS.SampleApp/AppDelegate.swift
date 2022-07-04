@@ -13,6 +13,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         return true
     }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        AppServices.shared.dexcareSDK.virtualService.updatePushNotificationDeviceToken(token: deviceToken)
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Failed registering for remote notifications: \(error.localizedDescription)")
+    }
 
 //    func application(_: UIApplication, open url: URL,
 //                     options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool
