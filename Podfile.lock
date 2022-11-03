@@ -2,10 +2,10 @@ PODS:
   - Auth0 (1.38.0):
     - JWTDecode (~> 2.0)
     - SimpleKeychain
-  - DexcareSDK (8.0.1):
+  - DexcareSDK (8.2.0):
     - MBProgressHUD (~> 1.2.0)
     - MessageKit (= 3.8.0)
-    - OpenTok (= 2.22.3)
+    - OpenTok (= 2.23.1)
   - InputBarAccessoryView (5.5.0):
     - InputBarAccessoryView/Core (= 5.5.0)
   - InputBarAccessoryView/Core (5.5.0)
@@ -19,7 +19,7 @@ PODS:
   - MBProgressHUD (1.2.0)
   - MessageKit (3.8.0):
     - InputBarAccessoryView (~> 5.5.0)
-  - OpenTok (2.22.3):
+  - OpenTok (2.23.1):
     - VonageWebRTC (= 84.0.21)
   - PromiseKit (6.17.1):
     - PromiseKit/CorePromise (= 6.17.1)
@@ -36,7 +36,7 @@ PODS:
 
 DEPENDENCIES:
   - Auth0
-  - DexcareSDK (from `https://github.com/Dexcare/DexcareSDK-iOS.git`, tag `8.0.1`)
+  - DexcareSDK (from `https://github.com/Dexcare/DexcareSDK-iOS.git`, tag `8.2.0`)
   - KeychainAccess
   - Lock (~> 2.24)
   - PromiseKit
@@ -60,28 +60,28 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   DexcareSDK:
     :git: https://github.com/Dexcare/DexcareSDK-iOS.git
-    :tag: 8.0.1
+    :tag: 8.2.0
 
 CHECKOUT OPTIONS:
   DexcareSDK:
     :git: https://github.com/Dexcare/DexcareSDK-iOS.git
-    :tag: 8.0.1
+    :tag: 8.2.0
 
 SPEC CHECKSUMS:
   Auth0: 56b4b681712d10bcfddae89d4a73158abebdf5a6
-  DexcareSDK: eb311d30f54e20cd005849696e12653f4d14e0d0
+  DexcareSDK: 07235f855830610d1ad9bddbb38bba97278fec3f
   InputBarAccessoryView: 1d7b0a672b36e370f01f264b3907ef39d03328e3
   JWTDecode: 33e5e26e5ddbd21b2065820894c08fef0cad9509
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   Lock: fa9879d19cfb2159e67bcc73dc7188c6b52925c3
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   MessageKit: a1ba0c69ebead94029867853eb44dd05b9b3f453
-  OpenTok: 532cdb6254b7bf41c64f8ad761469d6f7a154c7b
+  OpenTok: 1d5737dd4df87cc77094adeaeb3b82b25a23ed3e
   PromiseKit: ee485df3d4dc570594d7e7aecae6352697dc6a4c
   SimpleKeychain: 8193a9e40967eccac933c1fde82de46c07a5ae26
   TPKeyboardAvoiding: d55b3ea7b362540af8fcf36aa3ed2e87bf210cc6
   VonageWebRTC: cfa7aefc3fe6e95bcbd778e8973af90fe9bfd497
 
-PODFILE CHECKSUM: b253a2756ea26a7eaa5c7b2e95f5555440f09545
+PODFILE CHECKSUM: 1956dd498857dce7227ea56a5e470afff4aefdb7
 
 COCOAPODS: 1.11.3

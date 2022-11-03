@@ -10,7 +10,7 @@ def auth0_pods
 end
 
 def dexcare_pod
- pod 'DexcareSDK', :git => 'https://github.com/Dexcare/DexcareSDK-iOS.git', :tag => '8.0.1'
+ pod 'DexcareSDK', :git => 'https://github.com/Dexcare/DexcareSDK-iOS.git', :tag => '8.2.0'
 end
 
 target 'DexCareSDK.iOS.SampleApp' do
