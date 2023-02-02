@@ -36,17 +36,17 @@ class VirtualServiceHelper {
             try updatePatientDemographics()
         }.then { patient in
             try self.updateDependentDemographics().map { (patient, $0) }
-        }.done { [weak self] patient, dependentPatient in
-            let isDependentBooking = self?.isDependentBooking ?? false
+        }.done { patient, dependentPatient in
+            let isDependentBooking = self.isDependentBooking ?? false
 
-            guard let reasonForVisit = self?.reasonForVisit else {
+            guard let reasonForVisit = self.reasonForVisit else {
                 throw "Missing reason for visit"
             }
             var providerIdString: String?
             var memberIdString: String?
 
-            if self?.paymentType == nil {
-                guard let providerId = self?.currentInsurancePayer?.payerId, let memberId = self?.currentInsuranceMemberId else {
+            if self.paymentType == nil {
+                guard let providerId = self.currentInsurancePayer?.payerId, let memberId = self.currentInsuranceMemberId else {
                     throw "Missing Insurance Payer information"
                 }
                 providerIdString = providerId
@@ -54,15 +54,15 @@ class VirtualServiceHelper {
             }
             var combinedEmail: String?
             if isDependentBooking {
-                combinedEmail = self?.dependentEmail
+                combinedEmail = self.dependentEmail
             } else {
-                combinedEmail = self?.patientEmail
+                combinedEmail = self.patientEmail
             }
             guard let patientEmail = combinedEmail else {
                 throw "Missing patient email"
             }
 
-            guard let catchmentArea = self?.currentCatchmentArea else {
+            guard let catchmentArea = self.currentCatchmentArea else {
                 throw "Missing catchmentArea"
             }
 
@@ -76,19 +76,19 @@ class VirtualServiceHelper {
             guard let dexcarePatient = combinedPatient else {
                 throw "Missing dexcarePatient"
             }
-            guard let practiceId = self?.currentPracticeId else {
+            guard let practiceId = self.currentPracticeId else {
                 throw "Missing practiceId"
             }
 
-            guard let practiceRegionId = self?.currentPracticeRegionId else {
+            guard let practiceRegionId = self.currentPracticeRegionId else {
                 throw "Missing practiceRegionId"
             }
-            guard let currentRegionId = self?.currentRegionId else {
+            guard let currentRegionId = self.currentRegionId else {
                 throw "Missing regionId (homeMarket)"
             }
             var combinedRelationship: RelationshipToPatient?
             if isDependentBooking {
-                combinedRelationship = self?.relationshipToPatient
+                combinedRelationship = self.relationshipToPatient
                 if combinedRelationship == nil {
                     throw "Missing relationshipToPatient"
                 }
@@ -120,13 +120,13 @@ class VirtualServiceHelper {
                 presentingViewController: presentingViewController,
                 dexcarePatient: dexcarePatient,
                 virtualVisitDetails: virtualVisitDetails,
-                paymentMethod: self?.paymentType ?? PaymentMethod.insuranceManualSelf(memberId: memberIdString!, providerId: providerIdString!),
+                paymentMethod: self.paymentType ?? PaymentMethod.insuranceManualSelf(memberId: memberIdString!, providerId: providerIdString!),
                 actor: patient, // not used when booking for self.,
                 onCompletion: onCompletion,
-                success: { [weak self] visitId in
+                success: { visitId in
                     // successfully started a virtual visit. Save the visit id in case we need to resume
                     // Note: This test app doesn't do anything with it.
-                    self?.currentVisitId = visitId
+                    self.currentVisitId = visitId
                     onSuccess()
                 },
                 failure: { error in
@@ -173,8 +173,8 @@ class VirtualServiceHelper {
                 dexcareSDK.patientService.findOrCreatePatient(
                     inEhrSystem: catchmentArea.ehrSystem,
                     patientDemographics: patientDemographics,
-                    success: { [weak self] patient in
-                        self?.currentCatchmentArea = catchmentArea
+                    success: {  patient in
+                        self.currentCatchmentArea = catchmentArea
                         seal.fulfill(patient)
                     }, failure: { error in
                         print("error saving patient: \(error)")
@@ -223,8 +223,8 @@ class VirtualServiceHelper {
                 dexcareSDK.patientService.findOrCreateDependentPatient(
                     inEhrSystem: catchmentArea.ehrSystem,
                     dependentPatientDemographics: patientDemographics,
-                    success: { [weak self] patient in
-                        self?.currentCatchmentArea = catchmentArea
+                    success: { patient in
+                        self.currentCatchmentArea = catchmentArea
                         seal.fulfill(patient)
                     }, failure: { error in
                         print("error saving patient: \(error)")

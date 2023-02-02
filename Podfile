@@ -1,7 +1,7 @@
 # A private repo with the podspec. Please make sure you have github access before installing
 source 'https://cdn.cocoapods.org/'
 
-platform :ios, '13.0'
+platform :ios, '14.0'
 inhibit_all_warnings!
 
 def auth0_pods
@@ -10,7 +10,7 @@ def auth0_pods
 end
 
 def dexcare_pod
- pod 'DexcareSDK', :git => 'https://github.com/Dexcare/DexcareSDK-iOS.git', :tag => '8.2.0'
+ pod 'DexcareSDK', :git => 'https://github.com/Dexcare/DexcareSDK-iOS.git', :tag => '8.3.0'
 end
 
 target 'DexCareSDK.iOS.SampleApp' do
@@ -20,7 +20,7 @@ target 'DexCareSDK.iOS.SampleApp' do
   dexcare_pod
   auth0_pods
 
-  pod 'PromiseKit'
+  pod 'PromiseKit', "~> 6.18"
   pod 'KeychainAccess'
 
   #Keyboard Avoidance on forms
@@ -32,7 +32,6 @@ post_install do |installer|
     target.build_configurations.each do |config|
       # Needed for Xcode12 xcframework
       config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = 13.0
     end
   end
 end

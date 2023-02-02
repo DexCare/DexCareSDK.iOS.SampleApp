@@ -3,7 +3,7 @@
 import DexcareiOSSDK
 import Foundation
 
-class AppServices {
+struct AppServices {
     static var shared: AppServices!
 
     lazy var dexcareSDK: DexcareSDK = .init(configuration: self.configuration.dexcareConfiguration)
