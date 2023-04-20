@@ -134,7 +134,7 @@ struct PhoneNumberValidator: Validator {
     //       - 11 digit numbers *only* if they begin with 1 and the rest follows above requirements
     //   RegEx used by web: /^\(?(?:[2-9][0-8]\d)\)?[- ]?(?:[2-9]\d{2})[-]?(?:\d{4})$/
     //
-    //   We handle only 10 digit numbers until we update the autoformatting to handle 11 digit numbers
+    //   We handle only 10 digit numbers until we update the auto-formatting to handle 11 digit numbers
     private let phoneFormatValidator = ClosureValidator { value in
         let phoneRegex = PhoneValidator.PHONE_VALIDATION_REGEX
 

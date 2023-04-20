@@ -4,7 +4,7 @@ extension Encodable {
     /**
      Convert this object to json data
 
-     - parameter outputFormatting: The formatting of the output JSON data (compact or pritty printed)
+     - parameter outputFormatting: The formatting of the output JSON data (compact or pretty printed)
      - parameter dateEncodingStrategy: how do you want to format the date
      - parameter dataEncodingStrategy: what kind of encoding. base64 is the default
 
@@ -25,7 +25,7 @@ extension Encodable {
     /**
      Convert this object to a json string
 
-     - parameter outputFormatting: The formatting of the output JSON data (compact or pritty printed)
+     - parameter outputFormatting: The formatting of the output JSON data (compact or pretty printed)
      - parameter dateEncodingStrategy: how do you want to format the date
      - parameter dataEncodingStrategy: what kind of encoding. base64 is the default
 
@@ -80,7 +80,7 @@ extension Decodable {
     }
 }
 
-// Generic decoder for dictionarys
+// Generic decoder for dictionaries
 
 extension KeyedDecodingContainer {
     func decodeAny<T>(_: T.Type, forKey key: K) throws -> T {

@@ -396,7 +396,7 @@ class DemographicsViewController: BaseViewController {
         didSet {
             childPostalCodeInputView.textField.textContentType = .postalCode
             childPostalCodeInputView.textField.keyboardType = .numberPad
-            childPostalCodeInputView.textField.accessibilityIdentifier = "SOMEONE_ELSE_ZIPCODE"
+            childPostalCodeInputView.textField.accessibilityIdentifier = "SOMEONE_ELSE_ZIP_CODE"
             childPostalCodeInputView.textField.on(.editingChanged) { [weak self] in
                 self?.dependentAddress.address.postalCode = (self?.childPostalCodeInputView.text ?? "").uppercased()
                 self?.childPostalCodeInputView.validationResult = self?.dependentAddress.validateZip()

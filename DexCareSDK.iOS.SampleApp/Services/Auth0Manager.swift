@@ -100,7 +100,7 @@ class Auth0AccountManager {
                 self.loadUserInfo(accessToken: credentials.accessToken)
             }
             .onError { error in
-                // Auth0 isn't set up properly most likley.
+                // Auth0 isn't set up properly most likely.
                 print(String(describing: error))
             }
             .present(from: onViewController)

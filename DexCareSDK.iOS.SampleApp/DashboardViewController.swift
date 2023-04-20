@@ -28,8 +28,8 @@ struct DashboardRetailClinicViewModel: Equatable, Hashable {
     let openHours: String?
     let clinicImageURL: URL
 
-    // we're just going to show one day of timeslots in this example
-    var timeslots: ClinicDayTimeslotsViewModel?
+    // we're just going to show one day of time slots in this example
+    var timeSlot: ClinicDayTimeSlotsViewModel?
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(departmentId)
@@ -41,7 +41,7 @@ struct DashboardProviderVisitViewModel: Equatable, Hashable {
     let ehrSystemName: String
     let displayName: String
 
-    var timeslot: ProviderDayTimeslotsViewModel?
+    var timeSlot: ProviderDayTimeSlotsViewModel?
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(providerId)
@@ -51,37 +51,37 @@ struct DashboardProviderVisitViewModel: Equatable, Hashable {
 struct DashboardRetailVisitViewModel: Equatable, Hashable {
     let visitId: String
     let clinicName: String
-    let timeslot: String
+    let timeSlot: String
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(visitId)
     }
 }
 
-struct TimeslotsViewModel: Equatable, Hashable {
-    let timeslotId: String
+struct TimeSlotsViewModel: Equatable, Hashable {
+    let timeSlotId: String
     let timeLabel: String
-    let timeslot: TimeSlot
+    let timeSlot: TimeSlot
 
     func hash(into hasher: inout Hasher) {
-        hasher.combine(timeslotId)
+        hasher.combine(timeSlotId)
     }
 }
 
-struct ClinicDayTimeslotsViewModel: Equatable, Hashable {
+struct ClinicDayTimeSlotsViewModel: Equatable, Hashable {
     let id: UUID
     let dayHeader: String
-    let timeslots: [TimeslotsViewModel]?
+    let timeSlots: [TimeSlotsViewModel]?
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(id.hashValue)
     }
 }
 
-struct ProviderDayTimeslotsViewModel: Equatable, Hashable {
+struct ProviderDayTimeSlotsViewModel: Equatable, Hashable {
     let id: UUID
     let dayHeader: String
-    let timeslots: [TimeslotsViewModel]?
+    let timeSlots: [TimeSlotsViewModel]?
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(id.hashValue)
@@ -109,11 +109,11 @@ extension DashboardVirtualPracticeRegionViewModel {
     }
 }
 
-extension ClinicDayTimeslotsViewModel {
+extension ClinicDayTimeSlotsViewModel {
     init(withClinic clinic: RetailDepartment, clinicTimeSlot: RetailAppointmentTimeSlot?) {
         id = UUID()
 
-        // For simplicity of the Test App - I'm only grabbing the first day. There could be multiple days of timeslots
+        // For simplicity of the Test App - I'm only grabbing the first day. There could be multiple days of time slots
         if let scheduleDay = clinicTimeSlot?.scheduleDays.first {
             // N.B. display dates and times in the time zone of the clinic, regardless of user's time zone
             let timezone = TimeZone(identifier: clinic.timezone)!
@@ -134,33 +134,33 @@ extension ClinicDayTimeslotsViewModel {
 
             if scheduleDay.timeSlots.count == 0 {
                 dayHeader = "No available time today"
-                timeslots = []
+                timeSlots = []
             } else {
                 dayHeader = dayHeaderString
-                timeslots = scheduleDay.timeSlots.map {
-                    TimeslotsViewModel(timeslotId: $0.slotId, timeLabel: timeSlotDateFormatter.string(from: $0.slotDateTime), timeslot: $0)
+                timeSlots = scheduleDay.timeSlots.map {
+                    TimeSlotsViewModel(timeSlotId: $0.slotId, timeLabel: timeSlotDateFormatter.string(from: $0.slotDateTime), timeSlot: $0)
                 }
             }
 
         } else {
-            dayHeader = "Loading timeslots"
-            timeslots = nil
+            dayHeader = "Loading time slots"
+            timeSlots = nil
         }
     }
 }
 
-extension ProviderDayTimeslotsViewModel {
-    init(withProvider _: Provider, timeslot: ProviderTimeSlot?) {
+extension ProviderDayTimeSlotsViewModel {
+    init(withProvider _: Provider, timeSlot: ProviderTimeSlot?) {
         id = UUID()
-        // For simplicity of the Test App - I'm only grabbing the first day (that has timeslots). There could be multiple days of timeslots
+        // For simplicity of the Test App - I'm only grabbing the first day (that has time slots). There could be multiple days of time slots
 
-        let scheduleDay = timeslot?.scheduleDays.first {
+        let scheduleDay = timeSlot?.scheduleDays.first {
             $0.timeSlots.count > 0
         }
 
-        if let timeslot = timeslot, let scheduleDay = scheduleDay {
+        if let timeSlot, let scheduleDay {
             // N.B. display dates and times in the time zone of the clinic, regardless of user's time zone
-            let timezone = TimeZone(identifier: timeslot.timezoneString)!
+            let timezone = TimeZone(identifier: timeSlot.timezoneString)!
             let retailCalendar = Calendar(for: timezone)
             let headerDateFormatter: DateFormatter = retailCalendar.timeSlotShortDateFormatter()
             let timeSlotDateFormatter: DateFormatter = retailCalendar.timeSlotDateFormatter()
@@ -178,29 +178,29 @@ extension ProviderDayTimeslotsViewModel {
 
             if scheduleDay.timeSlots.count == 0 {
                 dayHeader = "No available time today"
-                timeslots = []
+                timeSlots = []
             } else {
                 dayHeader = dayHeaderString
-                timeslots = scheduleDay.timeSlots.map {
-                    TimeslotsViewModel(timeslotId: $0.slotId, timeLabel: timeSlotDateFormatter.string(from: $0.slotDateTime), timeslot: $0)
+                timeSlots = scheduleDay.timeSlots.map {
+                    TimeSlotsViewModel(timeSlotId: $0.slotId, timeLabel: timeSlotDateFormatter.string(from: $0.slotDateTime), timeSlot: $0)
                 }
             }
 
         } else {
-            dayHeader = "Loading timeslots"
-            timeslots = nil
+            dayHeader = "Loading time slots"
+            timeSlots = nil
         }
     }
 }
 
 extension DashboardRetailClinicViewModel {
-    init(withClinic clinic: RetailDepartment, clinicTimeSlot: ClinicDayTimeslotsViewModel?) {
+    init(withClinic clinic: RetailDepartment, clinicTimeSlot: ClinicDayTimeSlotsViewModel?) {
         departmentId = clinic.departmentId
         departmentName = clinic.departmentName
         ehrSystemName = clinic.ehrSystemName
         displayName = clinic.displayName
         clinicImageURL = clinic.smallImageUrl
-        timeslots = clinicTimeSlot
+        timeSlot = clinicTimeSlot
 
         openHours = clinic.openDays.compactMap {
             let today = DateFormatter.dayString.string(from: Date())
@@ -218,17 +218,17 @@ extension DashboardRetailClinicViewModel {
 extension DashboardRetailVisitViewModel {
     init(withScheduledVisit visit: ScheduledVisit) {
         visitId = visit.id
-        clinicName = visit.retailDepartment?.displayName ?? "Unkwown name"
-        timeslot = DateFormatter.appointmentString.string(from: visit.appointmentDetails.startDateTime)
+        clinicName = visit.retailDepartment?.displayName ?? "Unknown name"
+        timeSlot = DateFormatter.appointmentString.string(from: visit.appointmentDetails.startDateTime)
     }
 }
 
 extension DashboardProviderVisitViewModel {
-    init(withProvider provider: Provider, timeslot: ProviderDayTimeslotsViewModel) {
+    init(withProvider provider: Provider, timeSlot: ProviderDayTimeSlotsViewModel) {
         providerId = provider.providerNationalId
         ehrSystemName = provider.departments.first!.ehrSystemName
         displayName = provider.name
-        self.timeslot = timeslot
+        self.timeSlot = timeSlot
     }
 }
 
@@ -246,14 +246,14 @@ class DashboardViewController: BaseViewController {
     var didShowLogin: Bool = false
 
     var allClinics: [RetailDepartment] = []
-    var scheduledlVisits: [ScheduledVisit] = []
+    var scheduledVisits: [ScheduledVisit] = []
     var allVirtualPracticeRegions: [VirtualPracticeRegion] = []
 
-    var allTimeslots: [String: RetailAppointmentTimeSlot] = [:]
+    var allTimeSlots: [String: RetailAppointmentTimeSlot] = [:]
     var dataSource: UICollectionViewDiffableDataSource<DashboardSection, AnyHashable>!
 
     var provider: Provider?
-    var providerTimeslot: ProviderTimeSlot?
+    var providerTimeSlot: ProviderTimeSlot?
 
     @IBOutlet var collectionView: UICollectionView! {
         didSet {
@@ -280,7 +280,6 @@ class DashboardViewController: BaseViewController {
 
         // setup Dexcare Customization Options
         let customizationOptions = CustomizationOptions(
-            customStrings: nil,
             tytoCareConfig: TytoCareConfig(helpURL: URL(string: "https://www.google.com")!),
             virtualConfig: VirtualConfig(showWaitingRoomVideo: true, waitingRoomVideoURL: Bundle.main.url(forResource: "waitingRoomCustom", withExtension: "mp4"))
         )
@@ -360,9 +359,9 @@ class DashboardViewController: BaseViewController {
 
                     if let clinic = item as? DashboardRetailClinicViewModel {
                         cell.setupView(withClinic: clinic)
-                        cell.onTimeslotTap = { [weak self] timeslot in
-                            if let timeslot = timeslot {
-                                AppServices.shared.retailService.timeslot = timeslot
+                        cell.onTimeSlotTap = { [weak self] timeSlot in
+                            if let timeSlot {
+                                AppServices.shared.retailService.timeSlot = timeSlot
                                 AppServices.shared.retailService.ehrSystemName = clinic.ehrSystemName
                                 self?.navigateToReasonForVisit(visitType: .retail)
                             }
@@ -389,9 +388,9 @@ class DashboardViewController: BaseViewController {
                     if let provider = item as? DashboardProviderVisitViewModel {
                         cell.setupView(withProvider: provider)
 
-                        cell.onTimeslotTap = { [weak self] timeslot in
-                            if let timeslot = timeslot {
-                                AppServices.shared.retailService.timeslot = timeslot
+                        cell.onTimeSlotTap = { [weak self] timeSlot in
+                            if let timeSlot {
+                                AppServices.shared.retailService.timeSlot = timeSlot
                                 AppServices.shared.retailService.ehrSystemName = provider.ehrSystemName
                                 self?.navigateToReasonForVisit(visitType: .provider)
                             }
@@ -466,7 +465,7 @@ class DashboardViewController: BaseViewController {
         AppServices.shared.dexcareSDK.patientService.getPatient(success: { dexcarePatient in
             AppServices.shared.virtualService.currentDexcarePatient = dexcarePatient
             AppServices.shared.retailService.currentDexcarePatient = dexcarePatient
-            // we've gotten the dexcarepatient successfully with a jwt token
+            // We've gotten the DexCarePatient successfully with a JWT token
             dump(dexcarePatient)
         }) { error in
 
@@ -498,7 +497,7 @@ class DashboardViewController: BaseViewController {
     }
 
     private func checkRegionAvailability(practiceRegion: DashboardVirtualPracticeRegionViewModel) {
-        // before starting the booking process double check the availabilty of the region.
+        // before starting the booking process double check the availability of the region.
         MBProgressHUD.showAdded(to: view, animated: true)
         AppServices.shared.dexcareSDK.virtualService.getWaitTimeAvailability(
             regionCodes: [practiceRegion.regionCode],
@@ -545,23 +544,22 @@ class DashboardViewController: BaseViewController {
             brand: AppServices.shared.configuration.brand,
             success: { [weak self] clinics in
 
-                guard let strongSelf = self else { return }
-                strongSelf.allClinics = clinics
+                guard let self else { return }
+                self.allClinics = clinics
 
-                let snapshot = strongSelf.snapshotForCurrentState()
-                strongSelf.dataSource.apply(snapshot, animatingDifferences: true)
+                let snapshot = self.snapshotForCurrentState()
+                self.dataSource.apply(snapshot, animatingDifferences: true)
 
-                // load timeslots for clinics
+                // load time slots for clinics
                 clinics.forEach { clinic in
                     firstly {
-                        strongSelf.loadTimeslots(departmentName: clinic.departmentName)
+                        self.loadTimeSlots(departmentName: clinic.departmentName)
                     }.done { clinicTimeSlot in
-                        strongSelf.allTimeslots[clinic.departmentId] = clinicTimeSlot
-                        let snapshot = strongSelf.snapshotForCurrentState()
-                        strongSelf.dataSource.apply(snapshot, animatingDifferences: true)
-
+                        self.allTimeSlots[clinic.departmentId] = clinicTimeSlot
+                        let snapshot = self.snapshotForCurrentState()
+                        self.dataSource.apply(snapshot, animatingDifferences: true)
                     }.catch { error in
-                        print("Error loading timeslots: \(error)")
+                        print("Error loading time slots: \(error)")
                     }
                 }
             }
@@ -571,13 +569,13 @@ class DashboardViewController: BaseViewController {
         }
     }
 
-    private func loadTimeslots(departmentName: String) -> Promise<RetailAppointmentTimeSlot> {
+    private func loadTimeSlots(departmentName: String) -> Promise<RetailAppointmentTimeSlot> {
         return Promise { seal in
             AppServices.shared.dexcareSDK.retailService.getTimeSlots(
                 departmentName: departmentName,
                 visitTypeShortName: nil,
-                success: { timeslots in
-                    seal.fulfill(timeslots)
+                success: { timeSlots in
+                    seal.fulfill(timeSlots)
                 }
             ) { error in
                 seal.reject(error)
@@ -590,79 +588,75 @@ class DashboardViewController: BaseViewController {
         guard let providerId = AppServices.shared.configuration.providerId else { return }
 
         firstly {
-            loadProviderTimeslots(providerNationalId: providerId)
-        }.done { [weak self] provider, providerTimeslot in
-            guard let strongSelf = self else { return }
+            loadProviderTimeSlots(providerNationalId: providerId)
+        }.done { [weak self] provider, providerTimeSlot in
+            guard let self else { return }
 
-            strongSelf.provider = provider
-            strongSelf.providerTimeslot = providerTimeslot
+            self.provider = provider
+            self.providerTimeSlot = providerTimeSlot
 
-            let snapshot = strongSelf.snapshotForCurrentState()
-            strongSelf.dataSource.apply(snapshot, animatingDifferences: true)
+            let snapshot = self.snapshotForCurrentState()
+            self.dataSource.apply(snapshot, animatingDifferences: true)
+        }.catch { error in
+            print("error loading provider: \(error)")
         }
     }
 
-    private func loadProviderTimeslots(providerNationalId: String) -> Promise<(Provider, ProviderTimeSlot)> {
+    private func loadProviderTimeSlots(providerNationalId: String) -> Promise<(Provider, ProviderTimeSlot)> {
         return Promise { seal in
             AppServices.shared.dexcareSDK.providerService.getProvider(
                 providerNationalId: providerNationalId)
             { provider in
 
-                    // Providers can have various "VisitTypes", in this example we will be booking against "NewPatient" types
-
-                    // Grab visitType with shortName `"shortName": "NewPatient",`
-                    guard let visitType = provider.visitTypes.first(where: { $0.shortName == VisitTypeShortName.newPatient }) else {
-                        seal.reject("No New Patient VisitType found")
-                        return
-                    }
-
-                    // Providers can technically have multiple departments, but for the most part only have 1.
-                    guard let department = provider.departments.first else {
-                        seal.reject("No departments found")
-                        return
-                    }
-
-                    // We don't _have_ to call `getMaxLookaheadDays`. This will tell us how far ahead we can search for timeslots.
-                    AppServices.shared.dexcareSDK.providerService.getMaxLookaheadDays(
-                        visitTypeShortName: visitType.shortName!,
-                        ehrSystemName: department.ehrSystemName
-                    ) { maxLookAheadDays in
-
-                        let startDate = Date()
-                        let endDate = Calendar.current.date(byAdding: .day, value: maxLookAheadDays, to: startDate) ?? Date()
-
-                        // We used the maxLookAheadDays here for example, but the start/endDate can be anything inside Today to Today + MaxLookahead Days
-                        AppServices.shared.dexcareSDK.providerService.getProviderTimeslots(
-                            providerNationalId: providerNationalId,
-                            visitTypeId: visitType.visitTypeId,
-                            startDate: startDate,
-                            endDate: endDate
-                        ) { providerTimeSlot in
-
-                            seal.fulfill((provider, providerTimeSlot))
-
-                        } failure: { error in
-                            seal.reject(error)
-                        }
-
+                // Providers can have various "VisitTypes", in this example we will be booking against "NewPatient" types
+                
+                // Grab visitType with shortName `"shortName": "NewPatient",`
+                guard let visitTypeShortName = provider.visitTypes.first(where: { $0.shortName == VisitTypeShortName.newPatient })?.shortName else {
+                    seal.reject("No New Patient VisitType found")
+                    return
+                }
+                
+                // Providers can technically have multiple departments, but for the most part only have 1.
+                guard let department = provider.departments.first else {
+                    seal.reject("No departments found")
+                    return
+                }
+                
+                // We don't _have_ to call `getMaxLookaheadDays`. This will tell us how far ahead we can search for time slots.
+                AppServices.shared.dexcareSDK.providerService.getMaxLookaheadDays(
+                    visitTypeShortName: visitTypeShortName,
+                    ehrSystemName: department.ehrSystemName
+                ) { maxLookAheadDays in
+                    
+                    let startDate = Date()
+                    let endDate = Calendar.current.date(byAdding: .day, value: maxLookAheadDays, to: startDate) ?? Date()
+                    
+                    // We used the maxLookAheadDays here for example, but the start/endDate can be anything inside Today to Today + MaxLookahead Days
+                    AppServices.shared.dexcareSDK.providerService.getProviderTimeslots(providerNationalId: providerNationalId, visitTypeShortName: visitTypeShortName, startDate: startDate, endDate: endDate)
+                    { providerTimeSlot in
+                        seal.fulfill((provider, providerTimeSlot))
                     } failure: { error in
                         seal.reject(error)
                     }
-
+                    
                 } failure: { error in
                     seal.reject(error)
                 }
+                
+            } failure: { error in
+                seal.reject(error)
+            }
         }
     }
 
     private func loadRetailVisits() {
         AppServices.shared.dexcareSDK.appointmentService.getRetailVisits(
             success: { [weak self] scheduledVisits in
-                guard let strongSelf = self else { return }
-                strongSelf.scheduledlVisits = scheduledVisits
+                guard let self else { return }
+                self.scheduledVisits = scheduledVisits
 
-                let snapshot = strongSelf.snapshotForCurrentState()
-                strongSelf.dataSource.apply(snapshot, animatingDifferences: true)
+                let snapshot = self.snapshotForCurrentState()
+                self.dataSource.apply(snapshot, animatingDifferences: true)
             })
         { error in
                 print("Error loading retail visits: \(error)")
@@ -674,8 +668,8 @@ class DashboardViewController: BaseViewController {
         var snapshot = NSDiffableDataSourceSnapshot<DashboardSection, AnyHashable>()
 
         snapshot.appendSections([DashboardSection.retailVisits])
-        if scheduledlVisits.count > 0 {
-            snapshot.appendItems(scheduledlVisits.map { scheduledVisit in
+        if scheduledVisits.count > 0 {
+            snapshot.appendItems(scheduledVisits.map { scheduledVisit in
                 DashboardRetailVisitViewModel(withScheduledVisit: scheduledVisit)
             })
         } else {
@@ -686,8 +680,8 @@ class DashboardViewController: BaseViewController {
         snapshot.appendSections([DashboardSection.retailClinics])
         if allClinics.count > 0 {
             snapshot.appendItems(allClinics.map { clinic in
-                let timeslots = allTimeslots[clinic.departmentId]
-                return DashboardRetailClinicViewModel(withClinic: clinic, clinicTimeSlot: ClinicDayTimeslotsViewModel(withClinic: clinic, clinicTimeSlot: timeslots))
+                let timeSlot = allTimeSlots[clinic.departmentId]
+                return DashboardRetailClinicViewModel(withClinic: clinic, clinicTimeSlot: ClinicDayTimeSlotsViewModel(withClinic: clinic, clinicTimeSlot: timeSlot))
             })
         } else {
             // no clinics
@@ -703,10 +697,10 @@ class DashboardViewController: BaseViewController {
         }
 
         snapshot.appendSections([DashboardSection.providerBooking])
-        if let provider = provider, let timeslot = providerTimeslot {
-            snapshot.appendItems([DashboardProviderVisitViewModel(withProvider: provider, timeslot: ProviderDayTimeslotsViewModel(withProvider: provider, timeslot: timeslot))])
+        if let provider, let timeSlot = providerTimeSlot {
+            snapshot.appendItems([DashboardProviderVisitViewModel(withProvider: provider, timeSlot: ProviderDayTimeSlotsViewModel(withProvider: provider, timeSlot: timeSlot))])
         } else {
-            snapshot.appendItems(["No Provider Timeslots found"])
+            snapshot.appendItems(["No Provider Time Slots found"])
         }
 
         return snapshot
@@ -889,8 +883,8 @@ extension DashboardViewController: RefreshTokenDelegate {
             } else {
                 print("Could not renew token")
             }
-            // if token is nil, the sdk will fail the originating call
-            // if token is not nil, the sdk will retry the original call, and either succeed or fail back to the original point of entry
+            // if token is nil, the SDK will fail the originating call
+            // if token is not nil, the SDK will retry the original call, and either succeed or fail back to the original point of entry
             tokenCallback(token)
         }.catch { error in
             print("Error renewing token: \(error)")

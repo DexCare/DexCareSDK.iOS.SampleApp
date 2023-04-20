@@ -1,7 +1,7 @@
 PODS:
-  - Auth0 (1.38.0):
+  - Auth0 (1.39.1):
     - JWTDecode (~> 2.0)
-    - SimpleKeychain
+    - SimpleKeychain (~> 0.12)
   - DexcareSDK (8.3.0):
     - MBProgressHUD (~> 1.2.0)
     - MessageKit (= 3.8.0)
@@ -68,7 +68,7 @@ CHECKOUT OPTIONS:
     :tag: 8.3.0
 
 SPEC CHECKSUMS:
-  Auth0: 56b4b681712d10bcfddae89d4a73158abebdf5a6
+  Auth0: ba3f034ff606c99052ea9e91867ebb5317565f37
   DexcareSDK: 8e8bb4b9f3d73855dc6fe0b36bfb34d8257927e0
   InputBarAccessoryView: 1d7b0a672b36e370f01f264b3907ef39d03328e3
   JWTDecode: 33e5e26e5ddbd21b2065820894c08fef0cad9509
@@ -82,6 +82,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: d55b3ea7b362540af8fcf36aa3ed2e87bf210cc6
   VonageWebRTC: 4b57187170ef4ea435006e932600646a0521d6b0
 
-PODFILE CHECKSUM: 7d725b59e3f531125885b550c14fde2a1a593c37
+PODFILE CHECKSUM: 6bff43fc8452dce6b735f12439b2b24fa3e71214
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.0

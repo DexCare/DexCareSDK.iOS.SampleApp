@@ -6,14 +6,14 @@ import UIKit
 
 class RetailClinicCollectionViewCell: UICollectionViewCell, NibLoadableView {
     @IBOutlet var clinicNameLabel: UILabel!
-    @IBOutlet var timeslotCount: UILabel!
+    @IBOutlet var timeSlotCount: UILabel!
     @IBOutlet var timeSlotStackView: UIStackView!
-    @IBOutlet var timeslotHeaderLabel: UILabel!
+    @IBOutlet var timeSlotHeaderLabel: UILabel!
 
-    var onTimeslotTap: ((TimeSlot?) -> Void)?
+    var onTimeSlotTap: ((TimeSlot?) -> Void)?
 
     func setupView(withClinic clinic: DashboardRetailClinicViewModel) {
-        timeslotHeaderLabel.text = "Timeslots"
+        timeSlotHeaderLabel.text = "Time Slots"
         timeSlotStackView.isHidden = false
         backgroundColor = UIColor.systemGray2
         clinicNameLabel.text = clinic.displayName
@@ -22,23 +22,23 @@ class RetailClinicCollectionViewCell: UICollectionViewCell, NibLoadableView {
             timeSlotStackView.removeArrangedSubview(view)
         }
 
-        if let timeslot = clinic.timeslots {
-            timeslotCount.text = timeslot.dayHeader
-            addTimeSlots(timeslots: timeslot.timeslots ?? [])
+        if let timeSlot = clinic.timeSlot {
+            timeSlotCount.text = timeSlot.dayHeader
+            addTimeSlots(timeSlots: timeSlot.timeSlots ?? [])
         } else {
-            timeslotCount.text = "Loading timeslots"
+            timeSlotCount.text = "Loading time slots"
         }
     }
 
     func setupView(withString text: String) {
-        timeslotHeaderLabel.text = ""
-        timeslotCount.text = ""
+        timeSlotHeaderLabel.text = ""
+        timeSlotCount.text = ""
         timeSlotStackView.isHidden = true
         clinicNameLabel.text = text
     }
 
     func setupView(withProvider provider: DashboardProviderVisitViewModel) {
-        timeslotHeaderLabel.text = "Timeslots"
+        timeSlotHeaderLabel.text = "Time Slots"
         timeSlotStackView.isHidden = false
 
         backgroundColor = UIColor.systemGray2
@@ -48,29 +48,29 @@ class RetailClinicCollectionViewCell: UICollectionViewCell, NibLoadableView {
             timeSlotStackView.removeArrangedSubview(view)
         }
 
-        if let timeslot = provider.timeslot {
-            timeslotCount.text = timeslot.dayHeader
-            addTimeSlots(timeslots: timeslot.timeslots ?? [])
+        if let timeSlot = provider.timeSlot {
+            timeSlotCount.text = timeSlot.dayHeader
+            addTimeSlots(timeSlots: timeSlot.timeSlots ?? [])
         } else {
-            timeslotCount.text = "Loading timeslots"
+            timeSlotCount.text = "Loading time slots"
         }
     }
 
-    @objc func timeslotTapped(_ sender: TimeButton) {
-        onTimeslotTap?(sender.timeslot)
+    @objc func timeSlotTapped(_ sender: TimeButton) {
+        onTimeSlotTap?(sender.timeSlot)
     }
 
-    func addTimeSlots(timeslots: [TimeslotsViewModel]) {
-        timeslots.forEach { timeslot in
-            let button = timeButton(timeslot: timeslot)
-            button.addTarget(self, action: #selector(timeslotTapped(_:)), for: .touchUpInside)
+    func addTimeSlots(timeSlots: [TimeSlotsViewModel]) {
+        timeSlots.forEach { timeSlot in
+            let button = timeButton(timeSlot: timeSlot)
+            button.addTarget(self, action: #selector(timeSlotTapped(_:)), for: .touchUpInside)
             timeSlotStackView.addArrangedSubview(button)
         }
         timeSlotStackView.setNeedsLayout()
     }
 
-    func timeButton(timeslot: TimeslotsViewModel) -> TimeButton {
-        let button = TimeButton(timeslot: timeslot.timeslot, timeLabel: timeslot.timeLabel)
+    func timeButton(timeSlot: TimeSlotsViewModel) -> TimeButton {
+        let button = TimeButton(timeSlot: timeSlot.timeSlot, timeLabel: timeSlot.timeLabel)
         button.titleLabel?.adjustsFontSizeToFitWidth = true
         NSLayoutConstraint.activate([
             button.widthAnchor.constraint(equalToConstant: 75),
@@ -81,12 +81,12 @@ class RetailClinicCollectionViewCell: UICollectionViewCell, NibLoadableView {
 }
 
 class TimeButton: UIButton {
-    var timeslot: TimeSlot?
+    var timeSlot: TimeSlot?
 
-    convenience init(timeslot: TimeSlot, timeLabel: String) {
+    convenience init(timeSlot: TimeSlot, timeLabel: String) {
         self.init()
 
-        self.timeslot = timeslot
+        self.timeSlot = timeSlot
 
         setTitle(timeLabel, for: .normal)
         setTitleColor(UIColor.systemBlue, for: .normal)

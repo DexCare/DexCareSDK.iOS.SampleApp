@@ -310,16 +310,16 @@ public extension UIControl {
      */
     class EventHandler {
         let handler: (UIControl, UIEvent) -> Void
-        let oneshot: Bool
+        let oneShot: Bool
 
-        init(_ handler: @escaping (UIControl, UIEvent) -> Void, oneshot: Bool) {
+        init(_ handler: @escaping (UIControl, UIEvent) -> Void, oneShot: Bool) {
             self.handler = handler
-            self.oneshot = oneshot
+            self.oneShot = oneShot
         }
 
         @objc func invoke(_ sender: UIControl, event: UIEvent) {
             handler(sender, event)
-            if oneshot {
+            if oneShot {
                 sender.off(Unmanaged.passUnretained(self).toOpaque())
             }
         }
@@ -329,20 +329,20 @@ public extension UIControl {
 
     @discardableResult func on<T: UIControl>(_ events: UIControl.Event, _ callback: @escaping (T, UIEvent) -> Void) -> EventHandlerId {
         // swiftlint:disable force_cast
-        return _on(events, EventHandler({ callback($0 as! T, $1) }, oneshot: false))
+        return _on(events, EventHandler({ callback($0 as! T, $1) }, oneShot: false))
     }
 
     @discardableResult func once<T: UIControl>(_ events: UIControl.Event, _ callback: @escaping (T, UIEvent) -> Void) -> EventHandlerId {
         // swiftlint:disable force_cast
-        return _on(events, EventHandler({ callback($0 as! T, $1) }, oneshot: true))
+        return _on(events, EventHandler({ callback($0 as! T, $1) }, oneShot: true))
     }
 
     @discardableResult func on(_ events: UIControl.Event, _ callback: @escaping () -> Void) -> EventHandlerId {
-        return _on(events, EventHandler({ _, _ in callback() }, oneshot: false))
+        return _on(events, EventHandler({ _, _ in callback() }, oneShot: false))
     }
 
     @discardableResult func once(_ events: UIControl.Event, _ callback: @escaping () -> Void) -> EventHandlerId {
-        return _on(events, EventHandler({ _, _ in callback() }, oneshot: true))
+        return _on(events, EventHandler({ _, _ in callback() }, oneShot: true))
     }
 
     func off(_ identifier: EventHandlerId) {

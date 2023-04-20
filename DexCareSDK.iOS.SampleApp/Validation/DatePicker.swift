@@ -149,7 +149,7 @@ public class DatePickerTextField: UITextField {
     }
 
     @available(*, unavailable)
-    public required init?(coder _: NSCoder) { fatalError("we aint using IB") }
+    public required init?(coder _: NSCoder) { fatalError("we aren't using IB") }
 
     private(set) var datePickerView: UIDatePicker!
 

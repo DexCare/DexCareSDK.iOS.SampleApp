@@ -8,7 +8,7 @@ struct AppServices {
 
     lazy var dexcareSDK: DexcareSDK = .init(configuration: self.configuration.dexcareConfiguration)
 
-    lazy var configuration: Configuration = Configuration.load(tenantName: "acme")
+    lazy var configuration: Configuration = Configuration.loadDefault()
 
     lazy var virtualService: VirtualServiceHelper = .init()
 

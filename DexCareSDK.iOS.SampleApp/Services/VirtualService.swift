@@ -37,8 +37,6 @@ class VirtualServiceHelper {
         }.then { patient in
             try self.updateDependentDemographics().map { (patient, $0) }
         }.done { patient, dependentPatient in
-            let isDependentBooking = self.isDependentBooking ?? false
-
             guard let reasonForVisit = self.reasonForVisit else {
                 throw "Missing reason for visit"
             }
@@ -52,8 +50,8 @@ class VirtualServiceHelper {
                 providerIdString = providerId
                 memberIdString = memberId
             }
-            var combinedEmail: String?
-            if isDependentBooking {
+            let combinedEmail: String?
+            if self.isDependentBooking {
                 combinedEmail = self.dependentEmail
             } else {
                 combinedEmail = self.patientEmail
@@ -62,12 +60,8 @@ class VirtualServiceHelper {
                 throw "Missing patient email"
             }
 
-            guard let catchmentArea = self.currentCatchmentArea else {
-                throw "Missing catchmentArea"
-            }
-
             var combinedPatient: DexcarePatient?
-            if isDependentBooking {
+            if self.isDependentBooking {
                 combinedPatient = dependentPatient
             } else {
                 combinedPatient = patient
@@ -80,14 +74,11 @@ class VirtualServiceHelper {
                 throw "Missing practiceId"
             }
 
-            guard let practiceRegionId = self.currentPracticeRegionId else {
-                throw "Missing practiceRegionId"
-            }
             guard let currentRegionId = self.currentRegionId else {
                 throw "Missing regionId (homeMarket)"
             }
             var combinedRelationship: RelationshipToPatient?
-            if isDependentBooking {
+            if self.isDependentBooking {
                 combinedRelationship = self.relationshipToPatient
                 if combinedRelationship == nil {
                     throw "Missing relationshipToPatient"
@@ -97,7 +88,7 @@ class VirtualServiceHelper {
             let virtualVisitDetails = VirtualVisitDetails(
                 acceptedTerms: true,
                 assignmentQualifiers: nil,
-                patientDeclaration: isDependentBooking ? .other : .self,
+                patientDeclaration: self.isDependentBooking ? .other : .self,
                 stateLicensure: currentRegionId,
                 visitReason: reasonForVisit,
                 visitTypeName: .virtual,

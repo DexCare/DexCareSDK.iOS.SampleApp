@@ -22,12 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("Failed registering for remote notifications: \(error.localizedDescription)")
     }
 
-//    func application(_: UIApplication, open url: URL,
-//                     options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool
-//    {
-//        return Auth0.resumeAuth(url, options: options)
-//    }
-
     // MARK: UISceneSession Lifecycle
 
     func application(_: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options _: UIScene.ConnectionOptions) -> UISceneConfiguration {

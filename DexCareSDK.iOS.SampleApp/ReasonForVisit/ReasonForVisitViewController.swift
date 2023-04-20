@@ -20,7 +20,7 @@ class ReasonForVisitViewController: BaseViewController {
 
         navigationItem.title = "REASON FOR VISIT"
 
-        // We want to show the continue button while the keyboard is up as well, use the modifer to change the constraint constant
+        // We want to show the continue button while the keyboard is up as well, use the modifier to change the constraint constant
         keyboardObserver = KeyboardObservingConstraintModifier(constraint: bottomConstraint, inView: view)
         addTapToDismissKeyboardGestureRecognizer(to: view)
 

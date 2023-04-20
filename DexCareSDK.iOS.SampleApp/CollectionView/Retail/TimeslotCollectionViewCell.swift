@@ -3,7 +3,7 @@
 import Foundation
 import UIKit
 
-class TimeslotCollectionViewCell: UICollectionViewCell, ReusableView {
+class TimeSlotCollectionViewCell: UICollectionViewCell, ReusableView {
     // sourcery: AutoStubbable
     struct ViewModel {
         let timeText: String
@@ -21,7 +21,7 @@ class TimeslotCollectionViewCell: UICollectionViewCell, ReusableView {
         accessibilityTraits = UIAccessibilityTraits.button
     }
 
-    func setup(withTimeslotViewModel viewModel: ViewModel) {
+    func setup(withTimeSlotViewModel viewModel: ViewModel) {
         timeLabel.text = viewModel.timeText
 
         accessibilityValue = timeLabel.text

@@ -14,8 +14,6 @@ class ConsoleLogger: DexcareSDKLogger {
         case .info: emoji = "✏️"
         case .warning: emoji = "⚠️"
         case .error: emoji = "❌"
-        @unknown default:
-            emoji = "❌"
         }
         NSLog("\(emoji) \(sender): \(message)")
     }

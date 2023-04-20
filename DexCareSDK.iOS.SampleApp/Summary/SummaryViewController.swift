@@ -114,7 +114,7 @@ class SummaryViewController: BaseViewController {
         }
     }
 
-    @IBAction func bookVirtuaVisit() {
+    @IBAction func bookVirtualVisit() {
         switch visitType {
         case .virtual:
             do {

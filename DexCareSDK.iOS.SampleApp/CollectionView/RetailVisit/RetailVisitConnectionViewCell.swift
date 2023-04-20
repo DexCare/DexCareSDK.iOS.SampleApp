@@ -14,7 +14,7 @@ class RetailVisitCollectionViewCell: UICollectionViewCell, NibLoadableView {
         backgroundColor = UIColor.systemGray4
         clinicNameLabel.text = visit.clinicName
 
-        timeLabel.text = visit.timeslot
+        timeLabel.text = visit.timeSlot
 
         // can use this visit later to delete
         visitId = visit.visitId

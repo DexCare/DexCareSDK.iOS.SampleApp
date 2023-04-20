@@ -12,7 +12,7 @@ public protocol BiometricsServiceType {
 }
 
 // Because iOS 11.0-11.2 does not have .none case, and to
-// better encapsulate LocalAuthetication library, we wrap LABiometryType with our own type.
+// better encapsulate LocalAuthentication library, we wrap LABiometryType with our own type.
 // This will keep rest of the app from needing "if #available(iOS 11.2, *)" code.
 public enum BiometryType {
     case none

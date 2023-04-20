@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -34,8 +35,8 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zbv-62-Fqr">
                                         <rect key="frame" x="0.0" y="32" width="605" height="30"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Timeslots" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4zX-VU-Nr3">
-                                                <rect key="frame" x="0.0" y="4" width="65.5" height="22"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Time slots" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4zX-VU-Nr3">
+                                                <rect key="frame" x="0.0" y="4" width="69.5" height="22"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="22" id="1T3-DD-mAa"/>
                                                 </constraints>
@@ -100,9 +101,9 @@
             <size key="customSize" width="625" height="383"/>
             <connections>
                 <outlet property="clinicNameLabel" destination="yOQ-Li-Utc" id="Yat-ww-hoG"/>
+                <outlet property="timeSlotCount" destination="XRr-A7-9mZ" id="6s8-6r-zA4"/>
+                <outlet property="timeSlotHeaderLabel" destination="4zX-VU-Nr3" id="7Bw-4j-Oso"/>
                 <outlet property="timeSlotStackView" destination="me5-FF-6Uu" id="jmt-BU-nkM"/>
-                <outlet property="timeslotCount" destination="XRr-A7-9mZ" id="wsb-H0-Irj"/>
-                <outlet property="timeslotHeaderLabel" destination="4zX-VU-Nr3" id="uLe-nT-wbi"/>
             </connections>
             <point key="canvasLocation" x="-148.55072463768118" y="112.83482142857142"/>
         </collectionViewCell>

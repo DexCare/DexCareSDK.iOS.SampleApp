@@ -10,7 +10,7 @@ import UIKit
  every reuse identifier. Much of this is based off of the ideas from:
  https://medium.com/@gonzalezreal/ios-cell-registration-reusing-with-swift-protocol-extensions-and-generics-c5ac4fb5b75e
  */
-public protocol ReusableView: class {
+public protocol ReusableView: AnyObject {
     static var defaultReuseIdentifier: String { get }
 }
 
@@ -24,7 +24,7 @@ public extension ReusableView where Self: UIView {
     }
 }
 
-public protocol NibLoadableView: class {
+public protocol NibLoadableView: AnyObject {
     static var nibName: String { get }
 }
 
