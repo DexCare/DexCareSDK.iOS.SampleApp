@@ -4,7 +4,6 @@ import Auth0
 import DexcareiOSSDK
 import Foundation
 import Lock
-import PromiseKit
 
 class Configuration: Decodable {
     var idpClientId: String

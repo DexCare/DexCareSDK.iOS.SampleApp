@@ -4,7 +4,6 @@
 import DexcareiOSSDK
 import Foundation
 import MBProgressHUD
-import PromiseKit
 import UIKit
 
 class SummaryViewController: BaseViewController {
@@ -82,35 +81,36 @@ class SummaryViewController: BaseViewController {
     }
 
     @IBAction func validateCreditCard() {
-        guard let cardNumber = cardNumberInputView.text, !cardNumber.isEmpty else {
-            showAlert(title: "Error", message: "Missing credit card number")
-            return
-        }
-        guard let cardMonth = cardMonthInputView.text, !cardMonth.isEmpty else {
-            showAlert(title: "Error", message: "Missing credit card month")
-            return
-        }
-
-        guard let cardYear = cardYearInputView.text, !cardYear.isEmpty else {
-            showAlert(title: "Error", message: "Missing credit card year")
-            return
-        }
-
-        guard let cardCVC = cardCVCInputView.text, !cardCVC.isEmpty else {
-            showAlert(title: "Error", message: "Missing credit card cvc")
-            return
-        }
-
-        MBProgressHUD.showAdded(to: view, animated: true)
-        firstly {
-            AppServices.shared.virtualService.getStripeToken(cardNumber: cardNumber, cardMonth: cardMonth, cardYear: cardYear, cardCVC: cardCVC)
-        }.done { token in
-            MBProgressHUD.hide(for: self.view, animated: true)
-            AppServices.shared.virtualService.paymentType = PaymentMethod.creditCard(stripeToken: token)
-            self.showAlert(title: "Success", message: "Credit card has been validated")
-        }.catch { error in
-            MBProgressHUD.hide(for: self.view, animated: true)
-            self.showAlert(title: "Error", message: String(describing: error))
+        Task {
+            guard let cardNumber = cardNumberInputView.text, !cardNumber.isEmpty else {
+                showAlert(title: "Error", message: "Missing credit card number")
+                return
+            }
+            guard let cardMonth = cardMonthInputView.text, !cardMonth.isEmpty else {
+                showAlert(title: "Error", message: "Missing credit card month")
+                return
+            }
+            
+            guard let cardYear = cardYearInputView.text, !cardYear.isEmpty else {
+                showAlert(title: "Error", message: "Missing credit card year")
+                return
+            }
+            
+            guard let cardCVC = cardCVCInputView.text, !cardCVC.isEmpty else {
+                showAlert(title: "Error", message: "Missing credit card cvc")
+                return
+            }
+            
+            MBProgressHUD.showAdded(to: view, animated: true)
+            do {
+                let token = try await AppServices.shared.virtualService.getStripeToken(cardNumber: cardNumber, cardMonth: cardMonth, cardYear: cardYear, cardCVC: cardCVC)
+                MBProgressHUD.hide(for: self.view, animated: true)
+                AppServices.shared.virtualService.paymentType = PaymentMethod.creditCard(stripeToken: token)
+                showAlert(title: "Success", message: "Credit card has been validated")
+            } catch {
+                MBProgressHUD.hide(for: self.view, animated: true)
+                showAlert(title: "Error", message: String(describing: error))
+            }
         }
     }
 
@@ -140,35 +140,39 @@ class SummaryViewController: BaseViewController {
                 MBProgressHUD.hide(for: view, animated: true)
                 showAlert(title: "Error", message: "ERROR starting virtual visit:\(error.localizedDescription)")
             }
-
+            
         case .retail:
             MBProgressHUD.showAdded(to: view, animated: true)
-            AppServices.shared.retailService.bookVisit().done {
-                print("VISIT SUCCESSFULLY booked")
-                MBProgressHUD.hide(for: self.view, animated: true)
-                self.showAlert(title: "Success", message: "Visit Successfully booked")
-                // lets go back to the dashboard
-                self.navigationController?.popToRootViewController(animated: true)
-            }.catch { error in
-                print("ERROR booking retail visit:\(error)")
-                self.showAlert(title: "Error", message: "ERROR booking retail:\(error.localizedDescription)")
-                MBProgressHUD.hide(for: self.view, animated: true)
+            Task {
+                do {
+                    try await AppServices.shared.retailService.bookVisit()
+                    print("VISIT SUCCESSFULLY booked")
+                    MBProgressHUD.hide(for: self.view, animated: true)
+                    self.showAlert(title: "Success", message: "Visit Successfully booked")
+                    // lets go back to the dashboard
+                    self.navigationController?.popToRootViewController(animated: true)
+                } catch {
+                    print("ERROR booking retail visit:\(error)")
+                    self.showAlert(title: "Error", message: "ERROR booking retail:\(error.localizedDescription)")
+                    MBProgressHUD.hide(for: self.view, animated: true)
+                }
             }
-
         case .provider:
-            MBProgressHUD.showAdded(to: view, animated: true)
-            AppServices.shared.retailService.bookProviderVisit().done {
-                print("VISIT SUCCESSFULLY booked")
-                MBProgressHUD.hide(for: self.view, animated: true)
-                self.showAlert(title: "Success", message: "Provider Visit Successfully booked")
-                // lets go back to the dashboard
-                self.navigationController?.popToRootViewController(animated: true)
-            }.catch { error in
-                print("ERROR booking provider visit:\(error)")
-                self.showAlert(title: "Error", message: "ERROR booking retail:\(error.localizedDescription)")
-                MBProgressHUD.hide(for: self.view, animated: true)
-            }
-
+            Task {
+                MBProgressHUD.showAdded(to: view, animated: true)
+                do {
+                    try await AppServices.shared.retailService.bookProviderVisit()
+                    print("VISIT SUCCESSFULLY booked")
+                    MBProgressHUD.hide(for: self.view, animated: true)
+                    self.showAlert(title: "Success", message: "Provider Visit Successfully booked")
+                    // lets go back to the dashboard
+                    self.navigationController?.popToRootViewController(animated: true)
+                } catch {
+                    print("ERROR booking provider visit:\(error)")
+                    self.showAlert(title: "Error", message: "ERROR booking retail:\(error.localizedDescription)")
+                    MBProgressHUD.hide(for: self.view, animated: true)
+                }
+        }
         case .none:
             print("No visit type selected")
         }

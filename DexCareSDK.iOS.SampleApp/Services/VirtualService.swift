@@ -2,7 +2,7 @@
 
 import DexcareiOSSDK
 import Foundation
-import PromiseKit
+import UIKit
 
 class VirtualServiceHelper {
     var currentRegionId: String?
@@ -28,109 +28,104 @@ class VirtualServiceHelper {
     var paymentType: PaymentMethod?
 
     func bookVirtualVisit(presentingViewController: UINavigationController, onCompletion: @escaping VisitCompletion, onSuccess: @escaping () -> Void, failure: @escaping (Error) -> Void) throws {
-        try bookMyselfVirtualVisit(presentingViewController: presentingViewController, onCompletion: onCompletion, onSuccess: onSuccess, failure: failure)
-    }
-
-    func bookMyselfVirtualVisit(presentingViewController: UINavigationController, onCompletion: @escaping VisitCompletion, onSuccess: @escaping () -> Void, failure: @escaping (Error) -> Void) throws {
-        firstly {
-            try updatePatientDemographics()
-        }.then { patient in
-            try self.updateDependentDemographics().map { (patient, $0) }
-        }.done { patient, dependentPatient in
-            guard let reasonForVisit = self.reasonForVisit else {
-                throw "Missing reason for visit"
-            }
-            var providerIdString: String?
-            var memberIdString: String?
-
-            if self.paymentType == nil {
-                guard let providerId = self.currentInsurancePayer?.payerId, let memberId = self.currentInsuranceMemberId else {
-                    throw "Missing Insurance Payer information"
+        Task {
+            do {
+                let patient = try await updatePatientDemographics()
+                let dependentPatient = try await self.updateDependentDemographics()
+                guard let reasonForVisit = self.reasonForVisit else {
+                    throw "Missing reason for visit"
                 }
-                providerIdString = providerId
-                memberIdString = memberId
-            }
-            let combinedEmail: String?
-            if self.isDependentBooking {
-                combinedEmail = self.dependentEmail
-            } else {
-                combinedEmail = self.patientEmail
-            }
-            guard let patientEmail = combinedEmail else {
-                throw "Missing patient email"
-            }
-
-            var combinedPatient: DexcarePatient?
-            if self.isDependentBooking {
-                combinedPatient = dependentPatient
-            } else {
-                combinedPatient = patient
-            }
-
-            guard let dexcarePatient = combinedPatient else {
-                throw "Missing dexcarePatient"
-            }
-            guard let practiceId = self.currentPracticeId else {
-                throw "Missing practiceId"
-            }
-
-            guard let currentRegionId = self.currentRegionId else {
-                throw "Missing regionId (homeMarket)"
-            }
-            var combinedRelationship: RelationshipToPatient?
-            if self.isDependentBooking {
-                combinedRelationship = self.relationshipToPatient
-                if combinedRelationship == nil {
-                    throw "Missing relationshipToPatient"
+                var providerIdString: String?
+                var memberIdString: String?
+                
+                if self.paymentType == nil {
+                    guard let providerId = self.currentInsurancePayer?.payerId, let memberId = self.currentInsuranceMemberId else {
+                        throw "Missing Insurance Payer information"
+                    }
+                    providerIdString = providerId
+                    memberIdString = memberId
                 }
-            }
-
-            let virtualVisitDetails = VirtualVisitDetails(
-                acceptedTerms: true,
-                assignmentQualifiers: nil,
-                patientDeclaration: self.isDependentBooking ? .other : .self,
-                stateLicensure: currentRegionId,
-                visitReason: reasonForVisit,
-                visitTypeName: .virtual,
-                userEmail: patientEmail,
-                contactPhoneNumber: "(204)233-2332",
-                practiceId: practiceId,
-                assessmentToolUsed: nil,
-                brand: nil,
-                interpreterLanguage: nil,
-                preTriageTags: nil,
-                urgency: nil,
-                actorRelationshipToPatient: combinedRelationship,
-                homeMarket: nil,
-                initialStatus: nil
-            )
-            
-
-            let dexcareSDK = AppServices.shared.dexcareSDK
-            dexcareSDK.virtualService.createVirtualVisit(
-                presentingViewController: presentingViewController,
-                dexcarePatient: dexcarePatient,
-                virtualVisitDetails: virtualVisitDetails,
-                paymentMethod: self.paymentType ?? PaymentMethod.insuranceManualSelf(memberId: memberIdString!, providerId: providerIdString!),
-                actor: patient, // not used when booking for self.,
-                onCompletion: onCompletion,
-                success: { visitId in
-                    // successfully started a virtual visit. Save the visit id in case we need to resume
-                    // Note: This test app doesn't do anything with it.
-                    self.currentVisitId = visitId
-                    onSuccess()
-                },
-                failure: { error in
-                    failure("error starting virtual visit: \(error)")
+                let combinedEmail: String?
+                if self.isDependentBooking {
+                    combinedEmail = self.dependentEmail
+                } else {
+                    combinedEmail = self.patientEmail
                 }
-            )
-        }
-        .catch { error in
-            failure("error starting virtual visit: \(error)")
+                guard let patientEmail = combinedEmail else {
+                    throw "Missing patient email"
+                }
+                
+                let combinedPatient: DexcarePatient?
+                if self.isDependentBooking {
+                    combinedPatient = dependentPatient
+                } else {
+                    combinedPatient = patient
+                }
+                
+                guard let dexcarePatient = combinedPatient else {
+                    throw "Missing dexcarePatient"
+                }
+                guard let practiceId = self.currentPracticeId else {
+                    throw "Missing practiceId"
+                }
+                
+                guard let currentRegionId = self.currentRegionId else {
+                    throw "Missing regionId (homeMarket)"
+                }
+                var combinedRelationship: RelationshipToPatient?
+                if self.isDependentBooking {
+                    combinedRelationship = self.relationshipToPatient
+                    if combinedRelationship == nil {
+                        throw "Missing relationshipToPatient"
+                    }
+                }
+                
+                let virtualVisitDetails = VirtualVisitDetails(
+                    acceptedTerms: true,
+                    assignmentQualifiers: nil,
+                    patientDeclaration: self.isDependentBooking ? .other : .self,
+                    stateLicensure: currentRegionId,
+                    visitReason: reasonForVisit,
+                    visitTypeName: .virtual,
+                    userEmail: patientEmail,
+                    contactPhoneNumber: "(204)233-2332",
+                    practiceId: practiceId,
+                    assessmentToolUsed: nil,
+                    brand: nil,
+                    interpreterLanguage: nil,
+                    preTriageTags: nil,
+                    urgency: nil,
+                    actorRelationshipToPatient: combinedRelationship,
+                    homeMarket: nil,
+                    initialStatus: nil
+                )
+                
+                
+                let dexcareSDK = AppServices.shared.dexcareSDK
+                dexcareSDK.virtualService.createVirtualVisit(
+                    presentingViewController: presentingViewController,
+                    dexcarePatient: dexcarePatient,
+                    virtualVisitDetails: virtualVisitDetails,
+                    paymentMethod: self.paymentType ?? PaymentMethod.insuranceManualSelf(memberId: memberIdString!, providerId: providerIdString!),
+                    actor: patient, // not used when booking for self.,
+                    onCompletion: onCompletion,
+                    success: { visitId in
+                        // successfully started a virtual visit. Save the visit id in case we need to resume
+                        // Note: This test app doesn't do anything with it.
+                        self.currentVisitId = visitId
+                        onSuccess()
+                    },
+                    failure: { error in
+                        failure("error starting virtual visit: \(error)")
+                    }
+                )
+            } catch {
+                failure("error starting virtual visit: \(error)")
+            }
         }
     }
 
-    func updatePatientDemographics() throws -> Promise<DexcarePatient> {
+    func updatePatientDemographics() async throws -> DexcarePatient {
         guard let regionId = currentRegionId else {
             throw "Missing RegionId"
         }
@@ -143,42 +138,25 @@ class VirtualServiceHelper {
 
         let patientDemographics = try buildMyselfDemographics(patientEmail: patientEmail, myselfInformation: myselfInformation, myselfAddress: addressInformation)
         let dexcareSDK = AppServices.shared.dexcareSDK
-        let brand: String = AppServices.shared.configuration.brand
+        let brand = AppServices.shared.configuration.brand
 
-        return firstly {
-            // Based on the region and user address, we get a Catchment Area that includes an EHRSystem
-            return Promise<CatchmentArea> { resolver in
-                dexcareSDK.patientService.getCatchmentArea(
-                    visitState: regionId,
-                    residenceState: addressInformation.address.state,
-                    residenceZipCode: addressInformation.address.postalCode,
-                    brand: brand, success: { catchmentArea in
-                        resolver.fulfill(catchmentArea)
-                    }
-                ) { error in
-                    resolver.reject(error)
-                }
-            }
-        }.then { catchmentArea in
-            Promise { seal in
-                dexcareSDK.patientService.findOrCreatePatient(
-                    inEhrSystem: catchmentArea.ehrSystem,
-                    patientDemographics: patientDemographics,
-                    success: {  patient in
-                        self.currentCatchmentArea = catchmentArea
-                        seal.fulfill(patient)
-                    }, failure: { error in
-                        print("error saving patient: \(error)")
-                        seal.reject(error)
-                    }
-                )
-            }
-        }
+        // Based on the region and user address, we get a Catchment Area that includes an EHRSystem
+        let catchmentArea = try await dexcareSDK.patientService.getCatchmentArea(
+            visitState: regionId,
+            residenceState: addressInformation.address.state,
+            residenceZipCode: addressInformation.address.postalCode,
+            brand: brand)
+        let patient = try await dexcareSDK.patientService.findOrCreatePatient(
+            inEhrSystem: catchmentArea.ehrSystem,
+            patientDemographics: patientDemographics)
+        
+        self.currentCatchmentArea = catchmentArea
+        return patient
     }
 
-    func updateDependentDemographics() throws -> Promise<DexcarePatient?> {
+    func updateDependentDemographics() async throws -> DexcarePatient? {
         if !isDependentBooking {
-            return Promise.value(nil)
+            return nil
         }
         guard let regionId = currentRegionId else {
             throw "Missing RegionId"
@@ -194,36 +172,19 @@ class VirtualServiceHelper {
 
         let dexcareSDK = AppServices.shared.dexcareSDK
         let brand: String = AppServices.shared.configuration.brand
-
-        return firstly {
-            // Based on the region and user address, we get a Catchment Area that includes an EHRSystem
-            return Promise<CatchmentArea> { resolver in
-                dexcareSDK.patientService.getCatchmentArea(
-                    visitState: regionId,
-                    residenceState: addressInformation.address.state,
-                    residenceZipCode: addressInformation.address.postalCode,
-                    brand: brand, success: { catchmentArea in
-                        resolver.fulfill(catchmentArea)
-                    }
-                ) { error in
-                    resolver.reject(error)
-                }
-            }
-        }.then { catchmentArea in
-            Promise { seal in
-                dexcareSDK.patientService.findOrCreateDependentPatient(
-                    inEhrSystem: catchmentArea.ehrSystem,
-                    dependentPatientDemographics: patientDemographics,
-                    success: { patient in
-                        self.currentCatchmentArea = catchmentArea
-                        seal.fulfill(patient)
-                    }, failure: { error in
-                        print("error saving patient: \(error)")
-                        seal.reject(error)
-                    }
-                )
-            }
-        }
+        
+        // Based on the region and user address, we get a Catchment Area that includes an EHRSystem
+        let catchmentArea = try await dexcareSDK.patientService.getCatchmentArea(
+            visitState: regionId,
+            residenceState: addressInformation.address.state,
+            residenceZipCode: addressInformation.address.postalCode,
+            brand: brand)
+        let patient = try await dexcareSDK.patientService.findOrCreateDependentPatient(
+            inEhrSystem: catchmentArea.ehrSystem,
+            dependentPatientDemographics: patientDemographics)
+        
+        self.currentCatchmentArea = catchmentArea
+        return patient
     }
 
     private func buildMyselfDemographics(patientEmail: String?, myselfInformation: PersonInformation, myselfAddress: PersonDemographicAddress) throws -> PatientDemographics {
@@ -304,7 +265,7 @@ class VirtualServiceHelper {
         return demographics
     }
 
-    func getStripeToken(cardNumber: String, cardMonth: String, cardYear: String, cardCVC: String) -> Promise<String> {
+    func getStripeToken(cardNumber: String, cardMonth: String, cardYear: String, cardCVC: String) async throws -> String {
         /// In this simple example, we are using Stripe's Rest API in order to get the payment token
         /// You can also install the Stripe SDK which provides other means of getting the token as well as UI elements to help you.
 
@@ -319,27 +280,14 @@ class VirtualServiceHelper {
             "card[cvc]": cardCVC,
         ])
 
-        return Promise { seal in
-            URLSession.shared.dataTask(with: request) { data, _, error in
-                if let error = error {
-                    print("ERROR  getting stripe token: \(error)")
-                    seal.reject(error)
-                } else {
-                    guard let data = data else {
-                        print("Empty data")
-                        seal.reject("Empty data returned")
-                        return
-                    }
-
-                    do {
-                        // only need the ID out of the response
-                        let object = try JSONDecoder().decode(StripeResponseObject.self, from: data)
-                        seal.fulfill(object.id)
-                    } catch {
-                        seal.reject("error decoding stripe response: \(error)")
-                    }
-                }
-            }.resume()
+        do {
+            let data = try await URLSession.shared.data(for: request)
+            // only need the ID out of the response
+            let object = try JSONDecoder().decode(StripeResponseObject.self, from: data.0)
+            return object.id
+        } catch {
+            print("ERROR  getting stripe token: \(error)")
+            throw error
         }
     }
 }

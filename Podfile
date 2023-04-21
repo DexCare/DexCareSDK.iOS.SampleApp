@@ -20,7 +20,6 @@ target 'DexCareSDK.iOS.SampleApp' do
   dexcare_pod
   auth0_pods
 
-  pod 'PromiseKit', "~> 6.18"
   pod 'KeychainAccess'
 
   #Keyboard Avoidance on forms

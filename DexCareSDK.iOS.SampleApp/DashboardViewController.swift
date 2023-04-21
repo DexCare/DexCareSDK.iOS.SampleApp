@@ -3,7 +3,6 @@
 import DexcareiOSSDK
 import Foundation
 import MBProgressHUD
-import PromiseKit
 import UIKit
 
 struct DashboardVirtualPracticeRegionViewModel: Equatable, Hashable {
@@ -290,7 +289,7 @@ class DashboardViewController: BaseViewController {
         super.viewDidAppear(animated)
 
         if !didShowLogin {
-            signInWithBiometrics()
+            Task { await signInWithBiometrics() }
             return
         }
 
@@ -300,32 +299,31 @@ class DashboardViewController: BaseViewController {
         }
     }
 
-    private func signInWithBiometrics() {
+    private func signInWithBiometrics() async {
         // if user doesn't have biometrics OR user has biometrics but hasn't any saved tokens return early
         if !AppServices.shared.auth0AccountService.canLogInWithBiometrics {
             checkForAccessTokenAndLogin()
             return
         }
-        // grabs the access Token from keychain (with biometrics)
-        AppServices.shared.auth0AccountService.signInWithAuthToken().done { [weak self] accessToken in
+        
+        do {
+            // grabs the access Token from keychain (with biometrics)
+            let accessToken = try await AppServices.shared.auth0AccountService.signInWithAuthToken()
             if let accessToken = accessToken {
                 // we've successfully signed into Auth0 with an accessToken
-                self?.dexcareSDKSignInAndLoad(token: accessToken)
+                dexcareSDKSignInAndLoad(token: accessToken)
             } else {
-                self?.checkForAccessTokenAndLogin()
+                checkForAccessTokenAndLogin()
             }
-        }
-        .catch { [weak self] error in
-
+        } catch {
             switch error {
             case AccountServiceError.userCancelled:
                 // user cancelled out of biometrics, ignore
                 // in this example, lets just show the auth0 UI again
-                self?.checkForAccessTokenAndLogin()
-                return
-
+                checkForAccessTokenAndLogin()
+                
             default:
-                self?.checkForAccessTokenAndLogin()
+                checkForAccessTokenAndLogin()
             }
         }
     }
@@ -540,113 +538,79 @@ class DashboardViewController: BaseViewController {
     }
 
     private func loadRetailClinics() {
-        AppServices.shared.dexcareSDK.retailService.getRetailDepartments(
-            brand: AppServices.shared.configuration.brand,
-            success: { [weak self] clinics in
-
-                guard let self else { return }
-                self.allClinics = clinics
-
-                let snapshot = self.snapshotForCurrentState()
-                self.dataSource.apply(snapshot, animatingDifferences: true)
-
+        Task {
+            do {
+                allClinics = try await AppServices.shared.dexcareSDK.retailService.getRetailDepartments(
+                    brand: AppServices.shared.configuration.brand)
+                dataSource.apply(snapshotForCurrentState(), animatingDifferences: true)
+                
                 // load time slots for clinics
-                clinics.forEach { clinic in
-                    firstly {
-                        self.loadTimeSlots(departmentName: clinic.departmentName)
-                    }.done { clinicTimeSlot in
+                for clinic in allClinics {
+                    do {
+                        let clinicTimeSlot = try await loadTimeSlots(departmentName: clinic.departmentName)
                         self.allTimeSlots[clinic.departmentId] = clinicTimeSlot
-                        let snapshot = self.snapshotForCurrentState()
-                        self.dataSource.apply(snapshot, animatingDifferences: true)
-                    }.catch { error in
+                        self.dataSource.apply(snapshotForCurrentState(), animatingDifferences: true)
+                    } catch {
                         print("Error loading time slots: \(error)")
                     }
                 }
+            } catch {
+                print("Error loading retail clinics: \(error)")
+                self.showAlert(title: "Error loading retail clinics", message: error.localizedDescription)
             }
-        ) { error in
-            print("Error loading retail clinics: \(error)")
-            self.showAlert(title: "Error loading retail clinics", message: error.localizedDescription)
         }
     }
 
-    private func loadTimeSlots(departmentName: String) -> Promise<RetailAppointmentTimeSlot> {
-        return Promise { seal in
-            AppServices.shared.dexcareSDK.retailService.getTimeSlots(
-                departmentName: departmentName,
-                visitTypeShortName: nil,
-                success: { timeSlots in
-                    seal.fulfill(timeSlots)
-                }
-            ) { error in
-                seal.reject(error)
-            }
-        }
+    private func loadTimeSlots(departmentName: String) async throws -> RetailAppointmentTimeSlot {
+        try await AppServices.shared.dexcareSDK.retailService.getTimeSlots(
+            departmentName: departmentName,
+            visitTypeShortName: nil)
     }
 
     private func loadProvider() {
         // environment doesn't have providers
         guard let providerId = AppServices.shared.configuration.providerId else { return }
-
-        firstly {
-            loadProviderTimeSlots(providerNationalId: providerId)
-        }.done { [weak self] provider, providerTimeSlot in
-            guard let self else { return }
-
-            self.provider = provider
-            self.providerTimeSlot = providerTimeSlot
-
-            let snapshot = self.snapshotForCurrentState()
-            self.dataSource.apply(snapshot, animatingDifferences: true)
-        }.catch { error in
-            print("error loading provider: \(error)")
+        Task {
+            do {
+                let (provider, providerTimeSlot) = try await self.loadProviderTimeSlots(providerNationalId: providerId)
+                self.provider = provider
+                self.providerTimeSlot = providerTimeSlot
+                
+                self.dataSource.apply(self.snapshotForCurrentState(), animatingDifferences: true)
+            } catch {
+                print("error loading provider: \(error)")
+            }
         }
     }
 
-    private func loadProviderTimeSlots(providerNationalId: String) -> Promise<(Provider, ProviderTimeSlot)> {
-        return Promise { seal in
-            AppServices.shared.dexcareSDK.providerService.getProvider(
-                providerNationalId: providerNationalId)
-            { provider in
-
-                // Providers can have various "VisitTypes", in this example we will be booking against "NewPatient" types
-                
-                // Grab visitType with shortName `"shortName": "NewPatient",`
-                guard let visitTypeShortName = provider.visitTypes.first(where: { $0.shortName == VisitTypeShortName.newPatient })?.shortName else {
-                    seal.reject("No New Patient VisitType found")
-                    return
-                }
-                
-                // Providers can technically have multiple departments, but for the most part only have 1.
-                guard let department = provider.departments.first else {
-                    seal.reject("No departments found")
-                    return
-                }
-                
-                // We don't _have_ to call `getMaxLookaheadDays`. This will tell us how far ahead we can search for time slots.
-                AppServices.shared.dexcareSDK.providerService.getMaxLookaheadDays(
-                    visitTypeShortName: visitTypeShortName,
-                    ehrSystemName: department.ehrSystemName
-                ) { maxLookAheadDays in
-                    
-                    let startDate = Date()
-                    let endDate = Calendar.current.date(byAdding: .day, value: maxLookAheadDays, to: startDate) ?? Date()
-                    
-                    // We used the maxLookAheadDays here for example, but the start/endDate can be anything inside Today to Today + MaxLookahead Days
-                    AppServices.shared.dexcareSDK.providerService.getProviderTimeslots(providerNationalId: providerNationalId, visitTypeShortName: visitTypeShortName, startDate: startDate, endDate: endDate)
-                    { providerTimeSlot in
-                        seal.fulfill((provider, providerTimeSlot))
-                    } failure: { error in
-                        seal.reject(error)
-                    }
-                    
-                } failure: { error in
-                    seal.reject(error)
-                }
-                
-            } failure: { error in
-                seal.reject(error)
-            }
+    private func loadProviderTimeSlots(providerNationalId: String) async throws -> (Provider, ProviderTimeSlot) {
+        let provider = try await AppServices.shared.dexcareSDK.providerService.getProvider(providerNationalId: providerNationalId)
+        
+        // Providers can have various "VisitTypes", in this example we will be booking against "NewPatient" types
+        
+        // Grab visitType with shortName `"shortName": "NewPatient",`
+        guard let visitTypeShortName = provider.visitTypes.first(where: { $0.shortName == VisitTypeShortName.newPatient })?.shortName else {
+            throw "No New Patient VisitType found"
         }
+        
+        // Providers can technically have multiple departments, but for the most part only have 1.
+        guard let department = provider.departments.first else {
+            throw "No departments found"
+        }
+        
+        // We don't _have_ to call `getMaxLookaheadDays`. This will tell us how far ahead we can search for time slots.
+        let maxLookAheadDays = try await AppServices.shared.dexcareSDK.providerService.getMaxLookaheadDays(
+            visitTypeShortName: visitTypeShortName,
+            ehrSystemName: department.ehrSystemName
+        )
+        
+        let startDate = Date()
+        let endDate = Calendar.current.date(byAdding: .day, value: maxLookAheadDays, to: startDate) ?? Date()
+        
+        // We used the maxLookAheadDays here for example, but the start/endDate can be anything inside Today to Today + MaxLookahead Days
+        let providerTimeSlot = try await AppServices.shared.dexcareSDK.providerService.getProviderTimeslots(providerNationalId: providerNationalId, visitTypeShortName: visitTypeShortName, startDate: startDate, endDate: endDate)
+        
+        return (provider, providerTimeSlot)
     }
 
     private func loadRetailVisits() {
@@ -874,20 +838,21 @@ extension RetailAppointmentTimeSlot: Hashable {
 extension DashboardViewController: RefreshTokenDelegate {
     // The SDK has received a 403, lets try and refresh the token
     func newTokenRequest(tokenCallback: @escaping TokenRequestCallback) {
-        // lets try and renew are token we have saved
-        firstly {
-            AppServices.shared.auth0AccountService.renewToken()
-        }.done { token in
-            if token != nil {
-                print("Successfully renewed token")
-            } else {
-                print("Could not renew token")
+        // lets try and renew any token we have saved
+        Task {
+            do {
+                let token = try await AppServices.shared.auth0AccountService.renewToken()
+                if token != nil {
+                    print("Successfully renewed token")
+                } else {
+                    print("Could not renew token")
+                }
+                // if token is nil, the SDK will fail the originating call
+                // if token is not nil, the SDK will retry the original call, and either succeed or fail back to the original point of entry
+                tokenCallback(token)
+            } catch {
+                print("Error renewing token: \(error)")
             }
-            // if token is nil, the SDK will fail the originating call
-            // if token is not nil, the SDK will retry the original call, and either succeed or fail back to the original point of entry
-            tokenCallback(token)
-        }.catch { error in
-            print("Error renewing token: \(error)")
         }
     }
 }

@@ -1,7 +1,6 @@
 
 import Foundation
 import LocalAuthentication
-import PromiseKit
 
 // sourcery: AutoMockable
 public protocol BiometricsServiceType {
