@@ -3,6 +3,7 @@ import Foundation
 import JWTDecode
 import KeychainAccess
 import Lock
+import UIKit
 
 enum AccountServiceError: Error {
     case userCancelled

@@ -19,9 +19,9 @@ class VirtualServiceHelper {
     var currentVisitId: String?
     var currentInsurancePayer: InsurancePayer?
     var currentInsuranceMemberId: String?
-    var currentCatchmentArea: CatchmentArea?
     var currentPracticeId: String?
     var currentPracticeRegionId: String?
+    var currentEhrSystemName: String?
     var relationshipToPatient: RelationshipToPatient?
     var isDependentBooking: Bool = false
 
@@ -106,7 +106,7 @@ class VirtualServiceHelper {
                     presentingViewController: presentingViewController,
                     dexcarePatient: dexcarePatient,
                     virtualVisitDetails: virtualVisitDetails,
-                    paymentMethod: self.paymentType ?? PaymentMethod.insuranceManualSelf(memberId: memberIdString!, providerId: providerIdString!),
+                    paymentMethod: self.paymentType ?? PaymentMethod.insuranceSelf(memberId: memberIdString!, payorId: providerIdString!),
                     actor: patient, // not used when booking for self.,
                     onCompletion: onCompletion,
                     success: { visitId in
@@ -126,8 +126,8 @@ class VirtualServiceHelper {
     }
 
     func updatePatientDemographics() async throws -> DexcarePatient {
-        guard let regionId = currentRegionId else {
-            throw "Missing RegionId"
+        guard let ehrSystemName = currentEhrSystemName else {
+            throw "Missing ehrSystemName"
         }
         guard let myselfInformation = myselfInformation else {
             throw "Missing myselfInformation"
@@ -138,19 +138,10 @@ class VirtualServiceHelper {
 
         let patientDemographics = try buildMyselfDemographics(patientEmail: patientEmail, myselfInformation: myselfInformation, myselfAddress: addressInformation)
         let dexcareSDK = AppServices.shared.dexcareSDK
-        let brand = AppServices.shared.configuration.brand
-
-        // Based on the region and user address, we get a Catchment Area that includes an EHRSystem
-        let catchmentArea = try await dexcareSDK.patientService.getCatchmentArea(
-            visitState: regionId,
-            residenceState: addressInformation.address.state,
-            residenceZipCode: addressInformation.address.postalCode,
-            brand: brand)
         let patient = try await dexcareSDK.patientService.findOrCreatePatient(
-            inEhrSystem: catchmentArea.ehrSystem,
+            inEhrSystem: ehrSystemName,
             patientDemographics: patientDemographics)
         
-        self.currentCatchmentArea = catchmentArea
         return patient
     }
 
@@ -158,8 +149,8 @@ class VirtualServiceHelper {
         if !isDependentBooking {
             return nil
         }
-        guard let regionId = currentRegionId else {
-            throw "Missing RegionId"
+        guard let ehrSystemName = currentEhrSystemName else {
+            throw "Missing ehrSystemName"
         }
         guard let dependentInformation = dependentInformation else {
             throw "Missing myselfInformation"
@@ -171,19 +162,10 @@ class VirtualServiceHelper {
         let patientDemographics = try buildMyselfDemographics(patientEmail: dependentEmail, myselfInformation: dependentInformation, myselfAddress: addressInformation)
 
         let dexcareSDK = AppServices.shared.dexcareSDK
-        let brand: String = AppServices.shared.configuration.brand
-        
-        // Based on the region and user address, we get a Catchment Area that includes an EHRSystem
-        let catchmentArea = try await dexcareSDK.patientService.getCatchmentArea(
-            visitState: regionId,
-            residenceState: addressInformation.address.state,
-            residenceZipCode: addressInformation.address.postalCode,
-            brand: brand)
         let patient = try await dexcareSDK.patientService.findOrCreateDependentPatient(
-            inEhrSystem: catchmentArea.ehrSystem,
+            inEhrSystem: ehrSystemName,
             dependentPatientDemographics: patientDemographics)
         
-        self.currentCatchmentArea = catchmentArea
         return patient
     }
 
@@ -191,7 +173,6 @@ class VirtualServiceHelper {
         guard let email = patientEmail else {
             throw "Missing actor email from logged in account"
         }
-
         guard let firstName = myselfInformation.firstName else {
             throw "Missing actor first name from demographics form"
         }
@@ -253,7 +234,7 @@ class VirtualServiceHelper {
         let demographics = PatientDemographics(
             name: name,
             addresses: [address],
-            birthDate: birthDate,
+            birthdate: birthDate,
             email: email,
             gender: gender,
             ehrSystemName: nil, // EHR System will get filled in by SDK when VisitState/EHRSystem is passed in

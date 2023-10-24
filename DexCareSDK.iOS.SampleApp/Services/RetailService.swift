@@ -60,7 +60,7 @@ class RetailServiceHelper {
         _ = try await dexcareSDK.retailService.scheduleRetailAppointment(
             paymentMethod: .self,
             visitInformation: visitInformation,
-            timeslot: timeSlot,
+            timeSlot: timeSlot,
             ehrSystemName: ehrSystemName,
             patientDexCarePatient: isDependentBooking ? dependentPatient! : patient,
             actorDexCarePatient: isDependentBooking ? patient : nil)
@@ -223,7 +223,7 @@ class RetailServiceHelper {
         let demographics = PatientDemographics(
             name: name,
             addresses: [address],
-            birthDate: birthDate,
+            birthdate: birthDate,
             email: email,
             gender: gender,
             ehrSystemName: nil, // EHR System will get filled in by SDK when VisitState/EHRSystem is passed in

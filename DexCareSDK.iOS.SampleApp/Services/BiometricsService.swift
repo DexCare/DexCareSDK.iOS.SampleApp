@@ -17,6 +17,7 @@ public enum BiometryType {
     case none
     case touchID
     case faceID
+    case opticID
 }
 
 public class BiometricsService: BiometricsServiceType {
@@ -35,6 +36,7 @@ public class BiometricsService: BiometricsServiceType {
         switch context.biometryType {
         case .touchID: return .touchID
         case .faceID: return .faceID
+        case .opticID: return .opticID
         case .none: return .none
         @unknown default: return .none
         }
@@ -47,6 +49,7 @@ extension BiometryType: CustomStringConvertible {
         case .none: return ""
         case .touchID: return "TouchID"
         case .faceID: return "FaceID"
+        case .opticID: return "opticID"
         }
     }
 }

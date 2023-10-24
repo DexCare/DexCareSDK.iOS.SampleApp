@@ -9,6 +9,7 @@ struct DashboardVirtualPracticeRegionViewModel: Equatable, Hashable {
     let regionId: String
     let regionName: String
     let regionCode: String
+    let ehrSystemName: String
     let isOpen: Bool
     let isBusy: Bool?
     let busyMessage: String?
@@ -92,6 +93,7 @@ extension DashboardVirtualPracticeRegionViewModel {
         regionId = region.practiceRegionId
         regionName = region.displayName
         regionCode = region.regionCode
+        ehrSystemName = region.departments[0].ehrSystemName
         isOpen = region.active
         isBusy = region.busy
         busyMessage = region.busyMessage
@@ -511,6 +513,7 @@ class DashboardViewController: BaseViewController {
                     AppServices.shared.virtualService.currentPracticeId = AppServices.shared.configuration.practiceId
                     AppServices.shared.virtualService.currentPracticeRegionId = practiceRegion.regionId
                     AppServices.shared.virtualService.currentRegionId = practiceRegion.regionCode
+                    AppServices.shared.virtualService.currentEhrSystemName = practiceRegion.ehrSystemName
                     // navigate to reason for visit
                     self?.navigateToReasonForVisit(visitType: .virtual)
 
@@ -608,7 +611,7 @@ class DashboardViewController: BaseViewController {
         let endDate = Calendar.current.date(byAdding: .day, value: maxLookAheadDays, to: startDate) ?? Date()
         
         // We used the maxLookAheadDays here for example, but the start/endDate can be anything inside Today to Today + MaxLookahead Days
-        let providerTimeSlot = try await AppServices.shared.dexcareSDK.providerService.getProviderTimeslots(providerNationalId: providerNationalId, visitTypeShortName: visitTypeShortName, startDate: startDate, endDate: endDate)
+        let providerTimeSlot = try await AppServices.shared.dexcareSDK.providerService.getProviderTimeSlots(providerNationalId: providerNationalId, visitTypeShortName: visitTypeShortName, startDate: startDate, endDate: endDate)
         
         return (provider, providerTimeSlot)
     }

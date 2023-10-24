@@ -136,7 +136,7 @@ struct PhoneNumberValidator: Validator {
     //
     //   We handle only 10 digit numbers until we update the auto-formatting to handle 11 digit numbers
     private let phoneFormatValidator = ClosureValidator { value in
-        let phoneRegex = PhoneValidator.PHONE_VALIDATION_REGEX
+        let phoneRegex = PhoneValidator.phoneValidationRegex
 
         var number = value.removingNonNumericCharacters()
 
