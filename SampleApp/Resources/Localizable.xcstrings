@@ -1,0 +1,1814 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "" : {
+
+    },
+    "Alert.Error.CouponCode.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to validate service key"
+          }
+        }
+      }
+    },
+    "Alert.Error.Generic.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        }
+      }
+    },
+    "Alert.Error.Unhandled.Message" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unhandled error: '%@'"
+          }
+        }
+      }
+    },
+    "Alert.Error.Unhandled.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unhandled"
+          }
+        }
+      }
+    },
+    "Alert.NotImplemented.Message" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We are working hard to create this new Sample App. If this feature is important to you, please contact your implementation team. "
+          }
+        }
+      }
+    },
+    "Alert.NotImplemented.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not Implemented"
+          }
+        }
+      }
+    },
+    "Alert.Success.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Success"
+          }
+        }
+      }
+    },
+    "Common.Button.Continue" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continue"
+          }
+        }
+      }
+    },
+    "Common.Button.Done" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        }
+      }
+    },
+    "Common.Button.Logout" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logout"
+          }
+        }
+      }
+    },
+    "Common.Button.OK" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      }
+    },
+    "Common.Button.Validate" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Validate"
+          }
+        }
+      }
+    },
+    "Common.Close" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close"
+          }
+        }
+      }
+    },
+    "Common.TryAgainButton" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try Again"
+          }
+        }
+      }
+    },
+    "CouponCodeFailedReason.Failed.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to validate service key."
+          }
+        }
+      }
+    },
+    "CouponCodeFailedReason.Inactive.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Service key is inactive."
+          }
+        }
+      }
+    },
+    "CouponCodeFailedReason.InternalServerError.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Something went wrong internally. Please send us the correlation id."
+          }
+        }
+      }
+    },
+    "CouponCodeFailedReason.NotFound.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Service Key does not exist."
+          }
+        }
+      }
+    },
+    "CouponCodeFailedReason.TooManyRequests.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to validate coupong code because you made too many attempts."
+          }
+        }
+      }
+    },
+    "CouponCodeFailedReason.Unauthorized.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid token. Please log in again."
+          }
+        }
+      }
+    },
+    "DatePicker.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select Date"
+          }
+        }
+      }
+    },
+    "EnvironmentSelectionView.Greetings.Instructions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please select an environment"
+          }
+        }
+      }
+    },
+    "EnvironmentSelectionView.Greetings.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Together we can\nchange healthcare"
+          }
+        }
+      }
+    },
+    "EnvironmentSelectionView.NoEnvironmentConfigured.Message" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please contact your DexCare representative to obtain a 'DexConfig' configuration file."
+          }
+        }
+      }
+    },
+    "EnvironmentSelectionView.NoEnvironmentConfigured.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Environment Not Configured"
+          }
+        }
+      }
+    },
+    "EnvironmentSelectionView.PoweredBy" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Powered by"
+          }
+        }
+      }
+    },
+    "FailedReason.BadDexcareRequest.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bad Request. %@. Error Code: %@"
+          }
+        }
+      }
+    },
+    "FailedReason.BadRequest.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your API request was badly formed. Please validate your parameters."
+          }
+        }
+      }
+    },
+    "FailedReason.InvalidInput.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid Input: %@"
+          }
+        }
+      }
+    },
+    "FailedReason.MissingInformation.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Missing required information: %@"
+          }
+        }
+      }
+    },
+    "FailedReason.NotFound.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Information does not exist"
+          }
+        }
+      }
+    },
+    "FailedReason.Unauthorized.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid token. Please log in again."
+          }
+        }
+      }
+    },
+    "FailedReason.Unknown.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "An error occurred: %@"
+          }
+        }
+      }
+    },
+    "InsurancePayers.FaileToLoadAPI" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to load insurance providers"
+          }
+        }
+      }
+    },
+    "InsurancePayers.NoInsuranceProviders.ErrorMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to find any insurance providers."
+          }
+        }
+      }
+    },
+    "LoadingOverlayView.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading..."
+          }
+        }
+      }
+    },
+    "LoginView.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log In"
+          }
+        }
+      }
+    },
+    "MainView.LastVirtualVisit.FailedToLoadStatus" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to verify your last visit status"
+          }
+        }
+      }
+    },
+    "MainView.LastVirtualVisit.LoadingView.ResumingVisit" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resuming your visit. You should be joining our waiting room shortly."
+          }
+        }
+      }
+    },
+    "MainView.LastVirtualVisit.NoVisitSubtitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You have no visit to resume. Please request a new visit."
+          }
+        }
+      }
+    },
+    "MainView.LastVirtualVisit.ResumeVisitButton" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resume Visit"
+          }
+        }
+      }
+    },
+    "MainView.LastVirtualVisit.ResumeVisitSubtitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "It seems like you have an ongoing virtual visit, would you like to rejoin?"
+          }
+        }
+      }
+    },
+    "MainView.LastVirtualVisit.RetrevingStatusMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retrieving last virtual visit status"
+          }
+        }
+      }
+    },
+    "MainView.LastVirtualVisit.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resume Visit"
+          }
+        }
+      }
+    },
+    "MainView.ProviderBooking.Button.ScheduleAVisit" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schedule a Visit"
+          }
+        }
+      }
+    },
+    "MainView.ProviderBooking.Subtitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To continue, please select the provider you would like to visit."
+          }
+        }
+      }
+    },
+    "MainView.ProviderBooking.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Provider Booking"
+          }
+        }
+      }
+    },
+    "MainView.VirtualVisit.Button.ScheduleAVisit" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schedule a Visit"
+          }
+        }
+      }
+    },
+    "MainView.VirtualVisit.Subtitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To continue, please choose the state where you're currently located"
+          }
+        }
+      }
+    },
+    "MainView.VirtualVisit.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Requesting a Virtual Visit"
+          }
+        }
+      }
+    },
+    "Patient.FailedToLoadPatient.Message" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to load patient information"
+          }
+        }
+      }
+    },
+    "PaymentMethod.CouponCode.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Service Key"
+          }
+        }
+      }
+    },
+    "PaymentMethod.InsuranceSelf.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My Insurance"
+          }
+        }
+      }
+    },
+    "Regions.Error.FailedToLoadRegions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to load regions"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Button.CreateVirtualVisit" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter Waiting Room"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Button.Myself" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Myself"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Button.ScheduleProviderBooking" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schedule Visit"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Button.SomeoneElse" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Someone Else"
+          }
+        }
+      }
+    },
+    "RegistrationStep.CouponCode.Instructions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A service key is a code provided by your employer, insurance or another group."
+          }
+        }
+      }
+    },
+    "RegistrationStep.CouponCode.WorthMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your coupon is worth %@"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.AddressLine1.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Address Line"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.AddressLine2.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Address Line 1"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.Birthdate.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Birthdate"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.Birthday.CannotBeEmptyMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Birthdate cannot be empty"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.City.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "City"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.CouponCode.CannotBeEmptyMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coupon Code cannot be empty."
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.CouponCode.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Service Key"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.Email.InvalidFormatMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter a valid email address"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.Email.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.FirstName.CannotBeEmptyMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "First Name cannot be empty"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.FirstName.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "First Name"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.Gender.CannotBeEmptyMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gender cannot be empty"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.Gender.Instructions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please select your gender"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.Gender.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gender"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.InsuranceGroupId.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Id Number (Opt)"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.InsuranceMemberId.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Member Id Number"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.InsurancePayer.CannotBeEmptyMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Insurance Provider cannot be empty"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.InsurancePayers.Instructions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please select an insurance provider."
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.InsurancePayers.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Insurance Provider"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.LastName.CannotBeEmptyMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last name cannot be empty"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.LastName.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last Name"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.MemberId.CannotBeEmptyMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Member Id cannot be empty"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.MobilePhoneNumber.InvalidFormatMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter a valid phone number"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.MobilePhoneNumber.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mobile Phone Number"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.PaymentMethod.Instructions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please select a payment method"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.PaymentMethod.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Payment Method"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.Reason.CannotBeEmptyMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reason cannot be empty"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.Reason.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What is the most important thing you want addressed during this visit?"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.SSN.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last 4 Digits of SSN"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.State.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "State"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.TimeSlot.CannotBeEmptyMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please select a time."
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.TimeSlotDate.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appointment Date"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.TimeSlotTime.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appointment Time"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.VisitDate.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Date"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.ZipCode.InvalidFormatMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter a valid Zip Code"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Field.ZipCode.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zip Code"
+          }
+        }
+      }
+    },
+    "RegistrationStep.LoadingTimeSlots" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading schedule"
+          }
+        }
+      }
+    },
+    "RegistrationStep.LoadingView.StartingVisit" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starting your visit. You should be joining our waiting room shortly."
+          }
+        }
+      }
+    },
+    "RegistrationStep.LoadingVisitTypes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading your visit options"
+          }
+        }
+      }
+    },
+    "RegistrationStep.NoTimeSlotToday.Instructions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We have no availability today, please select a different day."
+          }
+        }
+      }
+    },
+    "RegistrationStep.NoTimeSlotToday.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No appointment available today"
+          }
+        }
+      }
+    },
+    "RegistrationStep.PatientSelection.Instructions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Who is this visit for?"
+          }
+        }
+      }
+    },
+    "RegistrationStep.PatientSelection.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Patient"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Payment.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Payment"
+          }
+        }
+      }
+    },
+    "RegistrationStep.PersonalInfo.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personal Info"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Reason.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reason"
+          }
+        }
+      }
+    },
+    "RegistrationStep.Schedule.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schedule"
+          }
+        }
+      }
+    },
+    "RegistrationStep.TestPersonas.Instructions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please select one of our test personas to go through the registration process with ease and test a specific scenario."
+          }
+        }
+      }
+    },
+    "RegistrationStep.TestPersonas.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Test Personas"
+          }
+        }
+      }
+    },
+    "RegistrationStep.VisitType.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visit Type"
+          }
+        }
+      }
+    },
+    "ScheduleProviderAppointmentFaileReason.ConflictPatientDoubleBooked.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are double booked."
+          }
+        }
+      }
+    },
+    "ScheduleProviderAppointmentFaileReason.ConflictSlotUnavailable.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The time slot you requested is no longer available. "
+          }
+        }
+      }
+    },
+    "ScheduleProviderAppointmentFaileReason.InternalServerError.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Something went wrong internally. Please send us the correlation id."
+          }
+        }
+      }
+    },
+    "ScheduleProviderAppointmentFaileReason.PatientAccountLocked.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your account is locked."
+          }
+        }
+      }
+    },
+    "ScheduleProviderAppointmentFaileReason.PatientNotFound.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We are unable to find you patient record."
+          }
+        }
+      }
+    },
+    "ScheduleProviderAppointmentFaileReason.PatientNotLinked.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your account is not linked."
+          }
+        }
+      }
+    },
+    "ScheduleProviderAppointmentFaileReason.patientNotOnPhysicalPanel.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You need to be on the physical panel before you can book a visit."
+          }
+        }
+      }
+    },
+    "ScheduleProviderAppointmentFaileReason.UnknownAppointmentConflict.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We are unable to book the time slot you requested."
+          }
+        }
+      }
+    },
+    "TimeSlot.FailedToLoad.Description" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sorry for the inconvenience. Please wait a little bit and try again."
+          }
+        }
+      }
+    },
+    "TimeSlot.FailedToLoad.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to load schedule"
+          }
+        }
+      }
+    },
+    "UnderConstruction.Message" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ is currently under construction. We are working hard to make it available to you."
+          }
+        }
+      }
+    },
+    "UnderConstruction.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚧 Under Construction 🚧"
+          }
+        }
+      }
+    },
+    "VirtualVisit.Field.Gender.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gender"
+          }
+        }
+      }
+    },
+    "VirtualVisit.Field.Region.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose current state (required)"
+          }
+        }
+      }
+    },
+    "VirtualVisit.Field.Regions.Message" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please choose the state where you're currently located"
+          }
+        }
+      }
+    },
+    "VirtualVisit.Field.Regions.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Requesting a Virtual Visit"
+          }
+        }
+      }
+    },
+    "VirtualVisit.PaymentMethod.CouponCode" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Service Key"
+          }
+        }
+      }
+    },
+    "VirtualVisit.PaymentMethod.CreditCard" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Credit Card"
+          }
+        }
+      }
+    },
+    "VirtualVisit.PaymentMethod.InsuranceOther" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Other Insurance"
+          }
+        }
+      }
+    },
+    "VirtualVisit.PaymentMethod.InsuranceSelf" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My Insurance"
+          }
+        }
+      }
+    },
+    "VirtualVisit.PaymentMethod.Title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Payment Method"
+          }
+        }
+      }
+    },
+    "VirtualVisitFailedReason.Expired.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your visit has expired. Please start a new visit."
+          }
+        }
+      }
+    },
+    "VirtualVisitFailedReason.IncompleteRequestData.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Missing data in your API request."
+          }
+        }
+      }
+    },
+    "VirtualVisitFailedReason.InvalidEmail.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your email is not valid."
+          }
+        }
+      }
+    },
+    "VirtualVisitFailedReason.PermissionDenied.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please ensure that we have access to your microphone and camera before starting a virtual visit."
+          }
+        }
+      }
+    },
+    "VirtualVisitFailedReason.RegionBusy.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The region is currently busy. Use 'PracticeService.getVirtualPracticeRegionAvailability' to get more information."
+          }
+        }
+      }
+    },
+    "VirtualVisitFailedReason.VirtualVisitNotFound.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The virtual visit you are trying to start does not exist."
+          }
+        }
+      }
+    },
+    "VirtualVisitFailedReason.VisitTypeNotSupported.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The visit type you selected is not supported."
+          }
+        }
+      }
+    },
+    "VisitCompletionReason.AlreadyInConference.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are already in a visit? Please close or cancelled your previous conference before joining a new one."
+          }
+        }
+      }
+    },
+    "VisitCompletionReason.AlreadyInConference.AlertTitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Already in a Visit"
+          }
+        }
+      }
+    },
+    "VisitCompletionReason.Canceled.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You sucessfully canceled your visit."
+          }
+        }
+      }
+    },
+    "VisitCompletionReason.Canceled.AlertTitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Canceled"
+          }
+        }
+      }
+    },
+    "VisitCompletionReason.Completed.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your visit was sucessfully completed."
+          }
+        }
+      }
+    },
+    "VisitCompletionReason.Completed.AlertTitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Completed"
+          }
+        }
+      }
+    },
+    "VisitCompletionReason.ConferenceFull.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The virtual visit you are trying to join is full. Please try again later."
+          }
+        }
+      }
+    },
+    "VisitCompletionReason.ConferenceFull.AlertTitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Full"
+          }
+        }
+      }
+    },
+    "VisitCompletionReason.ConferenceInactive.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The virtual visit you are trying to join is inactive. "
+          }
+        }
+      }
+    },
+    "VisitCompletionReason.ConferenceInactive.AlertTitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conference Inactive"
+          }
+        }
+      }
+    },
+    "VisitCompletionReason.ConferenceNonExistent.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We are unable to find your virtual visit. Please start a new visit."
+          }
+        }
+      }
+    },
+    "VisitCompletionReason.ConferenceNonExistent.AlertTitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to Find Conference"
+          }
+        }
+      }
+    },
+    "VisitCompletionReason.ExceededReconnectAttempt.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You exceeded reconnection attempt. Please start a new visit."
+          }
+        }
+      }
+    },
+    "VisitCompletionReason.ExceededReconnectAttempt.AlertTitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exceeded Reconnect Attempt"
+          }
+        }
+      }
+    },
+    "VisitCompletionReason.Failed.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to create virtual visit. Please try again later."
+          }
+        }
+      }
+    },
+    "VisitCompletionReason.Failed.AlertTitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed"
+          }
+        }
+      }
+    },
+    "VisitCompletionReason.JoinedElsewhere.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You seem to have joined the visit already. Please leave the visit on  your other device before joining here."
+          }
+        }
+      }
+    },
+    "VisitCompletionReason.JoinedElsewhere.AlertTitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Joined Elsewhere"
+          }
+        }
+      }
+    },
+    "VisitCompletionReason.Left.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You successfuly  left the visit."
+          }
+        }
+      }
+    },
+    "VisitCompletionReason.Left.AlertTitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Success"
+          }
+        }
+      }
+    },
+    "VisitCompletionReason.MicAndCamNotConnected.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please enable your Microphone or Camera before starting the visit."
+          }
+        }
+      }
+    },
+    "VisitCompletionReason.MicAndCamNotConnected.AlertTitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Microphone or Camera Off"
+          }
+        }
+      }
+    },
+    "VisitCompletionReason.NetworkIssues.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We seem to be experiencing some network issue. Please try again later."
+          }
+        }
+      }
+    },
+    "VisitCompletionReason.NetworkIssues.AlertTitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Network Issues"
+          }
+        }
+      }
+    },
+    "VisitCompletionReason.PhoneVisit.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please contact us by phone."
+          }
+        }
+      }
+    },
+    "VisitCompletionReason.PhoneVisit.AlertTitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Phone Visit"
+          }
+        }
+      }
+    },
+    "VisitCompletionReason.StaffDeclined.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your visit was declined by one of our staff."
+          }
+        }
+      }
+    },
+    "VisitCompletionReason.StaffDeclined.AlertTitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Declined"
+          }
+        }
+      }
+    },
+    "VisitCompletionReason.WaitOffline.AlertMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You will receive an email once we are ready to start your virtual visit. "
+          }
+        }
+      }
+    },
+    "VisitCompletionReason.WaitOffline.AlertTitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Success"
+          }
+        }
+      }
+    },
+    "VisitScheduler.AlertMessage.ScheduleProviderMandatoryFieldsMissing" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We are unable to schedule your visit as some mandatory information is missing."
+          }
+        }
+      }
+    },
+    "VisitScheduler.AlertMessage.StartVirtualVisitMandatoryFieldsMissing" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We are unable to create your virtual visit as some mandatory information is missing."
+          }
+        }
+      }
+    },
+    "VisitScheduler.AlertMessage.Success" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your visit was successfully booked. Visit Id = '%@'."
+          }
+        }
+      }
+    },
+    "VisitScheduler.AlertTitle.Success" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Success"
+          }
+        }
+      }
+    },
+    "VisitType.FailedToLoad.Description" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sorry for the inconvenience. Please wait a little bit and try again."
+          }
+        }
+      }
+    },
+    "VisitType.FailedToLoad.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to load visit types."
+          }
+        }
+      }
+    },
+    "Z.Preview.Button.Primary" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Primary"
+          }
+        }
+      }
+    },
+    "Z.Preview.Button.Primary.Disabled" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Primary - Disabled"
+          }
+        }
+      }
+    },
+    "Z.Preview.Button.Secondary" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Secondary"
+          }
+        }
+      }
+    },
+    "Z.Preview.Button.Secondary.Disabled" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Secondary - Disabled"
+          }
+        }
+      }
+    },
+    "Z.Preview.Button.Tertiary" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tertiary"
+          }
+        }
+      }
+    },
+    "Z.Preview.Button.Tertiary.Disabled" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tertiary - Disabled"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

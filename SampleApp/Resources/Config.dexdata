@@ -1,0 +1,75 @@
+{
+    "virtualVisitPatients": [
+        {
+            "id": "john.smith.senior",
+            "extraInfo" : {
+                "title" : "John - Service Key",
+                "visitReason" : "Lately, I've been feeling an intense urgency to urinate, accompanied by a burning sensation and discomfort in my lower abdomen. These symptoms have been interfering with my daily activities, and I'm worried that they might worsen if left untreated.",
+                "paymentInfo" : {
+                    "paymentMethod": "couponCode",
+                    "couponCode": "dextest"
+                }
+            },
+            "patientDemographics" : {
+                "name": {
+                    "given" : "John",
+                    "family" : "Smith"
+                },
+                "addresses": [
+                    {
+                        "line1": "123 Main St",
+                        "line2": "Apt 101",
+                        "city": "New York",
+                        "state": "NY",
+                        "postalCode": "12345"
+                    }
+                ],
+                "birthdate": "1990-01-01",
+                "email": "john.smith@example.com",
+                "gender": "male",
+                "identifiers": [],
+                "ssn" : "1234",
+                "homePhone": "333-333-3333",
+                "mobilePhone": "444-444-4444",
+                "workPhone": "555-555-5555"
+            }
+        },
+        {
+            "id": "jane.smith.senior",
+            "extraInfo" : {
+                "title" : "Jane - Self Insurance",
+                "visitReason" : "I've noticed a concerning bump on my arm that has been causing me some discomfort and worry. Over the past week, I've observed this bump gradually increasing in size, and it now feels tender to the touch. I've tried to monitor it closely, but I'm unsure about what could be causing it or if it poses any health risks.",
+                "paymentInfo" : {
+                    "paymentMethod": "insuranceSelf",
+                    "couponCode": null,
+                    "insurancePayerId" : "dexcare_test_zzz",
+                    "insuranceMemberId" : "1234",
+                    "insuranceGroupId" : "ABCD"
+                }
+            },
+            "patientDemographics" : {
+                "name": {
+                    "given" : "Jane",
+                    "family" : "Smith"
+                },
+                "addresses": [
+                    {
+                        "line1": "123 Main St",
+                        "line2": "Apt 101",
+                        "city": "New York",
+                        "state": "NY",
+                        "postalCode": "12345"
+                    }
+                ],
+                "birthdate": "1982-02-02",
+                "email": "jane.smith@example.com",
+                "gender": "female",
+                "identifiers": [],
+                "ssn" : "3456",
+                "homePhone": "777-777-7777",
+                "mobilePhone": "888-888-8888",
+                "workPhone": "555-555-5555"
+            }
+        }
+    ]
+}
