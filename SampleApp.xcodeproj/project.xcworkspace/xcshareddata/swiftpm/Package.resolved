@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DexCare/DexCareSDK-iOS/",
       "state" : {
-        "revision" : "d9b11391669c7f27777e9901c8cffbb6f4c17a3f",
-        "version" : "9.2.0"
+        "revision" : "534b8e9e8f56546bf8e0ffb9346c1d57a9381b2a",
+        "version" : "9.2.1"
       }
     },
     {
