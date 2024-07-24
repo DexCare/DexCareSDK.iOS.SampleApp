@@ -1043,8 +1043,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DexCare/DexCareSDK-iOS/";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 9.2.0;
+				kind = exactVersion;
+				version = 9.2.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
