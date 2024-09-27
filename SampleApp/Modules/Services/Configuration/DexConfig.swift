@@ -8,24 +8,6 @@
 
 import Foundation
 
-/// Features supported by the Sample App
-enum SupportedFeature: String, Decodable {
-    /// Provider booking flow.
-    case providerBooking
-    /// Retail booking flow.
-    case retail
-    /// Virtual booking flow.
-    case virtual
-    /// Unable to identified the feature.
-    case unknown
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let rawValue = try container.decode(String.self)
-        self = SupportedFeature(rawValue: rawValue) ?? .unknown
-    }
-}
-
 struct DexConfig: Decodable {
     /// A unique id that will identify this configuration.
     var configId: String
@@ -51,15 +33,15 @@ struct DexConfig: Decodable {
     var providerNationalId: String
     /// Name of the provider that will be displayed in the provider booking flow example. It should match name returned by the provider API for the configured `providerNationalId`.
     var providerNationalIdFullName: String
-    /// Push notification platform you want to use: `ios` or `ios-sandbox`.
-    var pushNotificationPlatform: String
+    /// Configuration necessary to implement push notifications
+    var pushNotification: PushNotificationConfig?
     /// Features that are supported by this configuration.
     var supportedFeatures: [SupportedFeature]
     /// The tenant environment used by your app.
     var tenant: String
     ///  The name of the app that will be sent in the "User-Agent" API header.
     var userAgent: String
-    /// Virtual visit flow practice id. 
+    /// Virtual visit flow practice id.
     var virtualPracticeId: String
 
     static let empty = DexConfig(
@@ -75,7 +57,7 @@ struct DexConfig: Decodable {
         dexcareVirtualVisitUrl: "",
         providerNationalId: "",
         providerNationalIdFullName: "",
-        pushNotificationPlatform: "",
+        pushNotification: nil,
         supportedFeatures: [],
         tenant: "",
         userAgent: "",
@@ -95,10 +77,36 @@ struct DexConfig: Decodable {
         dexcareVirtualVisitUrl: "",
         providerNationalId: "",
         providerNationalIdFullName: "James Smith, MD",
-        pushNotificationPlatform: "",
+        pushNotification: nil,
         supportedFeatures: [.providerBooking, .virtual, .retail],
         tenant: "",
         userAgent: "",
         virtualPracticeId: ""
     )
+}
+
+/// Push notication configuration
+struct PushNotificationConfig: Decodable {
+    /// Id provided by DexCare to identifiy your application
+    var appId: String
+    /// Push notification platform you want to use: `ios` or `ios-sandbox`.
+    var platform: String
+}
+
+/// Features supported by the Sample App
+enum SupportedFeature: String, Decodable {
+    /// Provider booking flow.
+    case providerBooking
+    /// Retail booking flow.
+    case retail
+    /// Virtual booking flow.
+    case virtual
+    /// Unable to identified the feature.
+    case unknown
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(String.self)
+        self = SupportedFeature(rawValue: rawValue) ?? .unknown
+    }
 }

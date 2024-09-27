@@ -19,8 +19,8 @@ class TimeSlotStepViewModel: ObservableObject {
     // MARK: Properties
 
     @Published var alertPresenter: AlertPresenter = .init()
-    @Published var providerTimeSlot: ProviderTimeSlot? = nil
-    @Published var selectedTimeSlot: TimeSlot? = nil
+    @Published var providerTimeSlot: ProviderTimeSlot?
+    @Published var selectedTimeSlot: TimeSlot?
     @Published var state: TimeSlotViewModelState
     @Published var viewState: ViewLoadingState = .loading
     @Published var selectedVisitDate: Date = .init() {
@@ -116,10 +116,8 @@ class TimeSlotStepViewModel: ObservableObject {
 
     private func calculateFirstAvailableVisitDay(scheduleDays: [ScheduleDay]) -> Date {
         let scheduleDays = scheduleDays.sorted { $0.date < $1.date }
-        for scheduleDay in scheduleDays {
-            if scheduleDay.timeSlots.count > 0 {
-                return scheduleDay.date
-            }
+        for scheduleDay in scheduleDays where scheduleDay.timeSlots.count > 0 {
+            return scheduleDay.date
         }
         return now()
     }

@@ -43,11 +43,14 @@ class CouponCodePaymentViewModel: ObservableObject {
         }
     }
 
+    // swiftlint:disable opening_brace
     func validateStep() -> String? {
         RulesValidator.validate([
             { self.validateCouponCode(self.couponCode) },
         ])
     }
+
+    // swiftlint:enable opening_brace
 
     func verifyCouponCode() {
         Task { @MainActor in

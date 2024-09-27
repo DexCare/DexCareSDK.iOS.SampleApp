@@ -1,4 +1,5 @@
 {
+  "originHash" : "2da48ce51c0408afe3c747c57dfa9afd31276e6639c8baf6453f15e7d003a66c",
   "pins" : [
     {
       "identity" : "auth0.swift",
@@ -7,15 +8,6 @@
       "state" : {
         "revision" : "ed8079f27b32f3fc96b6c3dcc5e9e5a1dd68e247",
         "version" : "1.39.1"
-      }
-    },
-    {
-      "identity" : "dexcaresdk-ios",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/DexCare/DexCareSDK-iOS/",
-      "state" : {
-        "revision" : "534b8e9e8f56546bf8e0ffb9346c1d57a9381b2a",
-        "version" : "9.2.1"
       }
     },
     {
@@ -86,10 +78,10 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/opentok/vonage-client-sdk-video",
       "state" : {
-        "revision" : "04590a25644faf6c0681bf65724eb4ee24cdb9d9",
-        "version" : "2.26.2"
+        "revision" : "f1261a5d6d018c822f512e9cb672dffba0b57f7f",
+        "version" : "2.27.4"
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

@@ -25,6 +25,7 @@ struct MainView: View {
                     VStack(alignment: .leading, spacing: UIConstant.Spacing.xxxLarge32) {
                         virtualVisitView()
                         resumeVirtualVisitView()
+                        cancelVisitView
                         providerBookingView()
                     }
                     .padding(UIConstant.Spacing.defaultSide16)
@@ -57,6 +58,12 @@ struct MainView: View {
                     VisitTypeStepView(viewModel: .init(visitScheduler: visitScheduler))
                 }
             }
+            .sheet(item: $viewModel.shouldShowReasons) { sheetState in
+                CancelVisitView(
+                    reasons: sheetState.reasons,
+                    onReasonSelected: viewModel.didConfirmCancelVisitReason
+                )
+            }
         }
     }
 
@@ -67,6 +74,26 @@ struct MainView: View {
     }
 
     // MARK: Private views
+
+    @ViewBuilder
+    private var cancelVisitView: some View {
+        if let cancelVisitSectionState = viewModel.cancelVisitSectionState {
+            VStack(alignment: .leading, spacing: UIConstant.Spacing.large16) {
+                Text(cancelVisitSectionState.sectionSubtitle)
+                    .font(.dxBody1)
+                    .foregroundColor(.dxTextPrimary)
+                Button {
+                    viewModel.didTapCancelVisit()
+                } label: {
+                    Text(cancelVisitSectionState.buttonTitle)
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(RectangleButtonStyle.secondary)
+            }
+        } else {
+            EmptyView()
+        }
+    }
 
     @ViewBuilder
     private func resumeVirtualVisitView() -> some View {

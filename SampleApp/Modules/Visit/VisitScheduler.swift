@@ -52,13 +52,13 @@ protocol VisitSchedulerType {
 class VisitScheduler: VisitSchedulerType {
     // MARK: VisitSchedulerType Properties
 
-    private(set) var patientDemographics: PatientDemographics? = nil
-    private(set) var paymentMethod: PaymentMethod? = nil
-    private(set) var personalInfoStepViewState: PersonalInfoStepViewState? = nil
-    private(set) var visitReason: String? = nil
-    private(set) var providerVisitType: ProviderVisitType? = nil
-    private(set) var provider: Provider? = nil
-    private(set) var timeSlot: TimeSlot? = nil
+    private(set) var patientDemographics: PatientDemographics?
+    private(set) var paymentMethod: PaymentMethod?
+    private(set) var personalInfoStepViewState: PersonalInfoStepViewState?
+    private(set) var visitReason: String?
+    private(set) var providerVisitType: ProviderVisitType?
+    private(set) var provider: Provider?
+    private(set) var timeSlot: TimeSlot?
     let schedulerVisitType: VisitSchedulerVisitType
     var logCategory: OSLog {
         switch schedulerVisitType {
@@ -393,6 +393,7 @@ class VisitScheduler: VisitSchedulerType {
     ) {
         switch reason {
         case .completed,
+             .phoneVisit,
              .left:
             return onCompletion()
         case .canceled,
@@ -406,7 +407,6 @@ class VisitScheduler: VisitSchedulerType {
              .joinedElsewhere,
              .staffDeclined,
              .failed,
-             .phoneVisit,
              .waitOffline:
             // We need to dismiss the virtual visit session/screen before showing the alert.
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
