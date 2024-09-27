@@ -33,7 +33,7 @@ struct InsuranceViewPaymentState {
 class InsurancePaymentViewModel: ObservableObject {
     @Published var state: InsuranceViewPaymentState = .empty
     @Published var insuranceProvidersLoadingState: ViewLoadingState = .loading
-    @Published var insurancePayerLoadingError: String? = nil
+    @Published var insurancePayerLoadingError: String?
     @Published var isInsurancePayerLoading: Bool = false
     @Published var insurancePayerPickerEntries: [CustomPickerEntry<InsurancePayer>] = []
     private var paymentMethod: PaymentMethod?
@@ -75,12 +75,15 @@ class InsurancePaymentViewModel: ObservableObject {
         }
     }
 
+    // swiftlint:disable opening_brace
     func validateStep() -> String? {
         RulesValidator.validate([
             { self.validateInsurancePayer(self.state.selectedInsurancePayer) },
             { self.validateMemberId(self.state.memberId) },
         ])
     }
+
+    // swiftlint:enable opening_brace
 
     func validateMemberId(_ memberId: String) -> String? {
         memberId.isEmpty ? String(localized: "RegistrationStep.Field.MemberId.CannotBeEmptyMessage") : nil

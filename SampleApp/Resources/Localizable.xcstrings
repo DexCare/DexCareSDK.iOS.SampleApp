@@ -74,6 +74,28 @@
         }
       }
     },
+    "CancelVisit.Submit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Submit"
+          }
+        }
+      }
+    },
+    "CancelVisit.Subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please select your cancel reason from the list below."
+          }
+        }
+      }
+    },
     "Common.Button.Continue" : {
       "localizations" : {
         "en" : {
@@ -374,6 +396,39 @@
         }
       }
     },
+    "MainView.CancelLastPhoneVisitButton" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel Last Phone Visit"
+          }
+        }
+      }
+    },
+    "MainView.CancelLastVideoVisitButton" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel Last Video Visit"
+          }
+        }
+      }
+    },
+    "MainView.CancelVisitSubtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can cancel your last visit. Tap the button below to proceed with cancellation"
+          }
+        }
+      }
+    },
     "MainView.LastVirtualVisit.FailedToLoadStatus" : {
       "localizations" : {
         "en" : {
@@ -503,6 +558,21 @@
           }
         }
       }
+    },
+    "Option 1" : {
+
+    },
+    "Option 2" : {
+
+    },
+    "Option 3" : {
+
+    },
+    "Options" : {
+
+    },
+    "Options Disabled" : {
+
     },
     "Patient.FailedToLoadPatient.Message" : {
       "localizations" : {
@@ -1634,7 +1704,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Please contact us by phone."
+            "value" : "Your attending provider has converted your visit to a phone visit, please expect a call from us shortly.\\n\\nYou may now close the application."
           }
         }
       }
@@ -1644,7 +1714,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Phone Visit"
+            "value" : "This visit has been converted to a phone visit"
           }
         }
       }

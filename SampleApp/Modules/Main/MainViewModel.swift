@@ -34,6 +34,23 @@ struct ResumeVirtualVisitSectionState {
     }
 }
 
+struct CancelVisitSectionState {
+    var visitId: String
+    var modality: VirtualVisitModality
+    var reasons: [CancelReason]
+    var email: String?
+    var buttonTitle: String {
+        modality == .phone ? String(localized: "MainView.CancelLastPhoneVisitButton") : String(localized: "MainView.CancelLastVideoVisitButton")
+    }
+
+    var sectionSubtitle: String = .init(localized: "MainView.CancelVisitSubtitle")
+}
+
+struct CancelReasonSelection: Identifiable {
+    var id: String = UUID().uuidString
+    var reasons: [CancelReason]
+}
+
 struct VirtualVisitSectionState {
     var viewState: ViewLoadingState
     var openRegions: [CustomPickerEntry<VirtualPracticeRegion>] = []
@@ -77,6 +94,8 @@ class MainViewModel: ObservableObject {
     @Published var resumeVisitSectionState: ResumeVirtualVisitSectionState
     @Published var virtualVisitSectionState: VirtualVisitSectionState
     @Published var providerBookingSectionState: ProviderBookingSectionState
+    @Published var cancelVisitSectionState: CancelVisitSectionState?
+    @Published var shouldShowReasons: CancelReasonSelection? = nil
     @Published var isLoadingViewPresented: Bool = false
 
     // MARK: Lifecycle
@@ -122,9 +141,18 @@ class MainViewModel: ObservableObject {
         resumeVisitSectionState = .loading()
         Task { @MainActor in
             do {
-                let visitStatus = try await dexcareSDK.virtualService.getVirtualVisitStatus(visitId: lastVisitId)
-                logger.log("Last Virtual Visit Status. Id: '\(lastVisitId)'. Status: '\(visitStatus.rawValue)'", level: .debug, sender: .virtualVisit)
-                if visitStatus.isActive() {
+                let visit = try await dexcareSDK.virtualService.getVirtualVisit(visitId: lastVisitId)
+                logger.log("Last Virtual Visit Status. Id: '\(lastVisitId)'. Status: '\(visit.status.rawValue)'", level: .debug, sender: .virtualVisit)
+                let cancelReasons = await dexcareSDK.virtualService.fetchCancellationReasons()
+
+                if visit.status.isActive(), let modality = visit.modality, !cancelReasons.isEmpty {
+                    cancelVisitSectionState = .init(visitId: lastVisitId, modality: modality, reasons: cancelReasons)
+                }
+
+                let patient = try? await dexcareSDK.patientService.getPatient()
+                cancelVisitSectionState?.email = patient?.demographicsLinks.first?.email
+
+                if visit.status.isActive() {
                     self.resumeVisitSectionState = .loaded(lastVisitId: lastVisitId)
                 } else {
                     self.resumeVisitSectionState = .loaded(lastVisitId: nil)
@@ -170,6 +198,7 @@ class MainViewModel: ObservableObject {
                             userDefaultsService.setLastVirtualVisitId(nil)
                             logVirtualVisitStats()
                             logger.log("Completed virtual visit. Reason = '\(reason)'", level: .verbose, sender: .virtualVisit)
+                            presentAlert(reason: reason)
                         }
                     )
                 logger.log("Virtual Visit resumed. id = '\(lastVisitId) '", level: .debug, sender: .virtualVisit)
@@ -207,6 +236,43 @@ class MainViewModel: ObservableObject {
             schedulerVisitType: .virtualVisit
         )
         ))
+    }
+
+    func didTapCancelVisit() {
+        guard let reasons = cancelVisitSectionState?.reasons else {
+            return
+        }
+        shouldShowReasons = .init(reasons: reasons)
+    }
+
+    func didConfirmCancelVisitReason(cancelReason: CancelReason) {
+        shouldShowReasons = nil
+        guard let cancelVisitSectionState = cancelVisitSectionState else {
+            return
+        }
+
+        presentLoadingView(true)
+        defer {
+            presentLoadingView(false)
+        }
+        Task { @MainActor in
+            do {
+                switch cancelVisitSectionState.modality {
+                case .phone:
+                    try await dexcareSDK.virtualService.cancelPhoneVisit(visitId: cancelVisitSectionState.visitId, reason: cancelReason.code, email: cancelVisitSectionState.email ?? "")
+                default:
+                    try await dexcareSDK.virtualService.cancelVideoVisit(visitId: cancelVisitSectionState.visitId, reason: cancelReason.code)
+                }
+                logger.log("\(cancelVisitSectionState.modality) visit cancelled. id = '\(cancelVisitSectionState.visitId) ' for reason = \(cancelReason.code)", level: .debug, sender: .virtualVisit)
+                resumeVisitSectionState = .loaded(lastVisitId: nil)
+                lastVisitId = nil
+                userDefaultsService.setLastVirtualVisitId(nil)
+                self.cancelVisitSectionState = nil
+            } catch {
+                alertPresenter.present(.error(error))
+                presentLoadingView(false)
+            }
+        }
     }
 
     // MARK: Private
@@ -266,6 +332,32 @@ class MainViewModel: ObservableObject {
             self.isLoadingViewPresented = present
         }
     }
+
+    private func presentAlert(reason: VisitCompletionReason) {
+        switch reason {
+        case .completed,
+             .phoneVisit,
+             .left:
+            return
+        case .canceled,
+             .alreadyInConference,
+             .conferenceFull,
+             .conferenceInactive,
+             .conferenceNonExistent,
+             .micAndCamNotConnected,
+             .networkIssues,
+             .exceededReconnectAttempt,
+             .joinedElsewhere,
+             .staffDeclined,
+             .failed,
+             .waitOffline:
+            alertPresenter.present(.info(
+                title: reason.alertTitle,
+                message: reason.alertMessage,
+                onOk: {}
+            ))
+        }
+    }
 }
 
 extension MainViewModel: VirtualEventDelegate {
@@ -311,6 +403,10 @@ extension MainViewModel: VirtualEventDelegate {
 
     func onVirtualVisitCancelledByUser() {
         logger.log("Method onVirtualVisitCancelledByUser() called", level: .verbose, sender: .virtualVisit)
+    }
+
+    func onVirtualVisitModalityChanged(to value: VirtualVisitModality) {
+        logger.log("Method onVirtualVisitConvertedTo() called with a \(value.rawValue) modality", level: .verbose, sender: .virtualVisit)
     }
 
     func onVirtualVisitDeclinedByProvider() {

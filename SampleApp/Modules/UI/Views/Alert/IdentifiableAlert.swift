@@ -115,7 +115,6 @@ struct IdentifiableAlert: Identifiable {
     static func makeScheduleProviderAppointmentFaileReason(_ failedReason: ScheduleProviderAppointmentFailedReason) -> IdentifiableAlert {
         IdentifiableAlert(
             id: "Alert.ScheduleProviderAppointmentFaileReason",
-
             alert: Alert(
                 title: Text("Alert.Error.Generic.Title"),
                 message: Text(failedReason.alertMessage),

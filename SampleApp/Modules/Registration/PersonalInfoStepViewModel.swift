@@ -113,6 +113,7 @@ class PersonalInfoStepViewModel: ObservableObject {
     /// Ensures that all the mandatory information for this step has been entered and validated
     ///
     /// - Returns: Returns an error message if something is missing or invalid
+    // swiftlint:disable opening_brace
     func validateStep() -> String? {
         RulesValidator.validate([
             { self.validateFirstName(self.state.patientFirstName) },
@@ -124,6 +125,8 @@ class PersonalInfoStepViewModel: ObservableObject {
             { self.validateZipCode(self.state.patientZipCode) },
         ])
     }
+
+    // swiftlint:enable opening_brace
 
     func validateFirstName(_ firstName: String) -> String? {
         firstName.isEmpty ? String(localized: "RegistrationStep.Field.FirstName.CannotBeEmptyMessage") : nil

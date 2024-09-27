@@ -13,8 +13,8 @@ extension DexcareConfiguration {
     /// Dexcare SDK initializer that takes a sample app configuration object (.dexconfig).
     init(config: DexConfig, logger: DexcareSDKLogger) {
         let virtualVisitConfig = VirtualVisitConfiguration(
-            pushNotificationAppId: Bundle.main.bundleIdentifier ?? "bundle.id.undefined",
-            pushNotificationPlatform: config.pushNotificationPlatform,
+            pushNotificationAppId: config.pushNotification?.appId ?? Bundle.main.bundleIdentifier ?? "app.id.undefined",
+            pushNotificationPlatform: config.pushNotification?.platform ?? "ios-sandbox",
             virtualVisitUrl: URL(string: config.dexcareVirtualVisitUrl)!
         )
         let environment = Environment(

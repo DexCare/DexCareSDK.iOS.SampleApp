@@ -17,7 +17,7 @@ class PatientSelectionStepViewModel: ObservableObject {
     @Published var alertPresenter: AlertPresenter = .init()
     @Published private(set) var myselfPatientDemographics: PatientDemographics?
     @Published private(set) var isPatientInformationLoading: Bool = true
-    private(set) var patientInformationLoadingError: String? = nil
+    private(set) var patientInformationLoadingError: String?
     @Published private(set) var testPersonas: [VirtualVisitSamplePersona]
 
     private let visitScheduler: VisitSchedulerType

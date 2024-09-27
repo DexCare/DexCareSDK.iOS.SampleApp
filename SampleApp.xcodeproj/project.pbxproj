@@ -7,11 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A4C8B662CA1916B0075A8E8 /* CancelVisitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4C8B652CA1916B0075A8E8 /* CancelVisitView.swift */; };
+		4A4C8B682CA1AAA40075A8E8 /* PickerStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4C8B672CA1AAA40075A8E8 /* PickerStyles.swift */; };
 		B60C5EA22BDAD516002DE1C9 /* PatientSelectionStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60C5EA12BDAD516002DE1C9 /* PatientSelectionStepView.swift */; };
 		B60C5EA42BDAD524002DE1C9 /* PatientSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60C5EA32BDAD524002DE1C9 /* PatientSelectionViewModel.swift */; };
 		B60C5EAC2BDD51DB002DE1C9 /* CouponCodeFailedReason+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60C5EAB2BDD51DB002DE1C9 /* CouponCodeFailedReason+Extensions.swift */; };
 		B60C5EAE2BDD55D3002DE1C9 /* SupportedPaymentMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60C5EAD2BDD55D3002DE1C9 /* SupportedPaymentMethod.swift */; };
 		B60C5EB02BDD5D0C002DE1C9 /* View+LayoutPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60C5EAF2BDD5D0C002DE1C9 /* View+LayoutPriority.swift */; };
+		B6135C6C2C3462D500888DF2 /* DexcareiOSSDK in Frameworks */ = {isa = PBXBuildFile; productRef = B6135C6B2C3462D500888DF2 /* DexcareiOSSDK */; };
+		B61D27582BC859BE0075EFD9 /* DexcareiOSSDK in Frameworks */ = {isa = PBXBuildFile; productRef = B61D27572BC859BE0075EFD9 /* DexcareiOSSDK */; };
 		B61D8DF52BD980DB00E54082 /* CouponCodePaymentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61D8DF42BD980DB00E54082 /* CouponCodePaymentViewModel.swift */; };
 		B61D8DF72BD980FB00E54082 /* CouponCodePaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61D8DF62BD980FB00E54082 /* CouponCodePaymentView.swift */; };
 		B6399AD62C1A087000A362BD /* ScheduleProviderAppointmentFailedReason+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6399AD52C1A087000A362BD /* ScheduleProviderAppointmentFailedReason+Extensions.swift */; };
@@ -86,7 +90,9 @@
 		B683D5482BFE32E0001963AA /* AppConfigurationSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B683D5472BFE32E0001963AA /* AppConfigurationSelectionView.swift */; };
 		B683D54A2BFE56FB001963AA /* AppConfigurationSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B683D5492BFE56FB001963AA /* AppConfigurationSelectionViewModel.swift */; };
 		B683D54C2BFE64C9001963AA /* AppConfigurationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B683D54B2BFE64C9001963AA /* AppConfigurationCell.swift */; };
-		B6C8544D2C34900F00A7A0E7 /* DexcareiOSSDK in Frameworks */ = {isa = PBXBuildFile; productRef = B6C8544C2C34900F00A7A0E7 /* DexcareiOSSDK */; };
+		B693DB9B2BC81FDD00DC2781 /* DexcareiOSSDK in Frameworks */ = {isa = PBXBuildFile; productRef = B693DB9A2BC81FDD00DC2781 /* DexcareiOSSDK */; };
+		B693DB9E2BC8228800DC2781 /* DexcareiOSSDK in Frameworks */ = {isa = PBXBuildFile; productRef = B693DB9D2BC8228800DC2781 /* DexcareiOSSDK */; };
+		B693DBA42BC8235D00DC2781 /* DexcareiOSSDK in Frameworks */ = {isa = PBXBuildFile; productRef = B693DBA32BC8235D00DC2781 /* DexcareiOSSDK */; };
 		B6E0536F2BE173F80007AB02 /* TimeSlotStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E0536E2BE173F80007AB02 /* TimeSlotStepView.swift */; };
 		B6E053712BE21E5F0007AB02 /* TimeSlotStepViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E053702BE21E5F0007AB02 /* TimeSlotStepViewModel.swift */; };
 		B6E053732BE21FC40007AB02 /* VisitTypeStepViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E053722BE21FC40007AB02 /* VisitTypeStepViewModel.swift */; };
@@ -116,6 +122,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4A4C8B652CA1916B0075A8E8 /* CancelVisitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelVisitView.swift; sourceTree = "<group>"; };
+		4A4C8B672CA1AAA40075A8E8 /* PickerStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerStyles.swift; sourceTree = "<group>"; };
 		B60C5EA12BDAD516002DE1C9 /* PatientSelectionStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientSelectionStepView.swift; sourceTree = "<group>"; };
 		B60C5EA32BDAD524002DE1C9 /* PatientSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientSelectionViewModel.swift; sourceTree = "<group>"; };
 		B60C5EAB2BDD51DB002DE1C9 /* CouponCodeFailedReason+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CouponCodeFailedReason+Extensions.swift"; sourceTree = "<group>"; };
@@ -224,7 +232,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B6C8544D2C34900F00A7A0E7 /* DexcareiOSSDK in Frameworks */,
+				B6135C6C2C3462D500888DF2 /* DexcareiOSSDK in Frameworks */,
+				B693DB9E2BC8228800DC2781 /* DexcareiOSSDK in Frameworks */,
+				B693DB9B2BC81FDD00DC2781 /* DexcareiOSSDK in Frameworks */,
+				B693DBA42BC8235D00DC2781 /* DexcareiOSSDK in Frameworks */,
+				B61D27582BC859BE0075EFD9 /* DexcareiOSSDK in Frameworks */,
 				B659F4EF2BC742B500BF7AD5 /* Lock in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -342,6 +354,7 @@
 				B659F47D2BC73E5C00BF7AD5 /* UnderConstructionView.swift */,
 				B64F34152BCD6C5800CF2519 /* LoadingOverlayView.swift */,
 				B6E0537A2BEB49BB0007AB02 /* CustomEmptyView.swift */,
+				4A4C8B672CA1AAA40075A8E8 /* PickerStyles.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -370,6 +383,7 @@
 			isa = PBXGroup;
 			children = (
 				B6809B9F2BD02E9300E7896B /* VisitScheduler.swift */,
+				4A4C8B652CA1916B0075A8E8 /* CancelVisitView.swift */,
 			);
 			path = Visit;
 			sourceTree = "<group>";
@@ -548,7 +562,11 @@
 			name = SampleApp;
 			packageProductDependencies = (
 				B659F4EE2BC742B500BF7AD5 /* Lock */,
-				B6C8544C2C34900F00A7A0E7 /* DexcareiOSSDK */,
+				B693DB9A2BC81FDD00DC2781 /* DexcareiOSSDK */,
+				B693DB9D2BC8228800DC2781 /* DexcareiOSSDK */,
+				B693DBA32BC8235D00DC2781 /* DexcareiOSSDK */,
+				B61D27572BC859BE0075EFD9 /* DexcareiOSSDK */,
+				B6135C6B2C3462D500888DF2 /* DexcareiOSSDK */,
 			);
 			productName = SampleApp;
 			productReference = B659F43E2BC73D7500BF7AD5 /* SampleApp.app */;
@@ -603,7 +621,7 @@
 			mainGroup = B659F4352BC73D7500BF7AD5;
 			packageReferences = (
 				B659F4ED2BC742B500BF7AD5 /* XCRemoteSwiftPackageReference "Lock.swift" */,
-				B6C8544B2C34900F00A7A0E7 /* XCRemoteSwiftPackageReference "DexCareSDK-iOS" */,
+				4A46C0E22CA6E9BE006D2ADF /* XCRemoteSwiftPackageReference "DexCareSDK-iOS" */,
 			);
 			productRefGroup = B659F43F2BC73D7500BF7AD5 /* Products */;
 			projectDirPath = "";
@@ -707,6 +725,7 @@
 				B659F4DC2BC73E5C00BF7AD5 /* AppServicesManager.swift in Sources */,
 				B659F4B22BC73E5C00BF7AD5 /* CustomPickerList.swift in Sources */,
 				B6E0DE052BD840E80031650B /* InsurancePaymentView.swift in Sources */,
+				4A4C8B662CA1916B0075A8E8 /* CancelVisitView.swift in Sources */,
 				B659F4DA2BC73E5C00BF7AD5 /* NavigationState.swift in Sources */,
 				B60C5EB02BDD5D0C002DE1C9 /* View+LayoutPriority.swift in Sources */,
 				B659F4BA2BC73E5C00BF7AD5 /* CustomTextEditor.swift in Sources */,
@@ -730,6 +749,7 @@
 				B659F4B42BC73E5C00BF7AD5 /* IdentifiableAlert.swift in Sources */,
 				B64F341A2BCDA1AE00CF2519 /* Transaction+Extensions.swift in Sources */,
 				B659F4AE2BC73E5C00BF7AD5 /* Color+Extensions.swift in Sources */,
+				4A4C8B682CA1AAA40075A8E8 /* PickerStyles.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1031,6 +1051,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		4A46C0E22CA6E9BE006D2ADF /* XCRemoteSwiftPackageReference "DexCareSDK-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/DexCare/DexCareSDK-iOS.git";
+			requirement = {
+				kind = exactVersion;
+				version = 9.3.0;
+			};
+		};
 		B659F4ED2BC742B500BF7AD5 /* XCRemoteSwiftPackageReference "Lock.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/auth0/Lock.swift.git";
@@ -1039,25 +1067,32 @@
 				minimumVersion = 2.24.1;
 			};
 		};
-		B6C8544B2C34900F00A7A0E7 /* XCRemoteSwiftPackageReference "DexCareSDK-iOS" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/DexCare/DexCareSDK-iOS/";
-			requirement = {
-				kind = exactVersion;
-				version = 9.2.1;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B6135C6B2C3462D500888DF2 /* DexcareiOSSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DexcareiOSSDK;
+		};
+		B61D27572BC859BE0075EFD9 /* DexcareiOSSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DexcareiOSSDK;
+		};
 		B659F4EE2BC742B500BF7AD5 /* Lock */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B659F4ED2BC742B500BF7AD5 /* XCRemoteSwiftPackageReference "Lock.swift" */;
 			productName = Lock;
 		};
-		B6C8544C2C34900F00A7A0E7 /* DexcareiOSSDK */ = {
+		B693DB9A2BC81FDD00DC2781 /* DexcareiOSSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B6C8544B2C34900F00A7A0E7 /* XCRemoteSwiftPackageReference "DexCareSDK-iOS" */;
+			productName = DexcareiOSSDK;
+		};
+		B693DB9D2BC8228800DC2781 /* DexcareiOSSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DexcareiOSSDK;
+		};
+		B693DBA32BC8235D00DC2781 /* DexcareiOSSDK */ = {
+			isa = XCSwiftPackageProductDependency;
 			productName = DexcareiOSSDK;
 		};
 /* End XCSwiftPackageProductDependency section */
