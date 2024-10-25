@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -621,7 +621,7 @@
 			mainGroup = B659F4352BC73D7500BF7AD5;
 			packageReferences = (
 				B659F4ED2BC742B500BF7AD5 /* XCRemoteSwiftPackageReference "Lock.swift" */,
-				4A46C0E22CA6E9BE006D2ADF /* XCRemoteSwiftPackageReference "DexCareSDK-iOS" */,
+				B6135C6A2C3462D500888DF2 /* XCLocalSwiftPackageReference "../DexcareSDK" */,
 			);
 			productRefGroup = B659F43F2BC73D7500BF7AD5 /* Products */;
 			projectDirPath = "";
@@ -1050,15 +1050,14 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		4A46C0E22CA6E9BE006D2ADF /* XCRemoteSwiftPackageReference "DexCareSDK-iOS" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/DexCare/DexCareSDK-iOS.git";
-			requirement = {
-				kind = exactVersion;
-				version = 9.3.0;
-			};
+/* Begin XCLocalSwiftPackageReference section */
+		B6135C6A2C3462D500888DF2 /* XCLocalSwiftPackageReference "../DexcareSDK" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../DexcareSDK;
 		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCRemoteSwiftPackageReference section */
 		B659F4ED2BC742B500BF7AD5 /* XCRemoteSwiftPackageReference "Lock.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/auth0/Lock.swift.git";
