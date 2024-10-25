@@ -559,21 +559,6 @@
         }
       }
     },
-    "Option 1" : {
-
-    },
-    "Option 2" : {
-
-    },
-    "Option 3" : {
-
-    },
-    "Options" : {
-
-    },
-    "Options Disabled" : {
-
-    },
     "Patient.FailedToLoadPatient.Message" : {
       "localizations" : {
         "en" : {
@@ -795,6 +780,7 @@
       }
     },
     "RegistrationStep.Field.Gender.Instructions" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1295,6 +1281,7 @@
       }
     },
     "VirtualVisit.Field.Gender.Title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1820,6 +1807,7 @@
       }
     },
     "Z.Preview.Button.Primary" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1830,6 +1818,7 @@
       }
     },
     "Z.Preview.Button.Primary.Disabled" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1840,6 +1829,7 @@
       }
     },
     "Z.Preview.Button.Secondary" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1850,6 +1840,7 @@
       }
     },
     "Z.Preview.Button.Secondary.Disabled" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1860,6 +1851,7 @@
       }
     },
     "Z.Preview.Button.Tertiary" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1870,6 +1862,7 @@
       }
     },
     "Z.Preview.Button.Tertiary.Disabled" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

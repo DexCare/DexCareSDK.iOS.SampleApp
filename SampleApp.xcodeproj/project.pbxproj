@@ -109,6 +109,7 @@
 		B6E0DE0D2BD8802D0031650B /* InsurancePayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E0DE0C2BD8802D0031650B /* InsurancePayer+Extensions.swift */; };
 		B6E0DE0F2BD931A30031650B /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = B6E0DE0E2BD931A30031650B /* README.md */; };
 		B6E0DE112BD939910031650B /* RulesValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E0DE102BD939910031650B /* RulesValidator.swift */; };
+		F6F01CFB2CCC041E00E5217C /* DexcareiOSSDK in Frameworks */ = {isa = PBXBuildFile; productRef = F6F01CFA2CCC041E00E5217C /* DexcareiOSSDK */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -233,6 +234,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B6135C6C2C3462D500888DF2 /* DexcareiOSSDK in Frameworks */,
+				F6F01CFB2CCC041E00E5217C /* DexcareiOSSDK in Frameworks */,
 				B693DB9E2BC8228800DC2781 /* DexcareiOSSDK in Frameworks */,
 				B693DB9B2BC81FDD00DC2781 /* DexcareiOSSDK in Frameworks */,
 				B693DBA42BC8235D00DC2781 /* DexcareiOSSDK in Frameworks */,
@@ -567,6 +569,7 @@
 				B693DBA32BC8235D00DC2781 /* DexcareiOSSDK */,
 				B61D27572BC859BE0075EFD9 /* DexcareiOSSDK */,
 				B6135C6B2C3462D500888DF2 /* DexcareiOSSDK */,
+				F6F01CFA2CCC041E00E5217C /* DexcareiOSSDK */,
 			);
 			productName = SampleApp;
 			productReference = B659F43E2BC73D7500BF7AD5 /* SampleApp.app */;
@@ -621,7 +624,7 @@
 			mainGroup = B659F4352BC73D7500BF7AD5;
 			packageReferences = (
 				B659F4ED2BC742B500BF7AD5 /* XCRemoteSwiftPackageReference "Lock.swift" */,
-				4A46C0E22CA6E9BE006D2ADF /* XCRemoteSwiftPackageReference "DexCareSDK-iOS" */,
+				F6F01CF92CCC041E00E5217C /* XCRemoteSwiftPackageReference "DexCareSDK-iOS" */,
 			);
 			productRefGroup = B659F43F2BC73D7500BF7AD5 /* Products */;
 			projectDirPath = "";
@@ -1051,20 +1054,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		4A46C0E22CA6E9BE006D2ADF /* XCRemoteSwiftPackageReference "DexCareSDK-iOS" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/DexCare/DexCareSDK-iOS.git";
-			requirement = {
-				kind = exactVersion;
-				version = 9.3.0;
-			};
-		};
 		B659F4ED2BC742B500BF7AD5 /* XCRemoteSwiftPackageReference "Lock.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/auth0/Lock.swift.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 2.24.1;
+			};
+		};
+		F6F01CF92CCC041E00E5217C /* XCRemoteSwiftPackageReference "DexCareSDK-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/DexCare/DexCareSDK-iOS.git";
+			requirement = {
+				branch = main;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1093,6 +1096,11 @@
 		};
 		B693DBA32BC8235D00DC2781 /* DexcareiOSSDK */ = {
 			isa = XCSwiftPackageProductDependency;
+			productName = DexcareiOSSDK;
+		};
+		F6F01CFA2CCC041E00E5217C /* DexcareiOSSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F6F01CF92CCC041E00E5217C /* XCRemoteSwiftPackageReference "DexCareSDK-iOS" */;
 			productName = DexcareiOSSDK;
 		};
 /* End XCSwiftPackageProductDependency section */
