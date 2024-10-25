@@ -1,5 +1,12 @@
 # Release Notes
 
+## 9.3.0
+### New
+Added support for SDK version 9.3.0. 
+- This includes a phone/virtual visit cancellation button underneath the Resume Visit button when a previous visit has been identified as active. 
+- Activating the visit cancellation flow will demonstrate the new UI supporting the new visit cancellation interface which requires a cancellation reason. 
+
+
 ## 9.2.0
 ### New
 This version introduces a new Sample App built in SwiftUI and SPM (Service Package Manager). This is still a work in progress, and some core functionality is missing. The new Sample App includes:
