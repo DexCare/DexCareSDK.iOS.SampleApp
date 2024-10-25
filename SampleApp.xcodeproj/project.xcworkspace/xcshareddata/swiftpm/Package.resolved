@@ -1,5 +1,5 @@
 {
-  "originHash" : "b29ee8692c6df50b056de2a7d8935993dc5aebcddb3f5acc53c6450da31f6614",
+  "originHash" : "ed8028c5a6096c85df6a144422345140243fec731b0630dd43d1dc2bcaaf8263",
   "pins" : [
     {
       "identity" : "auth0.swift",
@@ -8,6 +8,15 @@
       "state" : {
         "revision" : "ed8079f27b32f3fc96b6c3dcc5e9e5a1dd68e247",
         "version" : "1.39.1"
+      }
+    },
+    {
+      "identity" : "dexcaresdk-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/DexCare/DexCareSDK-iOS.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "dbd6828533f913b5d4579d6de72e28644117350c"
       }
     },
     {
