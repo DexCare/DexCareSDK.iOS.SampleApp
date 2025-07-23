@@ -24,6 +24,28 @@
         }
       }
     },
+    "Alert.Error.MissingConfig.Message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please ensure you have a Config.dexconfig file in the `Resources` directory."
+          }
+        }
+      }
+    },
+    "Alert.Error.MissingConfig.Title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Missing Configuration File"
+          }
+        }
+      }
+    },
     "Alert.Error.Unhandled.Message" : {
       "localizations" : {
         "en" : {
@@ -529,6 +551,17 @@
         }
       }
     },
+    "MainView.SdkVersion.Info" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SDK Version: 9.3.0"
+          }
+        }
+      }
+    },
     "MainView.VirtualVisit.Button.ScheduleAVisit" : {
       "localizations" : {
         "en" : {
@@ -558,6 +591,9 @@
           }
         }
       }
+    },
+    "OK" : {
+
     },
     "Patient.FailedToLoadPatient.Message" : {
       "localizations" : {

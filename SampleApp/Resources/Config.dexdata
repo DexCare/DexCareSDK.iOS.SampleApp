@@ -28,10 +28,8 @@
                 "email": "john.smith@example.com",
                 "gender": "male",
                 "identifiers": [],
-                "ssn" : "1234",
-                "homePhone": "333-333-3333",
-                "mobilePhone": "444-444-4444",
-                "workPhone": "555-555-5555"
+                "mobilePhone": "(415) 555-1234",
+                "ssn" : "1234"
             }
         },
         {

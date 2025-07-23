@@ -17,7 +17,15 @@ struct RootView: View {
     // MARK: Body
 
     var body: some View {
-        contentView()
+        contentView().alert(isPresented: $viewModel.missingConfig) {
+            Alert(
+                title: Text("Alert.Error.MissingConfig.Title"),
+                message: Text("Alert.Error.MissingConfig.Message"),
+                dismissButton: .destructive(Text("OK"), action: {
+                    exit(0)
+                })
+            )
+        }
     }
 
     // MARK: Private Views
@@ -31,6 +39,8 @@ struct RootView: View {
             AppConfigurationSelectionView()
         case .authenticated:
             MainView()
+        case .none:
+            LaunchScreenView()
         }
     }
 }
