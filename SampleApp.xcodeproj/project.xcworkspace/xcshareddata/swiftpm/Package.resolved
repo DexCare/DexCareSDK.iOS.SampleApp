@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DexCare/DexCareSDK-iOS.git",
       "state" : {
-        "branch" : "main",
-        "revision" : "dbd6828533f913b5d4579d6de72e28644117350c"
+        "revision" : "510ab3620ffac699042e66b7bf97cfd28a50fa66",
+        "version" : "9.5.0"
       }
     },
     {
@@ -33,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/nathantannar4/InputBarAccessoryView",
       "state" : {
-        "revision" : "2843b4454cfb6de5b4d1e5939fef2dd6257b69ee",
-        "version" : "5.5.0"
+        "revision" : "c7acd5fa32e54cd7a44ad7eb9a7730da35b54c95",
+        "version" : "6.5.1"
       }
     },
     {
@@ -69,8 +69,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/MessageKit/MessageKit",
       "state" : {
-        "revision" : "84236d91ac5783e3ecbefc15b82d854476720115",
-        "version" : "3.8.0"
+        "revision" : "b024c1287ac30fb6ea2ee07169e6193efc11d972",
+        "version" : "4.3.0"
       }
     },
     {
@@ -87,8 +87,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/opentok/vonage-client-sdk-video",
       "state" : {
-        "revision" : "f1261a5d6d018c822f512e9cb672dffba0b57f7f",
-        "version" : "2.27.4"
+        "revision" : "7e80b633003ea6e98d672fcb3656de9a6e9fba02",
+        "version" : "2.28.2"
       }
     }
   ],
