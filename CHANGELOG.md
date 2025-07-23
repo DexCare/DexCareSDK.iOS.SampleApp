@@ -1,6 +1,6 @@
 # Release Notes
 
-## Release NEXT
+## 9.5.0
 ### New
 - SDK version is now displayed on the main screen.
 - Added alert for missing config file.
