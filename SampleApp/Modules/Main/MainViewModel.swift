@@ -19,18 +19,19 @@ struct ResumeVirtualVisitSectionState {
     var viewState: ViewLoadingState
     var lastVisitId: String?
     var subtitle: String
+    var isVisible: Bool = false
 
-    static func loading() -> ResumeVirtualVisitSectionState {
-        .init(viewState: .loading, lastVisitId: nil, subtitle: String(localized: "MainView.LastVirtualVisit.RetrevingStatusMessage"))
+    static func loading(isVisible: Bool = false) -> ResumeVirtualVisitSectionState {
+        .init(viewState: .loading, lastVisitId: nil, subtitle: String(localized: "MainView.LastVirtualVisit.RetrevingStatusMessage"), isVisible: isVisible)
     }
 
     static func loaded(lastVisitId: String?) -> ResumeVirtualVisitSectionState {
         let subtitle = lastVisitId != nil ? String(localized: "MainView.LastVirtualVisit.ResumeVisitSubtitle") : String(localized: "MainView.LastVirtualVisit.NoVisitSubtitle")
-        return .init(viewState: .loaded, lastVisitId: lastVisitId, subtitle: subtitle)
+        return .init(viewState: .loaded, lastVisitId: lastVisitId, subtitle: subtitle, isVisible: true)
     }
 
     static func error(errorMessage: String) -> ResumeVirtualVisitSectionState {
-        .init(viewState: .error, subtitle: errorMessage)
+        .init(viewState: .error, subtitle: errorMessage, isVisible: true)
     }
 }
 
@@ -56,17 +57,18 @@ struct VirtualVisitSectionState {
     var openRegions: [CustomPickerEntry<VirtualPracticeRegion>] = []
     var errorMessage: String?
     var isLoading: Bool
+    var isVisible: Bool = false
 
-    static func loading() -> VirtualVisitSectionState {
-        .init(viewState: .loading, isLoading: true)
+    static func loading(isVisible: Bool = false) -> VirtualVisitSectionState {
+        .init(viewState: .loading, isLoading: true, isVisible: isVisible)
     }
 
     static func loaded(openRegions: [CustomPickerEntry<VirtualPracticeRegion>]) -> VirtualVisitSectionState {
-        .init(viewState: .loaded, openRegions: openRegions, isLoading: false)
+        .init(viewState: .loaded, openRegions: openRegions, isLoading: false, isVisible: true)
     }
 
     static func error(errorMessage: String) -> VirtualVisitSectionState {
-        .init(viewState: .error, errorMessage: errorMessage, isLoading: false)
+        .init(viewState: .error, errorMessage: errorMessage, isLoading: false, isVisible: true)
     }
 }
 
@@ -120,16 +122,20 @@ class MainViewModel: ObservableObject {
             isVisible: appConfiguration.supportedFeatures.contains(.providerBooking),
             providerFullName: appConfiguration.providerNationalIdFullName
         )
-        virtualVisitSectionState = .loading()
-        resumeVisitSectionState = .loading()
+        
+        let supportsVirtual = appConfiguration.supportedFeatures.contains(.virtual)
+        
+        virtualVisitSectionState = .loading(isVisible: supportsVirtual)
+        resumeVisitSectionState = .loading(isVisible: supportsVirtual)
         navigationTitle = appConfiguration.configName
         self.dexcareSDK.virtualService.setVirtualEventDelegate(delegate: self)
-
-        loadVirtualPractice(practiceId: appConfiguration.virtualPracticeId)
-
-        lastVisitId = userDefaultsService.getLastVirtualVisitId()
-
-        loadLastVirtualVisitId()
+        
+        
+        if supportsVirtual {
+            loadVirtualPractice(practiceId: appConfiguration.virtualPracticeId)
+            lastVisitId = userDefaultsService.getLastVirtualVisitId()
+            loadLastVirtualVisitId()
+        }
     }
 
     private func loadLastVirtualVisitId() {
@@ -282,7 +288,7 @@ class MainViewModel: ObservableObject {
     }
 
     private func loadVirtualPractice(practiceId: String) {
-        virtualVisitSectionState = .loading()
+        virtualVisitSectionState = .loading(isVisible: true)
         Task { @MainActor in
             do {
                 let virtualPractice = try await self.dexcareSDK.practiceService.getVirtualPractice(practiceId: practiceId)

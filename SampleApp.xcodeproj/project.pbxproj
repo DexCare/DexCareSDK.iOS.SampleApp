@@ -1066,8 +1066,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DexCare/DexCareSDK-iOS.git";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = exactVersion;
+				version = 9.5.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

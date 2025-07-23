@@ -27,6 +27,7 @@ struct MainView: View {
                         resumeVirtualVisitView()
                         cancelVisitView
                         providerBookingView()
+                        sdkVersionView()
                     }
                     .padding(UIConstant.Spacing.defaultSide16)
                 }
@@ -97,33 +98,35 @@ struct MainView: View {
 
     @ViewBuilder
     private func resumeVirtualVisitView() -> some View {
-        VStack(alignment: .leading, spacing: UIConstant.Spacing.large16) {
-            Text("MainView.LastVirtualVisit.Title")
-                .font(.dxH4)
-                .foregroundColor(.dxTextPrimary)
-            Text(viewModel.resumeVisitSectionState.subtitle)
-                .font(.dxBody1)
-                .foregroundColor(viewModel.resumeVisitSectionState.viewState == .error ? .dxAlert : .dxTextPrimary)
-            switch viewModel.resumeVisitSectionState.viewState {
-            case .loading:
-                HStack(spacing: 0) {
-                    Spacer()
-                    ProgressView()
-                        .progressViewStyle(.circular)
-                        .foregroundColor(.dxTextPrimary)
-                    Spacer()
+        if viewModel.resumeVisitSectionState.isVisible {
+            VStack(alignment: .leading, spacing: UIConstant.Spacing.large16) {
+                Text("MainView.LastVirtualVisit.Title")
+                    .font(.dxH4)
+                    .foregroundColor(.dxTextPrimary)
+                Text(viewModel.resumeVisitSectionState.subtitle)
+                    .font(.dxBody1)
+                    .foregroundColor(viewModel.resumeVisitSectionState.viewState == .error ? .dxAlert : .dxTextPrimary)
+                switch viewModel.resumeVisitSectionState.viewState {
+                case .loading:
+                    HStack(spacing: 0) {
+                        Spacer()
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                            .foregroundColor(.dxTextPrimary)
+                        Spacer()
+                    }
+                case .loaded:
+                    Button {
+                        viewModel.resumeVirtualVisit()
+                    } label: {
+                        Text("MainView.LastVirtualVisit.ResumeVisitButton")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(RectangleButtonStyle.primary)
+                    .disabled(viewModel.resumeVisitSectionState.lastVisitId == nil)
+                case .error:
+                    EmptyView()
                 }
-            case .loaded:
-                Button {
-                    viewModel.resumeVirtualVisit()
-                } label: {
-                    Text("MainView.LastVirtualVisit.ResumeVisitButton")
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(RectangleButtonStyle.primary)
-                .disabled(viewModel.resumeVisitSectionState.lastVisitId == nil)
-            case .error:
-                EmptyView()
             }
         }
     }
@@ -174,24 +177,34 @@ struct MainView: View {
         .cornerRadius(UIConstant.CornerRadius.medium8)
     }
 
+    @ViewBuilder
     private func virtualVisitView() -> some View {
-        VStack(alignment: .leading, spacing: UIConstant.Spacing.large16) {
-            Text("MainView.VirtualVisit.Title")
-                .font(.dxH4)
-                .foregroundColor(.dxTextPrimary)
-            Text("MainView.VirtualVisit.Subtitle")
-                .font(.dxBody1)
-                .foregroundColor(.dxTextPrimary)
-            virtualPracticeRegionPicker()
-            Button(action: {
-                viewModel.startVirtualVisitFlow()
-            }, label: {
-                Text("MainView.VirtualVisit.Button.ScheduleAVisit")
-                    .frame(maxWidth: .infinity)
-            })
-            .buttonStyle(RectangleButtonStyle.primary)
-            .disabled(viewModel.selectedRegion == nil || viewModel.virtualVisitSectionState.viewState != .loaded)
+        if viewModel.virtualVisitSectionState.isVisible {
+            VStack(alignment: .leading, spacing: UIConstant.Spacing.large16) {
+                Text("MainView.VirtualVisit.Title")
+                    .font(.dxH4)
+                    .foregroundColor(.dxTextPrimary)
+                Text("MainView.VirtualVisit.Subtitle")
+                    .font(.dxBody1)
+                    .foregroundColor(.dxTextPrimary)
+                virtualPracticeRegionPicker()
+                Button(action: {
+                    viewModel.startVirtualVisitFlow()
+                }, label: {
+                    Text("MainView.VirtualVisit.Button.ScheduleAVisit")
+                        .frame(maxWidth: .infinity)
+                })
+                .buttonStyle(RectangleButtonStyle.primary)
+                .disabled(viewModel.selectedRegion == nil || viewModel.virtualVisitSectionState.viewState != .loaded)
+            }
         }
+    }
+    
+    @ViewBuilder
+    private func sdkVersionView() -> some View {
+        Text("MainView.SdkVersion.Info")
+            .font(.dxH4)
+            .foregroundColor(.dxTextPrimary)
     }
 
     @ViewBuilder
