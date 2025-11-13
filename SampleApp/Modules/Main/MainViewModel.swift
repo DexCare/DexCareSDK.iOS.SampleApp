@@ -225,6 +225,17 @@ class MainViewModel: ObservableObject {
             )
         ))
     }
+    
+    func getWaitTimes() {
+        Task { @MainActor in
+            do {
+                let waitTimes = try await self.dexcareSDK.practiceService.getRegionWaitTimeAvailability(regionId: selectedRegion?.regionCode ?? "WA", assignmentQualifiers: [VirtualVisitAssignmentQualifier(rawValue:"Surgeon")], visitTypeNames: nil, practiceId: nil, homeMarket: nil, includeSpecialties: true)
+                logger.log(waitTimes.description, level: .info, sender: .virtualVisit)
+            } catch {
+                logger.log("Failed to load virtual practice. Error: \(error)", level: .error, sender: .virtualVisit)
+            }
+        }
+    }
 
     func startVirtualVisitFlow() {
         guard let selectedRegion else {

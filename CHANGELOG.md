@@ -1,5 +1,9 @@
 # Release Notes
 
+## 9.6.0
+### New
+- Added button to manually fetch Wait Times.
+
 ## 9.5.0
 ### New
 - SDK version is now displayed on the main screen.
