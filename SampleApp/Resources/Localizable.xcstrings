@@ -557,7 +557,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SDK Version: 9.5.0"
+            "value" : "SDK Version: 9.6.0"
           }
         }
       }
@@ -588,6 +588,28 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Requesting a Virtual Visit"
+          }
+        }
+      }
+    },
+    "MainView.WaitTime.Title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wait Times"
+          }
+        }
+      }
+    },
+    "MainView.WaitTime.WaitTimeButton" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Get Wait Times"
           }
         }
       }
@@ -1909,5 +1931,5 @@
       }
     }
   },
-  "version" : "1.0"
+  "version" : "1.1"
 }

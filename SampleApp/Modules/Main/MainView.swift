@@ -27,6 +27,7 @@ struct MainView: View {
                         resumeVirtualVisitView()
                         cancelVisitView
                         providerBookingView()
+                        waitTimesView()
                         sdkVersionView()
                     }
                     .padding(UIConstant.Spacing.defaultSide16)
@@ -197,6 +198,22 @@ struct MainView: View {
                 .buttonStyle(RectangleButtonStyle.primary)
                 .disabled(viewModel.selectedRegion == nil || viewModel.virtualVisitSectionState.viewState != .loaded)
             }
+        }
+    }
+    
+    @ViewBuilder
+    private func waitTimesView() -> some View {
+        VStack(alignment: .leading, spacing: UIConstant.Spacing.large16) {
+            Text("MainView.WaitTime.Title")
+                .font(.dxH4)
+                .foregroundColor(.dxTextPrimary)
+            Button(action: {
+                viewModel.getWaitTimes()
+            }, label: {
+                Text("MainView.WaitTime.WaitTimeButton")
+                    .frame(maxWidth: .infinity)
+            })
+            .buttonStyle(RectangleButtonStyle.primary)
         }
     }
     
