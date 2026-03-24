@@ -1,5 +1,9 @@
 # Release Notes
 
+## 9.7.0
+### Internal
+- Migrated DexCare iOS SDK screens to SwiftUI.
+
 ## 9.6.0
 ### New
 - Added button to manually fetch Wait Times.
